@@ -1,7 +1,7 @@
 <script setup>
-import { BloggerIcon, GitHubIcon, GmailIcon, MastodonIcon, TelegramIcon, XIcon } from 'vue3-simple-icons'
+import { GitHubIcon, GmailIcon } from 'vue3-simple-icons'
 
-const { title, email, telegram, blog, twitter, mastodon, github } = useAppConfig()
+const { title, email, github } = useAppConfig()
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const { title, email, telegram, blog, twitter, mastodon, github } = useAppConfig
         target="_blank"
         title="HTML.ZONE"
       >
-        &copy; {{ new Date().getFullYear() }} Products of HTML.ZONE
+        &copy; {{ new Date().getFullYear() }} CEM
       </a>
       <span
         class="inline-flex justify-center mt-4 space-x-5 sm:ml-auto sm:mt-0 sm:justify-start"
@@ -34,6 +34,7 @@ const { title, email, telegram, blog, twitter, mastodon, github } = useAppConfig
             class="w-6 h-6"
           />
         </a>
+        <!--
         <a
           v-if="telegram"
           :href="telegram"
@@ -83,7 +84,7 @@ const { title, email, telegram, blog, twitter, mastodon, github } = useAppConfig
           <MastodonIcon
             class="w-6 h-6"
           />
-        </a>
+        </a> -->
 
         <a
           v-if="github"
