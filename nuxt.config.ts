@@ -10,6 +10,18 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
 
+  app: {
+    head: {
+      meta: [
+        { name: 'robots', content: 'noindex, nofollow' },
+        { name: 'googlebot', content: 'noindex, nofollow' },
+        { name: 'bingbot', content: 'noindex, nofollow' },
+        { name: 'yandex', content: 'noindex, nofollow' },
+        { name: 'baiduspider', content: 'noindex, nofollow' },
+      ],
+    },
+  },
+
   colorMode: {
     classSuffix: '',
   },
@@ -52,6 +64,13 @@ export default defineNuxtConfig({
       // Enable Server API documentation within NuxtHub
       openAPI: true,
     },
+    publicAssets: [
+      {
+        baseURL: '/',
+        dir: 'public',
+        maxAge: 60 * 60 * 24 * 365, // 1 year
+      },
+    ],
   },
 
   hub: {
