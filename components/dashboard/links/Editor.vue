@@ -17,6 +17,7 @@ const props = defineProps({
 // Emits an event to update the link in the parent component when saved
 const emit = defineEmits(['update:link'])
 
+const { t } = useI18n()
 const link = ref(props.link)
 const dialogOpen = ref(false)
 
