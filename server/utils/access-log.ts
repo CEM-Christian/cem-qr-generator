@@ -60,19 +60,26 @@ export const logsMap = {
   ...Object.entries(doublesMap).reduce((acc, [k, v]) => ({ ...acc, [v]: k }), {}),
 } as LogsMap
 
+<<<<<<< HEAD
 function logs2blobs(logs: LogsMap) {
   return (Object.keys(blobsMap) as BlobsKey[])
     .sort((a, b) => toBlobNumber(a) - toBlobNumber(b))
     .map(key => String(logs[blobsMap[key] as LogsKey] || ''))
+=======
+export function logs2blobs(logs: LogsMap) {
+  // @ts-expect-error todo
+  return Object.keys(blobsMap).sort((a, b) => toBlobNumber(a) - toBlobNumber(b)).map(key => logs[blobsMap[key]] || '')
+>>>>>>> 63cd5e9 (feat: add realtime log and globe)
 }
 
-function blobs2logs(blobs: string[]) {
+export function blobs2logs(blobs: string[]) {
   const logsList = Object.keys(blobsMap)
 
   return blobs.reduce((logs, blob, i) => {
     const key = blobsMap[logsList[i] as BlobsKey]
     logs[key] = blob
     return logs
+<<<<<<< HEAD
   }, {} as Partial<LogsMap>)
 }
 
@@ -90,6 +97,9 @@ function doubles2logs(doubles: number[]) {
     logs[key] = double
     return logs
   }, {} as Partial<LogsMap>)
+=======
+  }, {}) as LogsMap
+>>>>>>> 63cd5e9 (feat: add realtime log and globe)
 }
 
 export function useAccessLog(event: H3Event) {
