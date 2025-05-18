@@ -4,9 +4,6 @@ import { scaleSequentialSqrt } from 'd3-scale'
 import { interpolateYlOrRd } from 'd3-scale-chromatic'
 import Globe from 'globe.gl'
 import { debounce } from 'lodash-es'
-<<<<<<< HEAD
-import data from './data.json'
-=======
 import { MeshPhongMaterial } from 'three'
 
 const props = defineProps({
@@ -15,7 +12,6 @@ const props = defineProps({
     default: 60,
   },
 })
->>>>>>> 3456e69 (feat: enhance realtime globe functionality)
 
 const time = inject('time')
 const filters = inject('filters')
@@ -86,12 +82,18 @@ async function getLiveLocations() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 function initGlobe() {
   const normalized = 5 / props.minutes
   const weightColor = scaleSequentialSqrt(interpolateYlOrRd).domain([0, highest.value * normalized * 15])
 >>>>>>> 3456e69 (feat: enhance realtime globe functionality)
 =======
 function trafficEvent({ props }) {
+=======
+let cleanArcsDataTimer = null
+
+function trafficEvent({ props }, { delay = 0 }) {
+>>>>>>> 9106881 (fix: clean up globe arcs and prevent empty stats display)
   const arc = {
     startLat: props.item.latitude,
     startLng: props.item.longitude,
@@ -107,6 +109,11 @@ function trafficEvent({ props }) {
     .arcDashLength(() => random + 0.2)
     .arcDashGap(() => random - 0.2)
     .arcDashAnimateTime(2000)
+
+  clearTimeout(cleanArcsDataTimer)
+  cleanArcsDataTimer = setTimeout(() => {
+    globe.arcsData([])
+  }, delay + 100)
 }
 >>>>>>> 852755e (feat: enhance globe visualization with traffic arcs)
 
