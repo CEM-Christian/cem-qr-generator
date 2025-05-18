@@ -121,7 +121,7 @@ function stopRotation() {
   }
 }
 
-const stopWatchQueryChange = watch([time, filters], getLiveLocations, {
+watch([time, filters], getLiveLocations, {
   deep: true,
 })
 
@@ -141,10 +141,6 @@ watch(locations, () => {
 onMounted(async () => {
   await Promise.all([getGlobeJSON(), getLiveLocations()])
   initGlobe()
-})
-
-onBeforeUnmount(() => {
-  stopWatchQueryChange()
 })
 </script>
 
