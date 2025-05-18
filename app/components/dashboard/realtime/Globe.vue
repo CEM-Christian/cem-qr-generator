@@ -22,6 +22,8 @@ const filters = inject('filters')
 
 const countries = ref({})
 const locations = ref([])
+const colos = ref({})
+const currentLocation = ref({})
 
 const el = useTemplateRef('globeEl')
 const { width } = useElementSize(el)
@@ -44,6 +46,7 @@ async function getGlobeJSON() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const liveSessionLocations = computed(() => {
   const map = new Map()
   data.forEach((item) => {
@@ -55,6 +58,18 @@ const liveSessionLocations = computed(() => {
     map.get(item.country).count += 1
   })
 =======
+=======
+async function getColosJSON() {
+  const data = await $fetch('/colos.json')
+  colos.value = data
+}
+
+async function getCurrentLocation() {
+  const data = await useAPI('/api/location')
+  currentLocation.value = data
+}
+
+>>>>>>> 852755e (feat: enhance globe visualization with traffic arcs)
 async function getLiveLocations() {
   const { data } = await useAPI('/api/logs/locations', {
     query: {
@@ -70,16 +85,39 @@ async function getLiveLocations() {
   }))
 }
 
+<<<<<<< HEAD
 function initGlobe() {
   const normalized = 5 / props.minutes
   const weightColor = scaleSequentialSqrt(interpolateYlOrRd).domain([0, highest.value * normalized * 15])
 >>>>>>> 3456e69 (feat: enhance realtime globe functionality)
+=======
+function trafficEvent({ props }) {
+  const arc = {
+    startLat: props.item.latitude,
+    startLng: props.item.longitude,
+    endLat: colos.value[props.item.COLO]?.lat,
+    endLng: colos.value[props.item.COLO]?.lon,
+    color: 'red',
+    arcAltitude: 0.5,
+  }
+  console.info(`from ${props.item.city}(${props.item.latitude}, ${props.item.longitude}) to ${props.item.COLO}(${colos.value[props.item.COLO]?.lat}, ${colos.value[props.item.COLO]?.lon})`)
+  const random = Math.random()
+  globe.arcsData([arc])
+    .arcColor('color')
+    .arcDashLength(() => random + 0.2)
+    .arcDashGap(() => random - 0.2)
+    .arcDashAnimateTime(2000)
+}
+>>>>>>> 852755e (feat: enhance globe visualization with traffic arcs)
 
+const normalized = 5 / props.minutes
+const weightColor = scaleSequentialSqrt(interpolateYlOrRd).domain([0, highest.value * normalized * 15])
+function initGlobe() {
   globe = new Globe(globeEl.value)
     .width(size.value.width)
     .height(size.value.height)
     // .globeOffset([width.value > 768 ? -100 : 0, width.value > 768 ? 0 : 100])
-    .atmosphereColor('rgba(170, 170, 200, 1)')
+    .atmosphereColor('rgba(170, 170, 200, 0.8)')
     .globeMaterial(new MeshPhongMaterial({
       color: 'rgb(228, 228, 231)',
       transparent: false,
@@ -94,13 +132,11 @@ function initGlobe() {
     .hexPolygonAltitude(() => hexAltitude.value)
     .hexBinMerge(true)
     .hexBinPointWeight('count')
-    .hexPolygonColor(() => `rgba(120, 140, 110, ${Math.random() / 2 + 0.5})`)
-    .hexTopColor(d => weightColor(d.sumWeight))
-    .hexSideColor(d => weightColor(d.sumWeight))
+    .hexPolygonColor(() => `rgba(54, 211, 153, ${Math.random() / 1.5 + 0.5})`)
     .onGlobeReady(() => {
-      globe.pointOfView({ lat: 20, lng: -36, altitude: width.value > 768 ? 2 : 3 })
+      globe.pointOfView({ lat: currentLocation.value.latitude, lng: currentLocation.value.longitude, altitude: width.value > 768 ? 2 : 3 })
       globe.controls().autoRotate = true
-      globe.controls().autoRotateSpeed = 0.2
+      globe.controls().autoRotateSpeed = 0.3
     })
 
   globe.controls().addEventListener('end', debounce(() => {
@@ -113,6 +149,8 @@ function initGlobe() {
     if (nextAlt !== hexAltitude.value)
       hexAltitude.value = nextAlt
   }, 200))
+
+  globalTrafficEvent.on(trafficEvent)
 }
 
 function stopRotation() {
@@ -135,12 +173,27 @@ watch(width, () => {
 watch(locations, () => {
   if (globe) {
     globe.hexBinPointsData(locations.value)
+    globe.hexTopColor(d => weightColor(d.sumWeight))
+    globe.hexSideColor(d => weightColor(d.sumWeight))
   }
 })
 
 onMounted(async () => {
-  await Promise.all([getGlobeJSON(), getLiveLocations()])
+  await Promise.all([
+    getLiveLocations(),
+    getCurrentLocation(),
+    getGlobeJSON(),
+    getColosJSON(),
+  ])
   initGlobe()
+})
+
+onBeforeUnmount(() => {
+  globalTrafficEvent.off(trafficEvent)
+  if (globe) {
+    globe._destructor?.()
+    globe = null
+  }
 })
 </script>
 
