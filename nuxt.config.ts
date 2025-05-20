@@ -73,16 +73,25 @@ export default defineNuxtConfig({
 
   nitro: {
     experimental: {
-      // Enable Server API documentation within NuxtHub
       openAPI: true,
     },
-    publicAssets: [
-      {
-        baseURL: '/',
-        dir: 'public',
-        maxAge: 60 * 60 * 24 * 365, // 1 year
+    timing: true,
+    openAPI: {
+      production: 'runtime',
+      meta: {
+        title: 'Sink API',
+        description: 'A Simple / Speedy / Secure Link Shortener with Analytics, 100% run on Cloudflare.',
       },
-    ],
+      route: '/_docs/openapi.json',
+      ui: {
+        scalar: {
+          route: '/_docs/scalar',
+        },
+        swagger: {
+          route: '/_docs/swagger',
+        },
+      },
+    },
   },
 
   hub: {
