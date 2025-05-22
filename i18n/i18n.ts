@@ -12,6 +12,7 @@ const locales: LocaleObject[] = [
     file: 'zh-TW.json',
     name: '繁體中文',
     emoji: '🇹🇼',
+<<<<<<< HEAD
   },
   
   {
@@ -19,6 +20,8 @@ const locales: LocaleObject[] = [
     file: 'en-US.json',
     name: 'English',
     emoji: '🇺🇸',
+=======
+>>>>>>> 76e4022 (style: eslint)
   },
   {
 <<<<<<< HEAD
