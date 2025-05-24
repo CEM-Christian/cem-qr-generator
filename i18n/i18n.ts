@@ -35,8 +35,18 @@ const locales: LocaleObject[] = [
     file: 'vi-VN.json',
     name: 'Tiếng Việt',
     emoji: '🇻🇳',
+<<<<<<< HEAD
   }
 >>>>>>> 7594366 (feat: add Vietnamese translation)
+=======
+  },
+  {
+    code: 'de-DE',
+    file: 'de-DE.json',
+    name: 'Deutsch',
+    emoji: '🇩🇪',
+  },
+>>>>>>> 89ce335 (feat: add German translation)
 ]
 
 function buildLocales() {
