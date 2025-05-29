@@ -28,7 +28,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/icon-192.png',
+      href: '/cem-qr-generator-logo-128.png',
     },
   ],
 })

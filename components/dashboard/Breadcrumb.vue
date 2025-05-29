@@ -7,7 +7,7 @@ defineProps({
     required: true,
   },
 })
-const { title } = useAppConfig()
+const { title: siteTitle } = useAppConfig()
 </script>
 
 <template>
@@ -15,7 +15,7 @@ const { title } = useAppConfig()
     <BreadcrumbList>
       <BreadcrumbItem>
         <BreadcrumbLink href="/">
-          {{ title }}
+          {{ siteTitle }}
         </BreadcrumbLink>
       </BreadcrumbItem>
       <BreadcrumbSeparator />

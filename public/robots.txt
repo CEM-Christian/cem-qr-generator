@@ -1,2 +1,28 @@
 User-agent: *
 Disallow: /
+Noindex: /
+
+# Block Googlebot specifically
+User-agent: Googlebot
+Disallow: /
+Noindex: /
+
+# Block Google Image bot
+User-agent: Googlebot-Image
+Disallow: /
+
+# Block Google Mobile bot
+User-agent: Googlebot-Mobile
+Disallow: /
+
+# Additional common bots
+User-agent: Bingbot
+Disallow: /
+User-agent: Slurp
+Disallow: /
+User-agent: DuckDuckBot
+Disallow: /
+User-agent: Baiduspider
+Disallow: /
+User-agent: YandexBot
+Disallow: /

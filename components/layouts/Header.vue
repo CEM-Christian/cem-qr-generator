@@ -23,7 +23,7 @@ const { title, github } = useAppConfig()
               class="flex items-center justify-center w-8 h-8 rounded-full"
             >
               <img
-                src="/sink.png"
+                src="/cem.png"
                 :alt="title"
                 class="w-full h-full rounded-full"
               >
