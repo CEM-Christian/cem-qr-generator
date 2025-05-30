@@ -41,5 +41,24 @@ onMounted(() => {
       v-if="link.id"
       :link="link"
     />
+    <div v-if="link.id" class="space-y-4">
+      <h2 class="text-lg font-semibold">
+        UTM Parameters
+      </h2>
+      <ul class="list-disc pl-5">
+        <li v-if="link.utm_source">
+          Source: {{ link.utm_source }}
+        </li>
+        <li v-if="link.utm_medium">
+          Medium: {{ link.utm_medium }}
+        </li>
+        <li v-if="link.utm_campaign">
+          Campaign: {{ link.utm_campaign }}
+        </li>
+        <li v-if="link.utm_id">
+          ID: {{ link.utm_id }}
+        </li>
+      </ul>
+    </div>
   </main>
 </template>

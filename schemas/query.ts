@@ -20,6 +20,10 @@ export const QuerySchema = z.object({
   device: z.string().optional(),
   deviceType: z.string().optional(),
   limit: z.coerce.number().int().safe().default(listQueryLimit),
+  utm_source: z.string().optional(),
+  utm_medium: z.string().optional(),
+  utm_campaign: z.string().optional(),
+  utm_id: z.string().optional(),
 })
 
 // export const FilterSchema = QuerySchema.omit({ id: true, startAt: true, endAt: true, limit: true }).extend({
