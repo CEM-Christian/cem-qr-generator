@@ -1,13 +1,18 @@
+import { provider } from 'std-env'
+import { currentLocales } from './i18n/i18n'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-
   modules: [
     '@nuxthub/core',
     'shadcn-nuxt',
+    '@vueuse/motion/nuxt',
     '@nuxt/eslint',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
+    '@nuxtjs/i18n',
   ],
+
   devtools: { enabled: true },
 
   app: {
@@ -39,6 +44,7 @@ export default defineNuxtConfig({
     aiPrompt: `You are a URL shortening assistant, please shorten the URL provided by the user into a SLUG. The SLUG information must come from the URL itself, do not make any assumptions. A SLUG is human-readable and should not exceed three words and can be validated using regular expressions {slugRegex} . Only the best one is returned, the format must be JSON reference {"slug": "example-slug"}`,
     caseSensitive: false,
     listQueryLimit: 500,
+    disableBotAccessLog: false,
     public: {
       previewMode: '',
       slugDefaultLength: '6',
@@ -50,6 +56,7 @@ export default defineNuxtConfig({
       prerender: true,
     },
     '/dashboard/**': {
+      prerender: true,
       ssr: false,
     },
     '/dashboard': {
@@ -57,11 +64,20 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2024-07-08',
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  experimental: {
+    enforceModuleCompatibility: true,
+  },
+
+  compatibilityDate: {
+    cloudflare: '2025-05-08',
+  },
 
   nitro: {
     experimental: {
-      // Enable Server API documentation within NuxtHub
       openAPI: true,
     },
     publicAssets: [
@@ -71,6 +87,23 @@ export default defineNuxtConfig({
         maxAge: 60 * 60 * 24 * 365, // 1 year
       },
     ],
+    timing: true,
+    openAPI: {
+      production: 'runtime',
+      meta: {
+        title: 'Sink API',
+        description: 'A Simple / Speedy / Secure Link Shortener with Analytics, 100% run on Cloudflare.',
+      },
+      route: '/_docs/openapi.json',
+      ui: {
+        scalar: {
+          route: '/_docs/scalar',
+        },
+        swagger: {
+          route: '/_docs/swagger',
+        },
+      },
+    },
   },
 
   hub: {
@@ -80,6 +113,7 @@ export default defineNuxtConfig({
     cache: false,
     database: false,
     kv: true,
+    workers: provider !== 'cloudflare_pages',
   },
 
   eslint: {
@@ -87,5 +121,34 @@ export default defineNuxtConfig({
       stylistic: true,
       standalone: false,
     },
+  },
+
+  i18n: {
+    locales: currentLocales,
+    compilation: {
+      strictMessage: false,
+      escapeHtml: true,
+    },
+    lazy: true,
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'sink_i18n_redirected',
+      redirectOn: 'root',
+    },
+    baseUrl: '/',
+    defaultLocale: 'en-US',
+  },
+
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: './app/components/ui',
   },
 })
