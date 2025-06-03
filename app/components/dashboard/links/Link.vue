@@ -26,6 +26,10 @@ function getLinkHost(url) {
 const shortLink = computed(() => `${origin}/${props.link.slug}`)
 const linkIcon = computed(() => `https://unavatar.io/${getLinkHost(props.link.url)}?fallback=https://sink.cool/icon.png`)
 
+const hasUtmParams = computed(() => {
+  return !!(props.link.utm_source || props.link.utm_medium || props.link.utm_campaign || props.link.utm_id)
+})
+
 const { copy, copied } = useClipboard({ source: shortLink.value, copiedDuring: 400 })
 
 function updateLink(link, type) {
@@ -188,6 +192,32 @@ function copyLink() {
         </template>
         <Separator orientation="vertical" />
         <span class="truncate">{{ link.url }}</span>
+        <template v-if="hasUtmParams">
+          <Separator orientation="vertical" />
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger as-child>
+                <span class="inline-flex items-center leading-5 whitespace-nowrap text-blue-600">UTM</span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <div class="space-y-1">
+                  <p v-if="link.utm_source">
+                    <strong>Source:</strong> {{ link.utm_source }}
+                  </p>
+                  <p v-if="link.utm_medium">
+                    <strong>Medium:</strong> {{ link.utm_medium }}
+                  </p>
+                  <p v-if="link.utm_campaign">
+                    <strong>Campaign:</strong> {{ link.utm_campaign }}
+                  </p>
+                  <p v-if="link.utm_id">
+                    <strong>ID:</strong> {{ link.utm_id }}
+                  </p>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </template>
       </div>
     </NuxtLink>
   </Card>

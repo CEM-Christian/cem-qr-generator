@@ -1,11 +1,11 @@
 <script setup>
-import { DependencyType } from '@/components/ui/auto-form/interface'
 import { LinkSchema, nanoid } from '@@/schemas/link'
 import { toTypedSchema } from '@vee-validate/zod'
 import { Shuffle, Sparkles } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { toast } from 'vue-sonner'
 import { z } from 'zod'
+import { DependencyType } from '@/components/ui/auto-form/interface'
 
 const props = defineProps({
   link: {
@@ -25,11 +25,19 @@ const isEdit = !!props.link.id
 const EditLinkSchema = LinkSchema.pick({
   url: true,
   slug: true,
+  utm_source: true,
+  utm_medium: true,
+  utm_campaign: true,
+  utm_id: true,
 }).extend({
   optional: LinkSchema.omit({
     id: true,
     url: true,
     slug: true,
+    utm_source: true,
+    utm_medium: true,
+    utm_campaign: true,
+    utm_id: true,
     createdAt: true,
     updatedAt: true,
     title: true,
@@ -43,6 +51,26 @@ const EditLinkSchema = LinkSchema.pick({
 const fieldConfig = {
   slug: {
     disabled: isEdit,
+  },
+  utm_medium: {
+    label: 'UTM Medium',
+    description: 'The medium the user arrived from e.g. poster, flyer, email, social, e-guide, referral.',
+    options: ['poster', 'flyer', 'social', 'email', 'e-guide', 'referral'],
+  },
+  utm_source: {
+    label: 'UTM Source',
+    description: 'Where traffic is coming from e.g. Facebook, Instagram, Google, QR-Code, PDF, website.',
+    options: ['QR-Code', 'PDF', 'Google', 'website', 'Facebook', 'Instagram', 'Mailchimp'],
+  },
+  utm_campaign: {
+    label: 'UTM Campaign',
+    description: 'A product promotion or strategic campaign e.g. Excelencia-Live-25, Kindy-Open-Day, Principals-Tour',
+    options: ['Excelencia-Live', 'Kindy-Open-Day', 'Principals-Tour'],
+  },
+  utm_id: {
+    label: 'UTM ID',
+    description: 'Specific instance of an ads campaign (usually just copy-paste the campaign name)',
+    options: ['Excelencia-Live-07-25', 'Kindy-Open-Day-11-24', 'Principals-Tour-01-25'],
   },
   optional: {
     comment: {
@@ -65,6 +93,10 @@ const form = useForm({
   initialValues: {
     slug: link.value.slug,
     url: link.value.url,
+    utm_source: link.value.utm_source,
+    utm_medium: link.value.utm_medium,
+    utm_campaign: link.value.utm_campaign,
+    utm_id: link.value.utm_id,
     optional: {
       comment: link.value.comment,
     },
@@ -107,6 +139,10 @@ async function onSubmit(formData) {
   const link = {
     url: formData.url,
     slug: formData.slug,
+    utm_source: formData.utm_source,
+    utm_medium: formData.utm_medium,
+    utm_campaign: formData.utm_campaign,
+    utm_id: formData.utm_id,
     ...(formData.optional || []),
     expiration: formData.optional?.expiration ? date2unix(formData.optional?.expiration, 'end') : undefined,
   }
