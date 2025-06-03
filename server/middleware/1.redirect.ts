@@ -36,7 +36,23 @@ export default eventHandler(async (event) => {
       catch (error) {
         console.error('Failed write access log:', error)
       }
-      const target = redirectWithQuery ? withQuery(link.url, getQuery(event)) : link.url
+
+      // Build UTM parameters from the link
+      const utmParams: Record<string, string> = {}
+      if (link.utm_source)
+        utmParams.utm_source = link.utm_source
+      if (link.utm_medium)
+        utmParams.utm_medium = link.utm_medium
+      if (link.utm_campaign)
+        utmParams.utm_campaign = link.utm_campaign
+      if (link.utm_id)
+        utmParams.utm_id = link.utm_id
+
+      // Combine query parameters and UTM parameters
+      const queryParams = redirectWithQuery ? getQuery(event) : {}
+      const allParams = { ...queryParams, ...utmParams }
+
+      const target = Object.keys(allParams).length > 0 ? withQuery(link.url, allParams) : link.url
       return sendRedirect(event, target, +useRuntimeConfig(event).redirectStatusCode)
     }
   }

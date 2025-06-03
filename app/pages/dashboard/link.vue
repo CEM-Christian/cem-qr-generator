@@ -16,11 +16,15 @@ async function getLink() {
   link.value = data
 }
 
-function updateLink(link, type) {
+function updateLink(newLink, type) {
   if (type === 'delete') {
     navigateTo('/dashboard/links', {
       replace: true,
     })
+  }
+  else if (type === 'edit') {
+    // Update the local link object with the edited data
+    link.value = newLink
   }
 }
 

@@ -52,6 +52,10 @@ export default eventHandler(async (event) => {
         expiration,
         url: link.url,
         comment: link.comment,
+        utm_source: link.utm_source,
+        utm_medium: link.utm_medium,
+        utm_campaign: link.utm_campaign,
+        utm_id: link.utm_id,
       },
     })
     setResponseStatus(event, 201)

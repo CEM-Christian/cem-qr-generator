@@ -2,6 +2,10 @@ interface Link {
   slug: string
   url: string
   comment?: string
+  utm_source?: string
+  utm_medium?: string
+  utm_campaign?: string
+  utm_id?: string
 }
 
 export default eventHandler(async (event) => {
@@ -28,6 +32,10 @@ export default eventHandler(async (event) => {
                 slug: key.name.replace('link:', ''),
                 url: key.metadata.url,
                 comment: key.metadata.comment,
+                utm_source: key.metadata.utm_source,
+                utm_medium: key.metadata.utm_medium,
+                utm_campaign: key.metadata.utm_campaign,
+                utm_id: key.metadata.utm_id,
               })
             }
             else {
@@ -38,6 +46,10 @@ export default eventHandler(async (event) => {
                   slug: key.name.replace('link:', ''),
                   url: link.url,
                   comment: link.comment,
+                  utm_source: link.utm_source,
+                  utm_medium: link.utm_medium,
+                  utm_campaign: link.utm_campaign,
+                  utm_id: link.utm_id,
                 })
                 await KV.put(key.name, JSON.stringify(link), {
                   expiration: metadata?.expiration,
@@ -45,6 +57,10 @@ export default eventHandler(async (event) => {
                     ...metadata,
                     url: link.url,
                     comment: link.comment,
+                    utm_source: link.utm_source,
+                    utm_medium: link.utm_medium,
+                    utm_campaign: link.utm_campaign,
+                    utm_id: link.utm_id,
                   },
                 })
               }

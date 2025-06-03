@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTM URL Generator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--    <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.production.min.js"></script>-->
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            text-align: center;
+        }
+
+        #options-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .option-btn{
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            let step = 0;
+            const steps = [
+                {
+                    question: "Enter Base URL",
+                    explanation: "This is the destination URL. Example: https://www.smartplay.edu.au/careers/",
+                    options: [],
+                    tag: "base_url"
+                },
+                {
+                    question: "In what context is the URL being used?",
+                    explanation: "The source identifies where the traffic is coming from. eg:",
+                    options: ["QR-Code", "PDF-link", "email-Link", "website-link", "Facebook"],
+                    tag: "utm_source"
+                },
+                {
+                    question: "Define the 'medium' - what is the marketing medium?",
+                    explanation: "The medium describes how the user arrived at your site. eg:",
+                    options: ["Flyer", "A4-Poster", "A5-flyer", "Email", "Printed-advert", "Digital-Advert"],
+                    tag: "utm_medium"
+                },
+                {
+                    question: "Enter Campaign Name",
+                    explanation: "The campaign name helps differentiate different promotions, be specific. eg:",
+                    options: ["Excelencia-Live","Kindy-Open-Day","Year-7-Open-Day","Principal's-Tour","Campus-Tour"],
+                    tag: "utm_campaign"
+                },
+                {
+                    question: "Enter Campaign ID",
+                    explanation: "The campaign ID is a unique identifier for your campaign, probably the same as medium. eg:",
+                    options: ["Excelencia-Live","Kindy-Open-Day","Year-7-Open-Day","Principal's-Tour","Campus-Tour"],
+                    tag: "utm_id"
+                }
+            ];
+            const utmParams = {};
+
+            function updateStep() {
+                if (step >= steps.length) return; // Prevent errors if step goes out of range
+
+                if (steps[step].options.length > 0) {
+                    $("#input-label").text("Select one or enter a specific value:");
+                } else {
+                    $("#input-label").text("Enter value:");
+                }
+                $("#step-explanation").text(steps[step].explanation);
+                $("#input-field").val(utmParams[steps[step].tag] || "");
+
+                let optionsHtml = "";
+                // Clone the default options so we don't modify the original array.
+                let optionsArray = steps[step].options.slice();
+
+                // If we're on the utm_id step and a campaign value exists, add it if not already included.
+                if (steps[step].tag === "utm_id" && utmParams["utm_campaign"]) {
+                    if (!optionsArray.includes(utmParams["utm_campaign"])) {
+                        optionsArray.push(utmParams["utm_campaign"]);
+                    }
+                }
+
+                optionsArray.forEach(option => {
+                    optionsHtml += `<button class='mui-button option-btn' data-value='${option}'>${option}</button>`;
+                });
+                $("#options-container").html(optionsHtml);
+            }
+
+
+            $("#options-container").on("click", ".option-btn", function () {
+                $("#input-field").val($(this).data("value"));
+                $("#next-btn").trigger("click");
+            });
+
+            $("#next-btn").click(function () {
+                const inputValue = $("#input-field").val();
+                if (inputValue) {
+                    // Save using the tag instead of the question text
+                    utmParams[steps[step].tag] = inputValue;
+                    step++;
+                    if (step < steps.length) {
+                        updateStep();
+                    } else {
+                        const finalUrl = `${utmParams["base_url"]}?utm_source=${utmParams["utm_source"]}&utm_medium=${utmParams["utm_medium"]}&utm_campaign=${utmParams["utm_campaign"]}&utm_id=${utmParams["utm_id"]}`;
+                        $("#result").text(finalUrl);
+                        $("#wizard").hide();
+                        $("#output").show();
+                    }
+                }
+            });
+
+            $("#restart-btn").click(function () {
+                step = 0;
+                Object.keys(utmParams).forEach(key => delete utmParams[key]);
+                $("#wizard").show();
+                $("#output").hide();
+                updateStep();
+            });
+
+            $("#copy-btn").click(function () {
+                const urlText = $("#result").text();
+                navigator.clipboard.writeText(urlText).then(() => {
+                    alert("URL copied to clipboard!");
+                });
+            });
+
+            updateStep();
+        });
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="container" id="wizard">
+        <h2 id="step-label"></h2>
+        <p id="step-explanation"></p>
+        <div id="options-container"></div>
+        <div class="mui-textfield">
+            <label id="input-label">Enter value:</label>
+            <input type="text" id="input-field" class="mui-textfield-input" style="width: calc(100% - 20px); padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <button id="next-btn" class="mui-button" style="background-color: #1976d2; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; width: 100%;">Next</button>
+    </div>
+
+    <div class="container" id="output" style="display:none;">
+        <h2>Generated URL</h2>
+        <p id="result"></p>
+        <button id="copy-btn" class="mui-button" style="background-color: #4caf50; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; width: 100%; margin-bottom: 1rem;">Copy URL</button>
+        <button id="restart-btn" class="mui-button" style="background-color: #d32f2f; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; width: 100%;">Start Over</button>
+    </div>
+</div>
+</body>
+</html>
