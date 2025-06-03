@@ -1,5 +1,5 @@
 {
-  "name": "sink",
+  "name": "CEM QR Generator",
   "type": "module",
   "version": "0.2.0",
   "private": true,
