@@ -1,6 +1,7 @@
 <script setup>
 import { Download } from 'lucide-vue-next'
 import QRCodeStyling from 'qr-code-styling'
+import DownloadOptionsModal from '../../ui/DownloadOptionsModal.vue'
 
 const props = defineProps({
   data: {
@@ -69,6 +70,7 @@ const options = {
 
 const qrCode = new QRCodeStyling(options)
 const qrCodeEl = ref(null)
+const showDownloadModal = ref(false)
 
 function updateColor(newColor) {
   qrCode.update({
@@ -82,12 +84,42 @@ watch(color, (newColor) => {
   updateColor(newColor)
 })
 
-function downloadQRCode() {
+function downloadQRCode(downloadOptions = null) {
+  console.log(downloadOptions)
   const slug = props.data.split('/').pop()
-  qrCode.download({
-    extension: 'png',
-    name: `qr_${slug}`,
-  })
+
+  if (downloadOptions) {
+    // Use the selected options from the modal
+    const { format, resolution } = downloadOptions
+
+    // Set download options based on format
+    const downloadConfig = {
+      extension: format,
+      name: `qr_${slug}`,
+    }
+
+    // Update QR code dimensions for raster formats with timing delays
+    if (resolution && format !== 'svg') {
+      // First update dimensions
+      qrCode.update({
+        width: resolution,
+        height: resolution,
+      })
+    }
+    qrCode.download(downloadConfig)
+  }
+  else {
+    console.log('Fallback download triggered')
+    // Fallback to original behavior (should not be called anymore)
+    qrCode.download({
+      extension: 'png',
+      name: `qr_${slug}`,
+    })
+  }
+}
+
+function openDownloadModal() {
+  showDownloadModal.value = true
 }
 
 onMounted(() => {
@@ -120,11 +152,17 @@ onMounted(() => {
       <Button
         variant="outline"
         size="sm"
-        @click="downloadQRCode"
+        @click="openDownloadModal"
       >
         <Download class="w-4 h-4 mr-2" />
         {{ $t('links.download_qr_code') }}
       </Button>
     </div>
+
+    <!-- Download Options Modal -->
+    <DownloadOptionsModal
+      v-model:open="showDownloadModal"
+      @download="downloadQRCode"
+    />
   </div>
 </template>

@@ -169,6 +169,22 @@
     "no_more": "沒有更多連結",
     "load_failed": "加載連接失敗,",
     "download_qr_code": "下載QR code",
+    "download_options": {
+      "title": "下載QR code",
+      "description": "選擇您偏好的格式和設定來下載QR code。",
+      "format_label": "格式",
+      "select_format": "選擇格式",
+      "resolution_label": "解析度",
+      "select_resolution": "選擇解析度",
+      "estimated_size": "預估檔案大小",
+      "format": "格式",
+      "download_button": "下載",
+      "vector_format_note": "向量格式不適用解析度設定",
+      "formats": {
+        "png_description": "高品質，無損壓縮，支援透明度",
+        "svg_description": "向量格式，可縮放，適合印刷和網頁"
+      }
+    },
     "sort": {
       "newest": "最新",
       "oldest": "最舊",

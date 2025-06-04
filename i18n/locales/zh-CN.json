@@ -169,6 +169,22 @@
     "no_more": "没有更多链接",
     "load_failed": "加载链接失败,",
     "download_qr_code": "下载二维码",
+    "download_options": {
+      "title": "下载二维码",
+      "description": "选择您偏好的格式和设置来下载二维码。",
+      "format_label": "格式",
+      "select_format": "选择格式",
+      "resolution_label": "分辨率",
+      "select_resolution": "选择分辨率",
+      "estimated_size": "预估文件大小",
+      "format": "格式",
+      "download_button": "下载",
+      "vector_format_note": "矢量格式不适用分辨率设置",
+      "formats": {
+        "png_description": "高质量，无损压缩，支持透明度",
+        "svg_description": "矢量格式，可缩放，适合打印和网页"
+      }
+    },
     "sort": {
       "newest": "最新",
       "oldest": "最旧",

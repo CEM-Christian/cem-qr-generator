@@ -169,6 +169,22 @@
     "no_more": "Không còn liên kết nào",
     "load_failed": "Tải liên kết thất bại,",
     "download_qr_code": "Tải mã QR",
+    "download_options": {
+      "title": "Tải mã QR",
+      "description": "Chọn định dạng và cài đặt ưa thích của bạn để tải mã QR.",
+      "format_label": "Định dạng",
+      "select_format": "Chọn định dạng",
+      "resolution_label": "Độ phân giải",
+      "select_resolution": "Chọn độ phân giải",
+      "estimated_size": "Kích thước tệp ước tính",
+      "format": "Định dạng",
+      "download_button": "Tải xuống",
+      "vector_format_note": "Cài đặt độ phân giải không áp dụng cho định dạng vector",
+      "formats": {
+        "png_description": "Chất lượng cao, nén không mất dữ liệu, hỗ trợ trong suốt",
+        "svg_description": "Định dạng vector, có thể mở rộng, hoàn hảo cho in ấn và web"
+      }
+    },
     "sort": {
       "newest": "Mới nhất trước",
       "oldest": "Cũ nhất trước",

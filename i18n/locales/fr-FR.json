@@ -169,6 +169,22 @@
     "no_more": "Plus de liens",
     "load_failed": "Échec du chargement des liens,",
     "download_qr_code": "Télécharger le code QR",
+    "download_options": {
+      "title": "Télécharger le code QR",
+      "description": "Choisissez votre format et vos paramètres préférés pour télécharger le code QR.",
+      "format_label": "Format",
+      "select_format": "Sélectionner le format",
+      "resolution_label": "Résolution",
+      "select_resolution": "Sélectionner la résolution",
+      "estimated_size": "Taille de fichier estimée",
+      "format": "Format",
+      "download_button": "Télécharger",
+      "vector_format_note": "Le paramètre de résolution ne s'applique pas aux formats vectoriels",
+      "formats": {
+        "png_description": "Haute qualité, compression sans perte, supporte la transparence",
+        "svg_description": "Format vectoriel, redimensionnable, parfait pour l'impression et le web"
+      }
+    },
     "sort": {
       "newest": "Les plus récents",
       "oldest": "Les plus anciens",
