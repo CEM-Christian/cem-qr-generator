@@ -28,6 +28,7 @@ export default eventHandler(async (event) => {
     metadata: {
       expiration,
       url: link.url,
+      name: link.name,
       comment: link.comment,
       utm_source: link.utm_source,
       utm_medium: link.utm_medium,

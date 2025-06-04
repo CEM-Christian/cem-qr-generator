@@ -151,6 +151,9 @@
     }
   },
   "links": {
+    "name": "Tên",
+    "name_description": "Tên thân thiện cho liên kết của bạn",
+    "name_placeholder": "Nhập tên liên kết...",
     "create": "Tạo liên kết",
     "edit": "Chỉnh sửa liên kết",
     "delete_confirm_title": "Bạn có chắc chắn không?",
@@ -188,8 +191,10 @@
     "sort": {
       "newest": "Mới nhất trước",
       "oldest": "Cũ nhất trước",
-      "az": "Slug A-Z",
-      "za": "Slug Z-A",
+      "name_az": "Tên A-Z",
+      "name_za": "Tên Z-A",
+      "slug_az": "Slug A-Z",
+      "slug_za": "Slug Z-A",
       "tip": "Trải nghiệm: Chỉ áp dụng với các liên kết đã tải"
     }
   }

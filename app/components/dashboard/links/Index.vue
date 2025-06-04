@@ -17,9 +17,21 @@ const displayedLinks = computed(() => {
       return sorted.sort((a, b) => b.createdAt - a.createdAt)
     case 'oldest':
       return sorted.sort((a, b) => a.createdAt - b.createdAt)
-    case 'az':
+    case 'name-az':
+      return sorted.sort((a, b) => {
+        const nameA = a.name || a.slug // Fallback to slug if name is not available
+        const nameB = b.name || b.slug
+        return nameA.localeCompare(nameB)
+      })
+    case 'name-za':
+      return sorted.sort((a, b) => {
+        const nameA = a.name || a.slug
+        const nameB = b.name || b.slug
+        return nameB.localeCompare(nameA)
+      })
+    case 'slug-az':
       return sorted.sort((a, b) => a.slug.localeCompare(b.slug))
-    case 'za':
+    case 'slug-za':
       return sorted.sort((a, b) => b.slug.localeCompare(a.slug))
     default:
       return sorted

@@ -76,7 +76,7 @@ onBeforeMount(() => {
                   selectedLinks.includes(link.slug) ? 'opacity-100' : 'opacity-0',
                 )"
               />
-              {{ link.slug }}
+              {{ link.name || link.slug }}
             </CommandItem>
           </VList>
         </CommandGroup>

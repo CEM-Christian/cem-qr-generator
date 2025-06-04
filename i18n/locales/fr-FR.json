@@ -151,6 +151,9 @@
     }
   },
   "links": {
+    "name": "Nom",
+    "name_description": "Un nom convivial pour votre lien",
+    "name_placeholder": "Entrez le nom du lien...",
     "create": "Créer un lien",
     "edit": "Modifier le lien",
     "delete_confirm_title": "Êtes-vous absolument sûr ?",
@@ -188,8 +191,10 @@
     "sort": {
       "newest": "Les plus récents",
       "oldest": "Les plus anciens",
-      "az": "Slug A-Z",
-      "za": "Slug Z-A",
+      "name_az": "Nom A-Z",
+      "name_za": "Nom Z-A",
+      "slug_az": "Slug A-Z",
+      "slug_za": "Slug Z-A",
       "tip": "Essai : uniquement pour les liens chargés"
     }
   }

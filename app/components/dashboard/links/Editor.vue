@@ -23,6 +23,7 @@ const dialogOpen = ref(false)
 const isEdit = !!props.link.id
 
 const EditLinkSchema = LinkSchema.pick({
+  name: true,
   url: true,
   slug: true,
   utm_source: true,
@@ -32,6 +33,7 @@ const EditLinkSchema = LinkSchema.pick({
 }).extend({
   optional: LinkSchema.omit({
     id: true,
+    name: true,
     url: true,
     slug: true,
     utm_source: true,
@@ -48,7 +50,14 @@ const EditLinkSchema = LinkSchema.pick({
   }).optional(),
 })
 
-const fieldConfig = {
+const fieldConfig = computed(() => ({
+  name: {
+    label: t('links.name'),
+    description: t('links.name_description'),
+    inputProps: {
+      placeholder: t('links.name_placeholder'),
+    },
+  },
   slug: {
     disabled: isEdit,
   },
@@ -77,7 +86,7 @@ const fieldConfig = {
       component: 'textarea',
     },
   },
-}
+}))
 
 const dependencies = [
   {
@@ -91,6 +100,7 @@ const dependencies = [
 const form = useForm({
   validationSchema: toTypedSchema(EditLinkSchema),
   initialValues: {
+    name: link.value.name,
     slug: link.value.slug,
     url: link.value.url,
     utm_source: link.value.utm_source,
@@ -137,6 +147,7 @@ onMounted(() => {
 
 async function onSubmit(formData) {
   const link = {
+    name: formData.name,
     url: formData.url,
     slug: formData.slug,
     utm_source: formData.utm_source,

@@ -151,6 +151,9 @@
     }
   },
   "links": {
+    "name": "Name",
+    "name_description": "Ein freundlicher Name für Ihren Link",
+    "name_placeholder": "Link-Namen eingeben...",
     "create": "Link erstellen",
     "edit": "Link bearbeiten",
     "delete_confirm_title": "Bist du dir absolut sicher?",
@@ -188,8 +191,10 @@
     "sort": {
       "newest": "Neueste zuerst",
       "oldest": "Älteste zuerst",
-      "az": "Slug A-Z",
-      "za": "Slug Z-A",
+      "name_az": "Name A-Z",
+      "name_za": "Name Z-A",
+      "slug_az": "Slug A-Z",
+      "slug_za": "Slug Z-A",
       "tip": "Hinweis: Nur für geladene Links"
     }
   }

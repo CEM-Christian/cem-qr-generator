@@ -151,6 +151,9 @@
     }
   },
   "links": {
+    "name": "名稱",
+    "name_description": "為您的連結設置一個友好的名稱",
+    "name_placeholder": "輸入連結名稱...",
     "create": "創建連結",
     "edit": "編輯連結",
     "delete_confirm_title": "確定要刪除嗎？",
@@ -188,8 +191,10 @@
     "sort": {
       "newest": "最新",
       "oldest": "最舊",
-      "az": "短連結(A-Z)",
-      "za": "短連結(Z-A)",
+      "name_az": "名稱(A-Z)",
+      "name_za": "名稱(Z-A)",
+      "slug_az": "短連結(A-Z)",
+      "slug_za": "短連結(Z-A)",
       "tip": "體驗功能: 僅對已經加載的連結有效"
     }
   }

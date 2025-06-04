@@ -17,7 +17,7 @@ const links = ref([])
 
 const { results: filteredLinks } = useFuse(searchTerm, links, {
   fuseOptions: {
-    keys: ['slug', 'url', 'comment'],
+    keys: ['name', 'slug', 'url', 'comment'],
   },
   resultLimit: 20,
 })
@@ -78,10 +78,10 @@ onMounted(() => {
             <div class="flex gap-1 w-full">
               <div class="inline-flex overflow-hidden flex-1 gap-1 items-center">
                 <div class="text-sm font-medium">
-                  {{ link.item?.slug }}
+                  {{ link.item?.name || link.item?.slug }}
                 </div>
                 <div class="flex-1 text-xs truncate text-muted-foreground">
-                  ({{ link.item?.url }})
+                  ({{ link.item?.name ? `${link.item?.slug} - ${link.item?.url}` : link.item?.url }})
                 </div>
               </div>
               <Badge v-if="link.item?.comment" variant="secondary">

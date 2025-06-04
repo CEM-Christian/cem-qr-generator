@@ -151,6 +151,9 @@
     }
   },
   "links": {
+    "name": "名称",
+    "name_description": "为您的链接设置一个友好的名称",
+    "name_placeholder": "输入链接名称...",
     "create": "创建链接",
     "edit": "编辑链接",
     "delete_confirm_title": "确定要删除吗？",
@@ -188,8 +191,10 @@
     "sort": {
       "newest": "最新",
       "oldest": "最旧",
-      "az": "短链(A-Z)",
-      "za": "短链(Z-A)",
+      "name_az": "名称(A-Z)",
+      "name_za": "名称(Z-A)",
+      "slug_az": "短链(A-Z)",
+      "slug_za": "短链(Z-A)",
       "tip": "体验功能: 仅对已经加载的链接有效"
     }
   }

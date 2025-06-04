@@ -1,6 +1,7 @@
 interface Link {
   slug: string
   url: string
+  name?: string
   comment?: string
   utm_source?: string
   utm_medium?: string
@@ -31,6 +32,7 @@ export default eventHandler(async (event) => {
               list.push({
                 slug: key.name.replace('link:', ''),
                 url: key.metadata.url,
+                name: key.metadata.name,
                 comment: key.metadata.comment,
                 utm_source: key.metadata.utm_source,
                 utm_medium: key.metadata.utm_medium,
@@ -45,6 +47,7 @@ export default eventHandler(async (event) => {
                 list.push({
                   slug: key.name.replace('link:', ''),
                   url: link.url,
+                  name: link.name,
                   comment: link.comment,
                   utm_source: link.utm_source,
                   utm_medium: link.utm_medium,
@@ -56,6 +59,7 @@ export default eventHandler(async (event) => {
                   metadata: {
                     ...metadata,
                     url: link.url,
+                    name: link.name,
                     comment: link.comment,
                     utm_source: link.utm_source,
                     utm_medium: link.utm_medium,

@@ -68,7 +68,7 @@ function copyLink() {
         <div class="flex-1 overflow-hidden">
           <div class="flex items-center">
             <div class="font-bold leading-5 truncate text-md">
-              {{ host }}/{{ link.slug }}
+              {{ link.name || `${host}/${link.slug}` }}
             </div>
 
             <CopyCheck
@@ -87,12 +87,12 @@ function copyLink() {
             <Tooltip>
               <TooltipTrigger as-child>
                 <p class="text-sm truncate">
-                  {{ link.comment || link.title || link.description }}
+                  {{ link.name ? `${host}/${link.slug}` : (link.comment || link.title || link.description) }}
                 </p>
               </TooltipTrigger>
               <TooltipContent>
                 <p class="max-w-[90svw] break-all">
-                  {{ link.comment || link.title || link.description }}
+                  {{ link.name ? `${host}/${link.slug}` : (link.comment || link.title || link.description) }}
                 </p>
               </TooltipContent>
             </Tooltip>
