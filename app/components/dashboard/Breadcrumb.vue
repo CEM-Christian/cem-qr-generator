@@ -7,7 +7,7 @@ defineProps({
     required: true,
   },
 })
-const { appTitle } = useAppConfig()
+const { title: appTitle } = useAppConfig()
 </script>
 
 <template>
