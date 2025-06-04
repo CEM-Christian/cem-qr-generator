@@ -27,7 +27,7 @@
   ],
   "kv_namespaces": [
     {
-      "binding": "QR_GENERATOR_NAMESPACE",
+      "binding": "KV",
       "id": "87c1faace5a84dd0a5ae97f2e32be21f" // id for QR_GENERATOR_NAMESPACE (Change this to your KV namespace ID)
     }
   ]
