@@ -19,9 +19,9 @@
   "ai": {
     "binding": "AI"
   },
-  "analytics_engine_datasets": [
+  "analytics_engine_datasets": [ 
     {
-      "binding": "ANALYTICS",
+      "binding": "WAE",
       "dataset": "qr_generator"
     }
   ],
