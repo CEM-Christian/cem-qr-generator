@@ -11,7 +11,8 @@
     "edit": "編輯",
     "delete": "刪除",
     "delete_success": "刪除成功！",
-    "search": "搜尋"
+    "search": "搜尋",
+    "download": "下載"
   },
   "theme": {
     "toggle": "切換主题",
@@ -185,6 +186,7 @@
       "vector_format_note": "向量格式不適用解析度設定",
       "formats": {
         "png_description": "高品質，無損壓縮，支援透明度",
+        "jpeg_description": "良好品質，檔案更小，適合照片",
         "svg_description": "向量格式，可縮放，適合印刷和網頁"
       }
     },
@@ -197,5 +199,70 @@
       "slug_za": "短連結(Z-A)",
       "tip": "體驗功能: 僅對已經加載的連結有效"
     }
+  },
+  "qr_style_editor": {
+    "title": "編輯QR樣式",
+    "description": "自定義您的QR碼外觀",
+    "sections": {
+      "dots": "點",
+      "background": "背景",
+      "corner_squares": "角落方塊",
+      "corner_dots": "角落點",
+      "image": "圖片",
+      "export": "匯出"
+    },
+    "dots": {
+      "color": "點顏色",
+      "type": "點類型",
+      "round_size": "圓形大小"
+    },
+    "background": {
+      "color": "背景顏色"
+    },
+    "corner_squares": {
+      "color": "角落方塊顏色",
+      "type": "角落方塊類型"
+    },
+    "corner_dots": {
+      "color": "角落點顏色",
+      "type": "角落點類型"
+    },
+    "image": {
+      "hide_background_dots": "隱藏背景點",
+      "size": "圖片大小",
+      "margin": "邊距"
+    },
+    "export": {
+      "format": "格式",
+      "resolution": "解析度"
+    },
+    "types": {
+      "square": "方形",
+      "dots": "點",
+      "rounded": "圓角",
+      "extra_rounded": "加圓角",
+      "classy": "優雅",
+      "classy_rounded": "優雅圓角",
+      "dot": "點"
+    },
+    "formats": {
+      "png": "PNG",
+      "svg": "SVG"
+    },
+    "resolutions": {
+      "256": "256x256",
+      "512": "512x512",
+      "1024": "1024x1024",
+      "2048": "2048x2048"
+    },
+    "actions": {
+      "save": "保存",
+      "save_and_download": "保存並下載",
+      "reset": "重置為預設",
+      "preview": "預覽"
+    },
+    "save_success": "QR樣式保存成功！",
+    "save_error": "無法保存QR樣式",
+    "reset_success": "已重置為預設值"
   }
 }

@@ -1,7 +1,8 @@
 <script setup>
-import { Download } from 'lucide-vue-next'
+import { Download, Edit3 } from 'lucide-vue-next'
 import QRCodeStyling from 'qr-code-styling'
-// import DownloadOptionsModal from '../../ui/DownloadOptionsModal.vue'
+import { DownloadOptionsModal } from '../../ui/download-options-modal'
+import QRStyleEditor from '../../ui/qr-style-editor/QRStyleEditor.vue'
 
 const props = defineProps({
   data: {
@@ -12,17 +13,42 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  link: {
+    type: Object,
+    default: () => ({}),
+  },
 })
-const color = ref('#000000')
-const options = {
+
+const emit = defineEmits(['update:link'])
+
+// Default QR style options based on current implementation
+const defaultOptions = {
+  dotsOptions: { type: 'square', color: '#000000', gradient: null },
+  backgroundOptions: { color: '#ffffff', gradient: null },
+  cornersSquareOptions: { type: 'square', color: '#000000' },
+  cornersDotOptions: { type: 'square', color: '#000000' },
+  imageOptions: { hideBackgroundDots: true, imageSize: 0.4, margin: 2 },
+}
+
+// Get current style options from link or use defaults
+const currentStyleOptions = computed(() => {
+  return props.link?.qr_style_options || defaultOptions
+})
+
+const options = computed(() => ({
   width: 256,
   height: 256,
   data: props.data,
   margin: 10,
   qrOptions: { typeNumber: '0', mode: 'Byte', errorCorrectionLevel: 'Q' },
-  imageOptions: { hideBackgroundDots: true, imageSize: 0.4, margin: 2 },
-  dotsOptions: { type: 'square', color: '#000000', gradient: null },
-  backgroundOptions: { color: '#ffffff', gradient: null },
+  imageOptions: {
+    ...currentStyleOptions.value.imageOptions,
+    crossOrigin: 'anonymous',
+  },
+  dotsOptions: currentStyleOptions.value.dotsOptions,
+  backgroundOptions: currentStyleOptions.value.backgroundOptions,
+  cornersSquareOptions: currentStyleOptions.value.cornersSquareOptions,
+  cornersDotOptions: currentStyleOptions.value.cornersDotOptions,
   image: props.image,
   dotsOptionsHelper: {
     colorType: { single: true, gradient: false },
@@ -34,7 +60,6 @@ const options = {
       rotation: '0',
     },
   },
-  cornersSquareOptions: { type: 'square', color: '#000000' },
   cornersSquareOptionsHelper: {
     colorType: { single: true, gradient: false },
     gradient: {
@@ -45,7 +70,6 @@ const options = {
       rotation: '0',
     },
   },
-  cornersDotOptions: { type: 'square', color: '#000000' },
   cornersDotOptionsHelper: {
     colorType: { single: true, gradient: false },
     gradient: {
@@ -66,60 +90,74 @@ const options = {
       rotation: '0',
     },
   },
-}
+}))
 
-const qrCode = new QRCodeStyling(options)
+const qrCode = new QRCodeStyling(options.value)
 const qrCodeEl = ref(null)
+const showStyleEditor = ref(false)
 const showDownloadModal = ref(false)
 
-function updateColor(newColor) {
-  qrCode.update({
-    dotsOptions: { color: newColor },
-    cornersSquareOptions: { color: newColor },
-    cornersDotOptions: { color: newColor },
-  })
-}
-
-watch(color, (newColor) => {
-  updateColor(newColor)
-})
-
-function downloadQRCode(downloadOptions = null) {
-  console.log(downloadOptions)
-  const slug = props.data.split('/').pop()
-
-  if (downloadOptions) {
-    // Use the selected options from the modal
-    const { format, resolution } = downloadOptions
-
-    // Set download options based on format
-    const downloadConfig = {
-      extension: format,
-      name: `qr_${slug}`,
-    }
-
-    // Update QR code dimensions for raster formats with timing delays
-    if (resolution && format !== 'svg') {
-      // First update dimensions
-      qrCode.update({
-        width: resolution,
-        height: resolution,
-      })
-    }
-    qrCode.download(downloadConfig)
+// Watch for changes in style options and update QR code
+watch(() => currentStyleOptions.value, (newOptions) => {
+  const updatedOptions = {
+    dotsOptions: newOptions.dotsOptions,
+    backgroundOptions: newOptions.backgroundOptions,
+    cornersSquareOptions: newOptions.cornersSquareOptions,
+    cornersDotOptions: newOptions.cornersDotOptions,
+    imageOptions: {
+      ...newOptions.imageOptions,
+      crossOrigin: 'anonymous',
+    },
   }
-  else {
-    console.log('Fallback download triggered')
-    // Fallback to original behavior (should not be called anymore)
-    qrCode.download({
-      extension: 'png',
-      name: `qr_${slug}`,
-    })
-  }
-}
+  qrCode.update(updatedOptions)
+}, { deep: true })
 
-function openDownloadModal() {
+function handleDirectDownload() {
   showDownloadModal.value = true
+}
+
+function handleDownloadConfirm(downloadOptions) {
+  try {
+    // Create temporary QR code instance with download-specific settings
+    const downloadQrOptions = {
+      ...options.value,
+      width: downloadOptions.resolution || 256,
+      height: downloadOptions.resolution || 256,
+    }
+
+    const tempQrCode = new QRCodeStyling(downloadQrOptions)
+
+    // Generate filename with resolution
+    const slug = props.data.split('/').pop()
+    const resolution = downloadOptions.resolution ? `_${downloadOptions.resolution}` : ''
+    const filename = `qr_${slug}${resolution}`
+
+    // Download with specified format
+    tempQrCode.download({
+      extension: downloadOptions.format,
+      name: filename,
+    })
+
+    // Clean up temporary instance
+    // Note: QRCodeStyling doesn't require explicit cleanup, but we can null the reference
+    // tempQrCode = null would go here if needed
+  }
+  catch (error) {
+    console.error('Failed to download QR code:', error)
+  }
+}
+
+function handleOpenStyleEditor() {
+  showStyleEditor.value = true
+}
+
+function handleStyleSave(newStyleOptions) {
+  // Update the link object with new style options and emit to parent
+  const updatedLink = {
+    ...props.link,
+    qr_style_options: newStyleOptions,
+  }
+  emit('update:link', updatedLink, 'edit')
 }
 
 onMounted(() => {
@@ -134,35 +172,42 @@ onMounted(() => {
       :data-text="data"
       class="bg-white p-1 rounded-lg"
     />
-    <div class="flex items-center gap-4">
-      <div class="relative flex items-center">
-        <div
-          class="w-8 h-8 rounded-full border border-gray-300 dark:border-gray-600 cursor-pointer overflow-hidden"
-          :style="{ backgroundColor: color }"
-          title="Change QR code color"
-        >
-          <input
-            v-model="color"
-            type="color"
-            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            title="Change QR code color"
-          >
-        </div>
-      </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center gap-2">
       <Button
         variant="outline"
         size="sm"
-        @click="openDownloadModal"
+        @click="handleDirectDownload"
       >
         <Download class="w-4 h-4 mr-2" />
-        {{ $t('links.download_qr_code') }}
+        {{ $t('common.download') }}
+      </Button>
+
+      <Button
+        variant="outline"
+        size="sm"
+        @click="handleOpenStyleEditor"
+      >
+        <Edit3 class="w-4 h-4 mr-2" />
+        {{ $t('qr_style_editor.edit_style') }}
       </Button>
     </div>
+
+    <!-- QR Style Editor Modal -->
+    <QRStyleEditor
+      v-model:open="showStyleEditor"
+      :data="data"
+      :image="image"
+      :initial-options="currentStyleOptions"
+      :link="link"
+      @save="handleStyleSave"
+    />
 
     <!-- Download Options Modal -->
     <DownloadOptionsModal
       v-model:open="showDownloadModal"
-      @download="downloadQRCode"
+      @download="handleDownloadConfirm"
     />
   </div>
 </template>

@@ -119,6 +119,8 @@ function copyLink() {
             <QRCode
               :data="shortLink"
               :image="linkIcon"
+              :link="link"
+              @update:link="updateLink"
             />
           </PopoverContent>
         </Popover>

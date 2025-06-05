@@ -11,7 +11,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "delete_success": "Delete successful!",
-    "search": "Search"
+    "search": "Search",
+    "download": "Download"
   },
   "theme": {
     "toggle": "Toggle theme",
@@ -185,6 +186,7 @@
       "vector_format_note": "Resolution setting is not applicable for vector formats",
       "formats": {
         "png_description": "High quality, lossless compression, supports transparency",
+        "jpeg_description": "Good quality, smaller file size, perfect for photos",
         "svg_description": "Vector format, scalable, perfect for print and web"
       }
     },
@@ -197,5 +199,61 @@
       "slug_za": "Slug Z-A",
       "tip": "Experience: Only for loaded links"
     }
+  },
+  "qr_style_editor": {
+    "title": "QR Code Style Editor",
+    "description": "Customize the appearance of your QR code with advanced styling options.",
+    "preview": "Preview",
+    "sections": {
+      "dots": "Dots Styling",
+      "background": "Background",
+      "corner_squares": "Corner Squares",
+      "corner_dots": "Corner Dots",
+      "image": "Image Settings",
+      "export": "Export Options"
+    },
+    "dots": {
+      "color": "Color",
+      "type": "Type",
+      "round_size": "Round Size"
+    },
+    "background": {
+      "color": "Color"
+    },
+    "corner_squares": {
+      "color": "Color",
+      "type": "Type"
+    },
+    "corner_dots": {
+      "color": "Color",
+      "type": "Type"
+    },
+    "image": {
+      "hide_background_dots": "Hide Background Dots",
+      "size": "Image Size",
+      "margin": "Margin"
+    },
+    "export": {
+      "format": "Format",
+      "resolution": "Resolution"
+    },
+    "types": {
+      "square": "Square",
+      "rounded": "Rounded",
+      "dots": "Dots",
+      "classy": "Classy",
+      "classy_rounded": "Classy Rounded",
+      "extra_rounded": "Extra Rounded",
+      "dot": "Dot"
+    },
+    "reset": "Reset to Defaults",
+    "save": "Save",
+    "save_and_download": "Save & Download",
+    "reset_success": "QR code style reset to defaults",
+    "save_success": "QR code style saved successfully",
+    "save_error": "Failed to save QR code style",
+    "download_success": "QR code downloaded successfully",
+    "download_error": "Failed to download QR code",
+    "edit_style": "Edit Style"
   }
 }

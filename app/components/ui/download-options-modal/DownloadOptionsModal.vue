@@ -44,6 +44,12 @@ const formatOptions = [
     isVector: false,
   },
   {
+    value: 'jpeg',
+    label: 'JPEG',
+    description: t('links.download_options.formats.jpeg_description'),
+    isVector: false,
+  },
+  {
     value: 'svg',
     label: 'SVG',
     description: t('links.download_options.formats.svg_description'),
@@ -75,6 +81,8 @@ const estimatedFileSize = computed(() => {
   switch (selectedFormat.value) {
     case 'png':
       return `~${Math.round(baseSize * 5)}KB`
+    case 'jpeg':
+      return `~${Math.round(baseSize * 3)}KB`
     case 'svg':
       return '~2-5KB'
     default:

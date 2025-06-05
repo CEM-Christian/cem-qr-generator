@@ -11,7 +11,8 @@
     "edit": "Chỉnh sửa",
     "delete": "Xóa",
     "delete_success": "Xóa thành công!",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "download": "Tải xuống"
   },
   "theme": {
     "toggle": "Chuyển đổi giao diện",
@@ -185,6 +186,7 @@
       "vector_format_note": "Cài đặt độ phân giải không áp dụng cho định dạng vector",
       "formats": {
         "png_description": "Chất lượng cao, nén không mất dữ liệu, hỗ trợ trong suốt",
+        "jpeg_description": "Chất lượng tốt, kích thước file nhỏ hơn, hoàn hảo cho ảnh",
         "svg_description": "Định dạng vector, có thể mở rộng, hoàn hảo cho in ấn và web"
       }
     },
@@ -197,5 +199,70 @@
       "slug_za": "Slug Z-A",
       "tip": "Trải nghiệm: Chỉ áp dụng với các liên kết đã tải"
     }
+  },
+  "qr_style_editor": {
+    "title": "Chỉnh sửa kiểu QR",
+    "description": "Tùy chỉnh giao diện mã QR của bạn",
+    "sections": {
+      "dots": "Chấm",
+      "background": "Nền",
+      "corner_squares": "Góc vuông",
+      "corner_dots": "Chấm góc",
+      "image": "Hình ảnh",
+      "export": "Xuất"
+    },
+    "dots": {
+      "color": "Màu chấm",
+      "type": "Kiểu chấm",
+      "round_size": "Kích thước tròn"
+    },
+    "background": {
+      "color": "Màu nền"
+    },
+    "corner_squares": {
+      "color": "Màu góc vuông",
+      "type": "Kiểu góc vuông"
+    },
+    "corner_dots": {
+      "color": "Màu chấm góc",
+      "type": "Kiểu chấm góc"
+    },
+    "image": {
+      "hide_background_dots": "Ẩn chấm nền",
+      "size": "Kích thước hình ảnh",
+      "margin": "Lề"
+    },
+    "export": {
+      "format": "Định dạng",
+      "resolution": "Độ phân giải"
+    },
+    "types": {
+      "square": "Vuông",
+      "dots": "Chấm",
+      "rounded": "Bo tròn",
+      "extra_rounded": "Bo tròn thêm",
+      "classy": "Thanh lịch",
+      "classy_rounded": "Thanh lịch bo tròn",
+      "dot": "Chấm"
+    },
+    "formats": {
+      "png": "PNG",
+      "svg": "SVG"
+    },
+    "resolutions": {
+      "256": "256x256",
+      "512": "512x512",
+      "1024": "1024x1024",
+      "2048": "2048x2048"
+    },
+    "actions": {
+      "save": "Lưu",
+      "save_and_download": "Lưu & Tải xuống",
+      "reset": "Đặt lại mặc định",
+      "preview": "Xem trước"
+    },
+    "save_success": "Đã lưu kiểu QR thành công!",
+    "save_error": "Không thể lưu kiểu QR",
+    "reset_success": "Đã đặt lại thành mặc định"
   }
 }

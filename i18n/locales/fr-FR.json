@@ -185,6 +185,7 @@
       "vector_format_note": "Le paramètre de résolution ne s'applique pas aux formats vectoriels",
       "formats": {
         "png_description": "Haute qualité, compression sans perte, supporte la transparence",
+        "jpeg_description": "Bonne qualité, taille de fichier plus petite, parfait pour les photos",
         "svg_description": "Format vectoriel, redimensionnable, parfait pour l'impression et le web"
       }
     },
@@ -196,6 +197,62 @@
       "slug_az": "Slug A-Z",
       "slug_za": "Slug Z-A",
       "tip": "Essai : uniquement pour les liens chargés"
+    }
+  },
+  "qr_style_editor": {
+    "title": "Éditer le style du QR Code",
+    "description": "Personnalisez l'apparence de votre QR Code avec des options de style avancées.",
+    "preview": "Aperçu",
+    "edit_style": "Éditer le style",
+    "reset": "Réinitialiser",
+    "save": "Enregistrer",
+    "save_and_download": "Enregistrer et télécharger",
+    "reset_success": "Style réinitialisé aux valeurs par défaut",
+    "save_success": "Style du QR Code enregistré avec succès",
+    "save_error": "Erreur lors de l'enregistrement du style du QR Code",
+    "download_success": "QR Code téléchargé avec succès",
+    "download_error": "Erreur lors du téléchargement du QR Code",
+    "sections": {
+      "dots": "Points",
+      "background": "Arrière-plan",
+      "corner_squares": "Carrés de coin",
+      "corner_dots": "Points de coin",
+      "image": "Image",
+      "export": "Export"
+    },
+    "dots": {
+      "color": "Couleur",
+      "type": "Type",
+      "round_size": "Taille ronde"
+    },
+    "background": {
+      "color": "Couleur"
+    },
+    "corner_squares": {
+      "color": "Couleur",
+      "type": "Type"
+    },
+    "corner_dots": {
+      "color": "Couleur",
+      "type": "Type"
+    },
+    "image": {
+      "hide_background_dots": "Masquer les points d'arrière-plan",
+      "size": "Taille",
+      "margin": "Marge"
+    },
+    "export": {
+      "format": "Format",
+      "resolution": "Résolution"
+    },
+    "types": {
+      "square": "Carré",
+      "rounded": "Arrondi",
+      "dots": "Points",
+      "classy": "Élégant",
+      "classy_rounded": "Élégant arrondi",
+      "extra_rounded": "Extra arrondi",
+      "dot": "Point"
     }
   }
 }

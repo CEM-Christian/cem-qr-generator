@@ -185,6 +185,7 @@
       "vector_format_note": "矢量格式不适用分辨率设置",
       "formats": {
         "png_description": "高质量，无损压缩，支持透明度",
+        "jpeg_description": "良好质量，文件更小，适合照片",
         "svg_description": "矢量格式，可缩放，适合打印和网页"
       }
     },
@@ -196,6 +197,62 @@
       "slug_az": "短链(A-Z)",
       "slug_za": "短链(Z-A)",
       "tip": "体验功能: 仅对已经加载的链接有效"
+    }
+  },
+  "qr_style_editor": {
+    "title": "二维码样式编辑器",
+    "description": "使用高级样式选项自定义二维码的外观。",
+    "preview": "预览",
+    "edit_style": "编辑样式",
+    "reset": "重置",
+    "save": "保存",
+    "save_and_download": "保存并下载",
+    "reset_success": "样式已重置为默认值",
+    "save_success": "二维码样式保存成功",
+    "save_error": "保存二维码样式失败",
+    "download_success": "二维码下载成功",
+    "download_error": "二维码下载失败",
+    "sections": {
+      "dots": "点阵",
+      "background": "背景",
+      "corner_squares": "角落方块",
+      "corner_dots": "角落点",
+      "image": "图像",
+      "export": "导出"
+    },
+    "dots": {
+      "color": "颜色",
+      "type": "类型",
+      "round_size": "圆形大小"
+    },
+    "background": {
+      "color": "颜色"
+    },
+    "corner_squares": {
+      "color": "颜色",
+      "type": "类型"
+    },
+    "corner_dots": {
+      "color": "颜色",
+      "type": "类型"
+    },
+    "image": {
+      "hide_background_dots": "隐藏背景点",
+      "size": "大小",
+      "margin": "边距"
+    },
+    "export": {
+      "format": "格式",
+      "resolution": "分辨率"
+    },
+    "types": {
+      "square": "方形",
+      "rounded": "圆角",
+      "dots": "点状",
+      "classy": "优雅",
+      "classy_rounded": "优雅圆角",
+      "extra_rounded": "超圆角",
+      "dot": "点"
     }
   }
 }
