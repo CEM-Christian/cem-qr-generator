@@ -203,6 +203,18 @@
   "qr_style_editor": {
     "title": "編輯QR樣式",
     "description": "自定義您的QR碼外觀",
+    "base_style": {
+      "title": "基礎樣式",
+      "description": "設定應用於所有QR碼組件的全域樣式選項",
+      "color": "基礎顏色",
+      "type": "基礎類型"
+    },
+    "override_indicators": {
+      "using_base": "使用基礎樣式",
+      "custom": "自訂樣式",
+      "apply_base": "重置為基礎",
+      "reset_to_base": "重置為基礎"
+    },
     "sections": {
       "dots": "點",
       "background": "背景",

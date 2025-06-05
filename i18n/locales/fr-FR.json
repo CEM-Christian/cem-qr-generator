@@ -203,6 +203,18 @@
     "title": "Éditer le style du QR Code",
     "description": "Personnalisez l'apparence de votre QR Code avec des options de style avancées.",
     "preview": "Aperçu",
+    "base_style": {
+      "title": "Style de base",
+      "description": "Style global appliqué à tous les composants du code QR",
+      "color": "Couleur de base",
+      "type": "Type de base"
+    },
+    "override_indicators": {
+      "using_base": "Utilise le style de base",
+      "custom": "Style personnalisé",
+      "apply_base": "Réinitialiser au style de base",
+      "reset_to_base": "Réinitialiser au style de base"
+    },
     "edit_style": "Éditer le style",
     "reset": "Réinitialiser",
     "save": "Enregistrer",

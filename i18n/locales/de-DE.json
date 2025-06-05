@@ -212,6 +212,18 @@
     "save_error": "Fehler beim Speichern des QR-Code-Stils",
     "download_success": "QR-Code erfolgreich heruntergeladen",
     "download_error": "Fehler beim Herunterladen des QR-Codes",
+    "base_style": {
+      "title": "Basis-Stil",
+      "description": "Legen Sie globale Stiloptionen fest, die auf alle QR-Code-Komponenten angewendet werden",
+      "color": "Basis-Farbe",
+      "type": "Basis-Typ"
+    },
+    "override_indicators": {
+      "using_base": "Basis-Stil verwenden",
+      "custom": "Benutzerdefinierter Stil",
+      "apply_base": "Auf Basis zurücksetzen",
+      "reset_to_base": "Auf Basis zurücksetzen"
+    },
     "sections": {
       "dots": "Punkte",
       "background": "Hintergrund",

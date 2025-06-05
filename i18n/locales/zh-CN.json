@@ -212,6 +212,18 @@
     "save_error": "保存二维码样式失败",
     "download_success": "二维码下载成功",
     "download_error": "二维码下载失败",
+    "base_style": {
+      "title": "基础样式",
+      "description": "设置应用于所有二维码组件的全局样式选项",
+      "color": "基础颜色",
+      "type": "基础类型"
+    },
+    "override_indicators": {
+      "using_base": "使用基础样式",
+      "custom": "自定义样式",
+      "apply_base": "重置为基础",
+      "reset_to_base": "重置为基础"
+    },
     "sections": {
       "dots": "点阵",
       "background": "背景",

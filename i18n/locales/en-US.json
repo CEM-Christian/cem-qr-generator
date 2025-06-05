@@ -204,6 +204,18 @@
     "title": "QR Code Style Editor",
     "description": "Customize the appearance of your QR code with advanced styling options.",
     "preview": "Preview",
+    "base_style": {
+      "title": "Base Style",
+      "description": "Global style applied to all QR code components",
+      "color": "Base Color",
+      "type": "Base Type"
+    },
+    "override_indicators": {
+      "using_base": "Using base style",
+      "custom": "Custom style",
+      "apply_base": "Reset to base",
+      "reset_to_base": "Reset to base"
+    },
     "sections": {
       "dots": "Dots Styling",
       "background": "Background",

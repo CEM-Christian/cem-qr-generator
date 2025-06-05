@@ -203,6 +203,18 @@
   "qr_style_editor": {
     "title": "Chỉnh sửa kiểu QR",
     "description": "Tùy chỉnh giao diện mã QR của bạn",
+    "base_style": {
+      "title": "Kiểu cơ bản",
+      "description": "Đặt tùy chọn kiểu toàn cục áp dụng cho tất cả các thành phần mã QR",
+      "color": "Màu cơ bản",
+      "type": "Kiểu cơ bản"
+    },
+    "override_indicators": {
+      "using_base": "Sử dụng kiểu cơ bản",
+      "custom": "Kiểu tùy chỉnh",
+      "apply_base": "Đặt lại về cơ bản",
+      "reset_to_base": "Đặt lại về cơ bản"
+    },
     "sections": {
       "dots": "Chấm",
       "background": "Nền",
