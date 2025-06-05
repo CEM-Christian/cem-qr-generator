@@ -1,7 +1,7 @@
 <script setup>
 import { Download } from 'lucide-vue-next'
 import QRCodeStyling from 'qr-code-styling'
-import DownloadOptionsModal from '../../ui/DownloadOptionsModal.vue'
+// import DownloadOptionsModal from '../../ui/DownloadOptionsModal.vue'
 
 const props = defineProps({
   data: {
@@ -74,9 +74,9 @@ const showDownloadModal = ref(false)
 
 function updateColor(newColor) {
   qrCode.update({
-    dotsOptions: { type: 'dots', color: newColor, gradient: null },
-    cornersSquareOptions: { type: 'extra-rounded', color: newColor },
-    cornersDotOptions: { type: 'dot', color: newColor },
+    dotsOptions: { color: newColor },
+    cornersSquareOptions: { color: newColor },
+    cornersDotOptions: { color: newColor },
   })
 }
 

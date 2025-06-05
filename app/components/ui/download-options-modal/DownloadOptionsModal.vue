@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './dialog'
+} from '../dialog'
 import {
   Select,
   SelectContent,
@@ -16,9 +16,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './select'
-import { Label } from './label'
-import { Button } from './button'
+} from '../select'
+import { Label } from '../label'
+import { Button } from '../button'
 
 const props = defineProps({
   open: {

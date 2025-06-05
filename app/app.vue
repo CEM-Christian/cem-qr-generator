@@ -36,6 +36,10 @@ useHead({
       rel: 'apple-touch-icon',
       href: '/apple-touch-icon.png',
     },
+    {
+      rel: 'stylesheet',
+      href: 'https://use.typekit.net/hbm4iux.css',
+    },
   ],
 })
 </script>
