@@ -6,6 +6,11 @@
     "binding": "ASSETS",
     "directory": "dist/public"
   },
+  "vars": {
+    // Set plain text env variables here, otherwise they get deleted on deploy
+    "NUXT_DATASET": "qr_generator", // Change this to your analytics engine dataset name
+    "NUXT_CF_ACCOUNT_ID": "e20ac73da8ef26fb8968d85e989745fa"
+  },
   "compatibility_date": "2025-05-08",
   "compatibility_flags": [
     "nodejs_compat"
