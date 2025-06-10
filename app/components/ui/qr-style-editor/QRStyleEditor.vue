@@ -582,7 +582,7 @@ watch(() => props.open, async (newValue) => {
                   </Badge>
                 </div>
               </AccordionTrigger>
-              <AccordionContent class="space-y-4">
+              <AccordionContent class="space-y-4 px-2">
                 
                 <!-- Dots Color -->
                 <div class="space-y-2">
@@ -673,7 +673,7 @@ watch(() => props.open, async (newValue) => {
                   </Badge>
                 </div>
               </AccordionTrigger>
-              <AccordionContent class="space-y-4">
+              <AccordionContent class="space-y-4 px-2">
                 
                 <!-- Corner Squares Color -->
                 <div class="space-y-2">
@@ -759,7 +759,7 @@ watch(() => props.open, async (newValue) => {
                   </Badge>
                 </div>
               </AccordionTrigger>
-              <AccordionContent class="space-y-4">
+              <AccordionContent class="space-y-4 px-2">
                 
                 <!-- Corner Dots Color -->
                 <div class="space-y-2">
@@ -833,7 +833,7 @@ watch(() => props.open, async (newValue) => {
             <!-- Background -->
             <AccordionItem value="background">
               <AccordionTrigger>{{ $t('qr_style_editor.sections.background') }}</AccordionTrigger>
-              <AccordionContent class="space-y-4">
+              <AccordionContent class="space-y-4 px-2">
                 
                 <!-- Background Color -->
                 <div class="space-y-2">
@@ -864,7 +864,7 @@ watch(() => props.open, async (newValue) => {
             <!-- Image Settings -->
             <AccordionItem value="image">
               <AccordionTrigger>{{ $t('qr_style_editor.sections.image') }}</AccordionTrigger>
-              <AccordionContent class="space-y-4">
+              <AccordionContent class="space-y-4 px-2">
                 
                 <!-- Hide Background Dots -->
                 <div class="flex items-center justify-between">
