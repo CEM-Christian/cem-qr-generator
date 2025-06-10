@@ -50,7 +50,7 @@ function copyLink() {
       :to="`/dashboard/link?slug=${link.slug}`"
     >
       <div class="flex items-center justify-center space-x-3">
-        <Avatar>
+        <Avatar shape="square">
           <AvatarImage
             :src="linkIcon"
             alt="@radix-vue"

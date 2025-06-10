@@ -8,14 +8,16 @@ const props = withDefaults(defineProps<{
   class?: HTMLAttributes['class']
   size?: AvatarVariants['size']
   shape?: AvatarVariants['shape']
+  background?: AvatarVariants['background']
 }>(), {
   size: 'sm',
   shape: 'circle',
+  background: 'tertiary'
 })
 </script>
 
 <template>
-  <AvatarRoot :class="cn(avatarVariant({ size, shape }), props.class)">
+  <AvatarRoot :class="cn(avatarVariant({ size, shape, background }), props.class)">
     <slot />
   </AvatarRoot>
 </template>
