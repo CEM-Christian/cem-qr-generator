@@ -26,7 +26,7 @@
   },
   "analytics_engine_datasets": [
     {
-      "binding": "WAE",
+      "binding": "ANALYTICS",
       "dataset": "qr_generator"
     }
   ],
