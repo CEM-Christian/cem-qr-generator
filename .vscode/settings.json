@@ -63,5 +63,11 @@
   "i18n-ally.parsers.typescript.compilerOptions": {
     "moduleResolution": "node"
   },
-  "i18n-ally.enabledFrameworks": ["vue"]
+  "i18n-ally.enabledFrameworks": ["vue"],
+  "github.copilot.enable": {
+    "*": true,
+    "dotenv": false
+  },
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "chat.promptFiles": true
 }
