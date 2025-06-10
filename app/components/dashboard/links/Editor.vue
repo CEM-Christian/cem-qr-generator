@@ -45,6 +45,7 @@ const EditLinkSchema = LinkSchema.pick({
     title: true,
     description: true,
     image: true,
+    qr_style_options: true,
   }).extend({
     expiration: z.coerce.date().optional(),
   }).optional(),
@@ -156,6 +157,8 @@ async function onSubmit(formData) {
     utm_id: formData.utm_id,
     ...(formData.optional || []),
     expiration: formData.optional?.expiration ? date2unix(formData.optional?.expiration, 'end') : undefined,
+    // Preserve existing QR style options when editing
+    ...(isEdit && props.link.qr_style_options && { qr_style_options: props.link.qr_style_options }),
   }
   const { link: newLink } = await useAPI(isEdit ? '/api/link/edit' : '/api/link/create', {
     method: isEdit ? 'PUT' : 'POST',

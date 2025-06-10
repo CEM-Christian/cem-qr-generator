@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { cn } from '@/lib/utils'
 import { computed, onMounted, ref, useSlots } from 'vue'
+import { cn } from '@/utils'
 
 const props = withDefaults(defineProps<{
   class?: string
