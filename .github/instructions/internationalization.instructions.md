@@ -74,17 +74,6 @@ Organize translation keys in a nested structure:
 
 ## Usage in Components
 ```vue
-<template>
-  <!-- Simple translation -->
-  <h1>{{ $t('feature.title') }}</h1>
-  
-  <!-- With interpolation -->
-  <p>{{ $t('feature.welcome', { name: userName }) }}</p>
-  
-  <!-- In script setup -->
-  <button @click="showMessage">{{ $t('common.save') }}</button>
-</template>
-
 <script setup lang="ts">
 const { t } = useI18n()
 
@@ -92,6 +81,19 @@ function showMessage() {
   toast.success(t('feature.messages.save_success'))
 }
 </script>
+
+<template>
+  <!-- Simple translation -->
+  <h1>{{ $t('feature.title') }}</h1>
+
+  <!-- With interpolation -->
+  <p>{{ $t('feature.welcome', { name: userName }) }}</p>
+
+  <!-- In script setup -->
+  <button @click="showMessage">
+    {{ $t('common.save') }}
+  </button>
+</template>
 ```
 
 ## Maintenance

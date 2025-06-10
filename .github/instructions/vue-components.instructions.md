@@ -52,9 +52,9 @@ onMounted(() => {
   <div>
     <!-- Always use $t() for internationalization -->
     <h1>{{ $t('component.title') }}</h1>
-    
+
     <!-- Use v-bind and v-on shorthand -->
-    <Button 
+    <Button
       :disabled="isLoading"
       @click="handleAction"
     >

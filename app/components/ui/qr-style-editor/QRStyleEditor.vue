@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, watch, onMounted, nextTick } from 'vue'
 import QRCodeStyling from 'qr-code-styling'
 import { useDebounceFn } from '@vueuse/core'
@@ -30,6 +30,7 @@ import { Button } from '../button'
 import { Input } from '../input'
 import { Label } from '../label'
 import { Badge } from '../badge'
+import { LogoSelector } from '../logo-selector'
 
 const props = defineProps({
   open: {
@@ -97,6 +98,10 @@ const defaultStyleOptions = {
     hideBackgroundDots: true,
     imageSize: 0.4,
     margin: 2
+  },
+  logoSelection: {
+    logoType: 'favicon',
+    selectedLogoId: undefined
   }
 }
 
@@ -115,6 +120,11 @@ function initializeStyleOptions(initialOptions) {
       options.cornersSquareOptions = { ...options.cornersSquareOptions, ...initialOptions.cornersSquareOptions }
       options.cornersDotOptions = { ...options.cornersDotOptions, ...initialOptions.cornersDotOptions }
       options.imageOptions = { ...options.imageOptions, ...initialOptions.imageOptions }
+    }
+    
+    // Initialize logo selection from existing options or defaults
+    if (initialOptions.logoSelection) {
+      options.logoSelection = { ...options.logoSelection, ...initialOptions.logoSelection }
     }
   }
   
@@ -227,11 +237,24 @@ function handleBaseTypeChange(newType) {
   }
 }
 
+// Logo selection handlers
+function handleLogoTypeChange(newType: string) {
+  styleOptions.logoSelection.logoType = newType
+  // Clear selected logo when switching to favicon or none
+  if (newType === 'favicon' || newType === 'none') {
+    styleOptions.logoSelection.selectedLogoId = undefined
+  }
+}
+
+function handleLogoIdChange(logoId: string) {
+  styleOptions.logoSelection.selectedLogoId = logoId
+}
+
 // Style options reactive object
 const styleOptions = reactive(initializeStyleOptions(props.initialOptions))
 
 // QR Code instance
-let qrCodePreview = null
+let qrCodePreview: any = null
 
 // Computed properties for effective styles
 const effectiveDotsColor = computed(() => {
@@ -276,41 +299,47 @@ watch(() => isOpen.value, (newValue) => {
   emit('update:open', newValue)
 })
 
-function handleOpenChange(open) {
+function handleOpenChange(open: boolean) {
   isOpen.value = open
 }
 
 function createQRCodeOptions() {
+  // Determine the image to use based on logo selection
+  let imageUrl = props.image // Default to favicon
+  
+  if (styleOptions.logoSelection.logoType === 'none') {
+    imageUrl = undefined // No image for QR code
+  } else if (styleOptions.logoSelection.logoType === 'organization' && styleOptions.logoSelection.selectedLogoId) {
+    const { getLogoUrl } = useLogoSelection()
+    imageUrl = getLogoUrl(styleOptions.logoSelection.selectedLogoId)
+  }
+
   return {
     width: 256,
     height: 256,
     data: props.data,
     margin: 10,
     qrOptions: { 
-      typeNumber: '0', 
+      typeNumber: 0, 
       mode: 'Byte', 
       errorCorrectionLevel: 'Q' 
     },
-    image: props.image,
+    image: imageUrl,
     dotsOptions: {
       color: effectiveDotsColor.value,
       type: effectiveDotsType.value,
-      roundSize: styleOptions.dotsOptions.roundSize,
-      gradient: styleOptions.dotsOptions.gradient || null
+      roundSize: styleOptions.dotsOptions.roundSize
     },
     cornersSquareOptions: {
       color: effectiveCornerSquareColor.value,
-      type: effectiveCornerSquareType.value,
-      gradient: styleOptions.cornersSquareOptions.gradient || null
+      type: effectiveCornerSquareType.value
     },
     cornersDotOptions: {
       color: effectiveCornerDotColor.value,
-      type: effectiveCornerDotType.value,
-      gradient: styleOptions.cornersDotOptions.gradient || null
+      type: effectiveCornerDotType.value
     },
     backgroundOptions: {
-      ...styleOptions.backgroundOptions,
-      gradient: styleOptions.backgroundOptions.gradient || null
+      color: styleOptions.backgroundOptions.color
     },
     imageOptions: {
       ...styleOptions.imageOptions,
@@ -385,6 +414,10 @@ async function saveStyleOptions() {
         hideBackgroundDots: styleOptions.imageOptions.hideBackgroundDots ?? true,
         imageSize: styleOptions.imageOptions.imageSize ?? 0.4,
         margin: styleOptions.imageOptions.margin ?? 2
+      },
+      logoSelection: {
+        logoType: styleOptions.logoSelection.logoType || 'favicon',
+        selectedLogoId: styleOptions.logoSelection.selectedLogoId
       }
     }
     
@@ -413,7 +446,8 @@ async function saveStyleOptions() {
       body: updatedLink
     })
     
-    emit('save', cleanStyleOptions)
+    // Emit the updated link from the API response instead of just the style options
+    emit('save', response.link)
     return true
   } catch (error) {
     console.error('Failed to save QR style options:', error)
@@ -519,6 +553,16 @@ watch(() => props.open, async (newValue) => {
                 </Select>
               </div>
             </div>
+          </div>
+          
+          <!-- Logo Selection Section -->
+          <div class="bg-muted/50 rounded-lg p-4 space-y-4">
+            <LogoSelector
+              :logo-type="styleOptions.logoSelection.logoType"
+              :selected-logo-id="styleOptions.logoSelection.selectedLogoId"
+              @update:logo-type="handleLogoTypeChange"
+              @update:selected-logo-id="handleLogoIdChange"
+            />
           </div>
           
           <Accordion v-model="openAccordions" type="multiple" class="w-full">

@@ -209,6 +209,15 @@
       "color": "基礎顏色",
       "type": "基礎類型"
     },
+    "logo_selection": {
+      "title": "標誌選擇",
+      "description": "在網站圖標、組織標誌或無圖像之間選擇",
+      "use_favicon": "使用網站圖標",
+      "use_organization": "使用組織標誌",
+      "use_none": "無圖像",
+      "select_logo": "選擇組織標誌",
+      "no_logo_selected": "請從上述選項中選擇一個標誌"
+    },
     "override_indicators": {
       "using_base": "使用基礎樣式",
       "custom": "自訂樣式",

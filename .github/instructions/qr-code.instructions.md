@@ -67,15 +67,15 @@ interface QRCodeOptions {
   <div class="qr-style-section">
     <!-- Color picker with preview -->
     <div class="color-input-group">
-      <div 
+      <div
         class="color-preview"
         :style="{ backgroundColor: effectiveColor }"
         @click="openColorPicker"
       />
-      <Input 
+      <Input
         :model-value="effectiveColor"
-        @update:model-value="handleColorChange"
         placeholder="#000000"
+        @update:model-value="handleColorChange"
       />
       <Button
         v-if="!isUsingBaseStyle"
@@ -88,17 +88,17 @@ interface QRCodeOptions {
     </div>
 
     <!-- Type selector -->
-    <Select 
-      :model-value="effectiveType" 
+    <Select
+      :model-value="effectiveType"
       @update:model-value="handleTypeChange"
     >
       <SelectTrigger>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem 
-          v-for="type in availableTypes" 
-          :key="type.value" 
+        <SelectItem
+          v-for="type in availableTypes"
+          :key="type.value"
           :value="type.value"
         >
           {{ $t(`qr_style_editor.types.${type.label}`) }}

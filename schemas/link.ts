@@ -1,5 +1,6 @@
 import { customAlphabet } from 'nanoid'
 import { z } from 'zod'
+import { QRStyleOptionsSchema } from './qr-style'
 
 const { slugRegex } = useAppConfig()
 
@@ -26,59 +27,5 @@ export const LinkSchema = z.object({
   utm_medium: z.string().trim().max(255).optional(),
   utm_campaign: z.string().trim().max(255).optional(),
   utm_id: z.string().trim().max(255).optional(),
-  qr_style_options: z.object({
-    dotsOptions: z.object({
-      color: z.string().default('#000000'),
-      type: z.enum(['rounded', 'dots', 'classy', 'classy-rounded', 'square', 'extra-rounded']).default('square'),
-      roundSize: z.boolean().default(true),
-      gradient: z.object({
-        type: z.enum(['linear', 'radial']).default('linear'),
-        rotation: z.number().default(0),
-        colorStops: z.array(z.object({
-          offset: z.number().min(0).max(1),
-          color: z.string(),
-        })),
-      }).optional(),
-    }).default({}),
-    backgroundOptions: z.object({
-      color: z.string().default('#ffffff'),
-      gradient: z.object({
-        type: z.enum(['linear', 'radial']).default('linear'),
-        rotation: z.number().default(0),
-        colorStops: z.array(z.object({
-          offset: z.number().min(0).max(1),
-          color: z.string(),
-        })),
-      }).optional(),
-    }).default({}),
-    cornersSquareOptions: z.object({
-      color: z.string().default('#000000'),
-      type: z.enum(['dot', 'square', 'extra-rounded', 'rounded', 'dots', 'classy', 'classy-rounded']).optional(),
-      gradient: z.object({
-        type: z.enum(['linear', 'radial']).default('linear'),
-        rotation: z.number().default(0),
-        colorStops: z.array(z.object({
-          offset: z.number().min(0).max(1),
-          color: z.string(),
-        })),
-      }).optional(),
-    }).default({}),
-    cornersDotOptions: z.object({
-      color: z.string().default('#000000'),
-      type: z.enum(['dot', 'square', 'rounded', 'dots', 'classy', 'classy-rounded', 'extra-rounded']).optional(),
-      gradient: z.object({
-        type: z.enum(['linear', 'radial']).default('linear'),
-        rotation: z.number().default(0),
-        colorStops: z.array(z.object({
-          offset: z.number().min(0).max(1),
-          color: z.string(),
-        })),
-      }).optional(),
-    }).default({}),
-    imageOptions: z.object({
-      hideBackgroundDots: z.boolean().default(true),
-      imageSize: z.number().min(0).max(1).default(0.4),
-      margin: z.number().min(0).default(2),
-    }).default({}),
-  }).optional(),
+  qr_style_options: QRStyleOptionsSchema,
 })

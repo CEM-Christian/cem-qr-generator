@@ -209,6 +209,15 @@
       "color": "Màu cơ bản",
       "type": "Kiểu cơ bản"
     },
+    "logo_selection": {
+      "title": "Chọn logo",
+      "description": "Chọn giữa favicon trang web, logo tổ chức hoặc không có hình ảnh",
+      "use_favicon": "Sử dụng favicon trang web",
+      "use_organization": "Sử dụng logo tổ chức",
+      "use_none": "Không có hình ảnh",
+      "select_logo": "Chọn logo tổ chức",
+      "no_logo_selected": "Vui lòng chọn một logo từ các tùy chọn ở trên"
+    },
     "override_indicators": {
       "using_base": "Sử dụng kiểu cơ bản",
       "custom": "Kiểu tùy chỉnh",

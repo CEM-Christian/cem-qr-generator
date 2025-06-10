@@ -26,7 +26,7 @@ interface UseFeatureReturn {
 
 // Export the composable function
 export function useFeature(
-  options: UseFeatureOptions = {}
+  options: UseFeatureOptions = {},
 ): UseFeatureReturn {
   // Reactive state
   const data = ref<SomeType | null>(null)
@@ -37,14 +37,16 @@ export function useFeature(
   async function execute() {
     isLoading.value = true
     error.value = null
-    
+
     try {
       const result = await someAsyncOperation()
       data.value = result
-    } catch (err) {
+    }
+    catch (err) {
       error.value = err instanceof Error ? err.message : 'Unknown error'
       console.error('Composable error:', err)
-    } finally {
+    }
+    finally {
       isLoading.value = false
     }
   }

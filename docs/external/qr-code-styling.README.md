@@ -23,7 +23,6 @@ If you would like to use additional stiles, you can connect extensions.
 <img style="display:inline-block" src="https://www.lefe.dev/_static/packages/qr-border-plugin-2.svg" width="240" />
 </p>
 
-
 ### Installation
 
 ```
@@ -276,74 +275,73 @@ You can use this on a node server by passing through the node-canvas or jsdom ob
 Calling `getRawData` in node will return a Buffer instead of a Blob.
 
 ```js
-const { QRCodeStyling } = require("qr-code-styling/lib/qr-code-styling.common.js");
-const nodeCanvas = require("canvas");
-const { JSDOM } = require("jsdom");
-const fs = require("fs");
+const fs = require('node:fs')
+const nodeCanvas = require('canvas')
+const { JSDOM } = require('jsdom')
+const { QRCodeStyling } = require('qr-code-styling/lib/qr-code-styling.common.js')
 
 const options = {
-    width: 300,
-    height: 300,
-    data: "https://www.facebook.com/",
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
-    dotsOptions: {
-        color: "#4267b2",
-        type: "rounded"
-    },
-    backgroundOptions: {
-        color: "#e9ebee",
-    },
-    imageOptions: {
-        crossOrigin: "anonymous",
-        margin: 20
-    }
+  width: 300,
+  height: 300,
+  data: 'https://www.facebook.com/',
+  image: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg',
+  dotsOptions: {
+    color: '#4267b2',
+    type: 'rounded',
+  },
+  backgroundOptions: {
+    color: '#e9ebee',
+  },
+  imageOptions: {
+    crossOrigin: 'anonymous',
+    margin: 20,
+  },
 }
 
 // For canvas type
 const qrCodeImage = new QRCodeStyling({
-    jsdom: JSDOM, // this is required
-    nodeCanvas, // this is required,
-    ...options,
-    imageOptions: {
-        saveAsBlob: true,
-        crossOrigin: "anonymous",
-        margin: 20
-    },
-});
+  jsdom: JSDOM, // this is required
+  nodeCanvas, // this is required,
+  ...options,
+  imageOptions: {
+    saveAsBlob: true,
+    crossOrigin: 'anonymous',
+    margin: 20,
+  },
+})
 
-qrCodeImage.getRawData("png").then((buffer) => {
-  fs.writeFileSync("test.png", buffer);
-});
+qrCodeImage.getRawData('png').then((buffer) => {
+  fs.writeFileSync('test.png', buffer)
+})
 
 // For svg type
 const qrCodeSvg = new QRCodeStyling({
-    jsdom: JSDOM, // this is required
-    type: "svg",
-    ...options
-});
+  jsdom: JSDOM, // this is required
+  type: 'svg',
+  ...options,
+})
 
-qrCodeSvg.getRawData("svg").then((buffer) => {
-  fs.writeFileSync("test.svg", buffer);
-});
+qrCodeSvg.getRawData('svg').then((buffer) => {
+  fs.writeFileSync('test.svg', buffer)
+})
 
 // For svg type with the inner-image saved as a blob
 // (inner-image will render in more places but file will be larger)
 const qrCodeSvgWithBlobImage = new QRCodeStyling({
-    jsdom: JSDOM, // this is required
-    nodeCanvas, // this is required
-    type: "svg",
-    ...options,
-    imageOptions: {
-        saveAsBlob: true,
-        crossOrigin: "anonymous",
-        margin: 20
-    }
-});
+  jsdom: JSDOM, // this is required
+  nodeCanvas, // this is required
+  type: 'svg',
+  ...options,
+  imageOptions: {
+    saveAsBlob: true,
+    crossOrigin: 'anonymous',
+    margin: 20,
+  },
+})
 
-qrCodeSvgWithBlobImage.getRawData("svg").then((buffer) => {
-  fs.writeFileSync("test_blob.svg", buffer);
-});
-
+qrCodeSvgWithBlobImage.getRawData('svg').then((buffer) => {
+  fs.writeFileSync('test_blob.svg', buffer)
+})
 ```
 
 ### License

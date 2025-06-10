@@ -9,16 +9,18 @@ Follow this exact pattern for all UI components:
 
 ```vue
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { 
-  RadixComponent, 
-  type RadixComponentProps, 
-  useForwardProps 
+import type { RadixComponentProps } from 'radix-vue'
+import type { HTMLAttributes } from 'vue'
+import {
+  RadixComponent,
+
+  useForwardProps,
 } from 'radix-vue'
+import { computed } from 'vue'
 import { cn } from '@/utils'
 
 // Define component props extending Radix props
-const props = defineProps<RadixComponentProps & { 
+const props = defineProps<RadixComponentProps & {
   class?: HTMLAttributes['class']
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
   size?: 'default' | 'sm' | 'lg' | 'icon'
@@ -42,7 +44,7 @@ const forwardedProps = useForwardProps(delegatedProps)
         'variant-classes': props.variant === 'default',
         'size-classes': props.size === 'default',
       },
-      props.class
+      props.class,
     )"
   >
     <slot />

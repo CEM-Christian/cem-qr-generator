@@ -26,7 +26,7 @@ export const CreateLinkSchema = LinkSchema.omit({ id: true, createdAt: true })
 export const LinkWithExpirationSchema = LinkSchema.extend({
   expiration: z.number().int().safe().refine(
     expiration => expiration > Math.floor(Date.now() / 1000),
-    { message: 'expiration must be greater than current time' }
+    { message: 'expiration must be greater than current time' },
   ).optional(),
 })
 ```

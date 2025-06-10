@@ -210,6 +210,15 @@
       "color": "Base Color",
       "type": "Base Type"
     },
+    "logo_selection": {
+      "title": "Logo Selection",
+      "description": "Choose between website favicon, organization logo, or no image",
+      "use_favicon": "Use website favicon",
+      "use_organization": "Use organization logo",
+      "use_none": "No image",
+      "select_logo": "Select Organization Logo",
+      "no_logo_selected": "Please select a logo from the options above"
+    },
     "override_indicators": {
       "using_base": "Using base style",
       "custom": "Custom style",

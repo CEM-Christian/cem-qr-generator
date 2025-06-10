@@ -218,6 +218,15 @@
       "color": "基础颜色",
       "type": "基础类型"
     },
+    "logo_selection": {
+      "title": "标志选择",
+      "description": "在网站图标、组织标志或无图像之间选择",
+      "use_favicon": "使用网站图标",
+      "use_organization": "使用组织标志",
+      "use_none": "无图像",
+      "select_logo": "选择组织标志",
+      "no_logo_selected": "请从上述选项中选择一个标志"
+    },
     "override_indicators": {
       "using_base": "使用基础样式",
       "custom": "自定义样式",

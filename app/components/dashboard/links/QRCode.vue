@@ -35,12 +35,29 @@ const currentStyleOptions = computed(() => {
   return props.link?.qr_style_options || defaultOptions
 })
 
+// Get the image URL based on logo selection
+const imageUrl = computed(() => {
+  const logoSelection = currentStyleOptions.value.logoSelection
+
+  if (logoSelection && logoSelection.logoType === 'none') {
+    return undefined // No image for QR code
+  }
+
+  if (logoSelection && logoSelection.logoType === 'organization' && logoSelection.selectedLogoId) {
+    const { getLogoUrl } = useLogoSelection()
+    return getLogoUrl(logoSelection.selectedLogoId)
+  }
+
+  // Default to favicon
+  return props.image
+})
+
 const options = computed(() => ({
   width: 256,
   height: 256,
   data: props.data,
   margin: 10,
-  qrOptions: { typeNumber: '0', mode: 'Byte', errorCorrectionLevel: 'Q' },
+  qrOptions: { typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'Q' },
   imageOptions: {
     ...currentStyleOptions.value.imageOptions,
     crossOrigin: 'anonymous',
@@ -49,7 +66,7 @@ const options = computed(() => ({
   backgroundOptions: currentStyleOptions.value.backgroundOptions,
   cornersSquareOptions: currentStyleOptions.value.cornersSquareOptions,
   cornersDotOptions: currentStyleOptions.value.cornersDotOptions,
-  image: props.image,
+  image: imageUrl.value,
   dotsOptionsHelper: {
     colorType: { single: true, gradient: false },
     gradient: {
@@ -104,6 +121,7 @@ watch(() => currentStyleOptions.value, (newOptions) => {
     backgroundOptions: newOptions.backgroundOptions,
     cornersSquareOptions: newOptions.cornersSquareOptions,
     cornersDotOptions: newOptions.cornersDotOptions,
+    image: imageUrl.value, // Include the computed image URL
     imageOptions: {
       ...newOptions.imageOptions,
       crossOrigin: 'anonymous',
@@ -111,6 +129,13 @@ watch(() => currentStyleOptions.value, (newOptions) => {
   }
   qrCode.update(updatedOptions)
 }, { deep: true })
+
+// Also watch for image URL changes separately
+watch(() => imageUrl.value, (newImageUrl) => {
+  qrCode.update({
+    image: newImageUrl,
+  })
+})
 
 function handleDirectDownload() {
   showDownloadModal.value = true
@@ -151,12 +176,8 @@ function handleOpenStyleEditor() {
   showStyleEditor.value = true
 }
 
-function handleStyleSave(newStyleOptions) {
-  // Update the link object with new style options and emit to parent
-  const updatedLink = {
-    ...props.link,
-    qr_style_options: newStyleOptions,
-  }
+function handleStyleSave(updatedLink) {
+  // The QR Style Editor now emits the full updated link from the API
   emit('update:link', updatedLink, 'edit')
 }
 

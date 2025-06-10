@@ -218,6 +218,15 @@
       "color": "Basis-Farbe",
       "type": "Basis-Typ"
     },
+    "logo_selection": {
+      "title": "Logo-Auswahl",
+      "description": "Wählen Sie zwischen Website-Favicon, Organisations-Logo oder keinem Bild",
+      "use_favicon": "Website-Favicon verwenden",
+      "use_organization": "Organisations-Logo verwenden",
+      "use_none": "Kein Bild",
+      "select_logo": "Organisations-Logo auswählen",
+      "no_logo_selected": "Bitte wählen Sie ein Logo aus den obigen Optionen"
+    },
     "override_indicators": {
       "using_base": "Basis-Stil verwenden",
       "custom": "Benutzerdefinierter Stil",

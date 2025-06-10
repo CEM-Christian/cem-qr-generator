@@ -8,8 +8,8 @@ applyTo: "server/api/**/*.ts"
 Follow this pattern for all server routes:
 
 ```typescript
-import { z } from 'zod'
 import { SomeSchema } from '@@/schemas/some-schema'
+import { z } from 'zod'
 
 // Define request schema if needed
 const RequestSchema = z.object({
@@ -19,28 +19,29 @@ const RequestSchema = z.object({
 export default eventHandler(async (event) => {
   // Validate query parameters
   const query = await getValidatedQuery(event, RequestSchema.parse)
-  
+
   // Or validate request body
   const body = await readValidatedBody(event, SomeSchema.parse)
-  
+
   // Get Cloudflare context
   const { cloudflare } = event.context
   const { KV, AI } = cloudflare.env
-  
+
   // Implement proper error handling
   try {
     // API logic here
     const result = await someOperation()
-    
+
     return {
       success: true,
-      data: result
+      data: result,
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('API Error:', error)
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal Server Error'
+      statusMessage: 'Internal Server Error',
     })
   }
 })
