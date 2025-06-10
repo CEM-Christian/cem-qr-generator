@@ -93,6 +93,13 @@ export function doubles2logs(doubles: number[]) {
 }
 
 export function useAccessLog(event: H3Event) {
+  const startTime = Date.now()
+  console.log('🔍 [ACCESS-LOG] Started for:', {
+    url: event.node.req.url,
+    userAgent: event.node.req.headers['user-agent'],
+    timestamp: new Date().toISOString()
+  })
+
   const ip = getHeader(event, 'cf-connecting-ip') || getHeader(event, 'x-real-ip') || getRequestIP(event, { xForwardedFor: true })
 
   const { host: referer } = parseURL(getHeader(event, 'referer'))
@@ -113,13 +120,18 @@ export function useAccessLog(event: H3Event) {
   const { request: { cf } } = event.context.cloudflare
   const link = event.context.link || {}
 
+  console.log('🔗 [ACCESS-LOG] Link context:', {
+    linkId: link.id,
+    linkSlug: link.slug
+  })
+
   const isBot = cf?.botManagement?.verifiedBot
     || ['crawler', 'fetcher'].includes(uaInfo?.browser?.type || '')
     || ['spider', 'bot'].includes(uaInfo?.browser?.name?.toLowerCase() || '')
 
   const { disableBotAccessLog } = useRuntimeConfig(event)
   if (isBot && disableBotAccessLog) {
-    console.log('bot access log disabled:', userAgent)
+    console.log('🤖 [ACCESS-LOG] Bot access log disabled:', userAgent)
     return Promise.resolve()
   }
 
@@ -148,15 +160,136 @@ export function useAccessLog(event: H3Event) {
     longitude: Number(cf?.longitude || getHeader(event, 'cf-iplongitude') || 0),
   }
 
+  console.log('📊 [ACCESS-LOG] Generated logs:', {
+    logCount: Object.keys(accessLogs).length,
+    link: { id: link.id, slug: link.slug },
+    isProduction: process.env.NODE_ENV === 'production'
+  })
+
+  if (!link.id) {
+    console.warn('⚠️ [ACCESS-LOG] No link.id in context')
+    return Promise.resolve()
+  }
+
   if (process.env.NODE_ENV === 'production') {
-    return hubAnalytics().put({
+    const analyticsData = {
       indexes: [link.id], // only one index
       blobs: logs2blobs(accessLogs),
       doubles: logs2doubles(accessLogs),
+    }
+    
+    console.log('📤 [ACCESS-LOG] Attempting Analytics Engine write:', {
+      indexes: analyticsData.indexes,
+      blobsLength: analyticsData.blobs.length,
+      doublesLength: analyticsData.doubles.length,
+      rawBlobs: analyticsData.blobs,
+      rawDoubles: analyticsData.doubles
     })
+
+    try {
+      const analyticsResult = hubAnalytics().put(analyticsData)
+      
+      // Check if result is a Promise
+      if (analyticsResult && typeof analyticsResult === 'object' && 'then' in analyticsResult) {
+        return (analyticsResult as Promise<any>)
+          .then(() => {
+            console.log('✅ [ACCESS-LOG] Successfully written to Analytics Engine')
+            console.log(`⏱️ [ACCESS-LOG] Total time: ${Date.now() - startTime}ms`)
+          })
+          .catch((error: any) => {
+            console.error('❌ [ACCESS-LOG] Failed to write to Analytics Engine:', {
+              error: error.message,
+              stack: error.stack,
+              linkId: link.id,
+              data: analyticsData
+            })
+            throw error
+          })
+      }
+      else {
+        console.log('✅ [ACCESS-LOG] Analytics Engine write completed synchronously')
+        console.log(`⏱️ [ACCESS-LOG] Total time: ${Date.now() - startTime}ms`)
+        return Promise.resolve()
+      }
+    }
+    catch (error: any) {
+      console.error('❌ [ACCESS-LOG] Failed to write to Analytics Engine:', {
+        error: error.message,
+        stack: error.stack,
+        linkId: link.id,
+        data: analyticsData
+      })
+      throw error
+    }
   }
   else {
+    console.log('🧪 [ACCESS-LOG] Development mode - skipping Analytics Engine write')
+    console.log('📄 [ACCESS-LOG] Would have written:', {
+      indexes: [link.id],
+      blobs: logs2blobs(accessLogs),
+      doubles: logs2doubles(accessLogs)
+    })
     console.log('access logs:', accessLogs, logs2blobs(accessLogs), logs2doubles(accessLogs), { ...blobs2logs(logs2blobs(accessLogs)), ...doubles2logs(logs2doubles(accessLogs)) })
     return Promise.resolve()
+  }
+}
+
+// Helper functions for debugging
+export function isBot(userAgent: string, cf?: any) {
+  const uaInfo = (new UAParser(userAgent, {
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-expect-error
+    browser: [Crawlers.browser || [], CLIs.browser || [], Emails.browser || [], Fetchers.browser || [], InApps.browser || [], MediaPlayers.browser || [], Vehicles.browser || []].flat(),
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-expect-error
+    device: [ExtraDevices.device || []].flat(),
+  })).getResult()
+
+  return cf?.botManagement?.verifiedBot
+    || ['crawler', 'fetcher'].includes(uaInfo?.browser?.type || '')
+    || ['spider', 'bot'].includes(uaInfo?.browser?.name?.toLowerCase() || '')
+}
+
+export function getAccessLog(event: H3Event): LogsMap {
+  const ip = getHeader(event, 'cf-connecting-ip') || getHeader(event, 'x-real-ip') || getRequestIP(event, { xForwardedFor: true })
+  const { host: referer } = parseURL(getHeader(event, 'referer'))
+  const acceptLanguage = getHeader(event, 'accept-language') || ''
+  const language = (parseAcceptLanguage(acceptLanguage) || [])[0]
+  const userAgent = getHeader(event, 'user-agent') || ''
+  
+  const uaInfo = (new UAParser(userAgent, {
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-expect-error
+    browser: [Crawlers.browser || [], CLIs.browser || [], Emails.browser || [], InApps.browser || [], MediaPlayers.browser || [], Vehicles.browser || []].flat(),
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-expect-error
+    device: [ExtraDevices.device || []].flat(),
+  })).getResult()
+
+  const { request: { cf } } = event.context.cloudflare || { request: { cf: {} } }
+  const link = event.context.link || {}
+
+  const regionNames = new Intl.DisplayNames(['en'], { type: 'region' })
+  const countryName = regionNames.of(cf?.country || 'WD')
+
+  return {
+    url: link.url,
+    slug: link.slug,
+    ua: userAgent,
+    ip,
+    referer,
+    country: cf?.country,
+    region: `${getFlag(cf?.country)} ${[cf?.region, countryName].filter(Boolean).join(',')}`,
+    city: `${getFlag(cf?.country)} ${[cf?.city, countryName].filter(Boolean).join(',')}`,
+    timezone: cf?.timezone,
+    language,
+    os: uaInfo?.os?.name,
+    browser: uaInfo?.browser?.name,
+    browserType: uaInfo?.browser?.type,
+    device: uaInfo?.device?.model,
+    deviceType: uaInfo?.device?.type,
+    COLO: cf?.colo,
+    latitude: Number(cf?.latitude || getHeader(event, 'cf-iplatitude') || 0),
+    longitude: Number(cf?.longitude || getHeader(event, 'cf-iplongitude') || 0),
   }
 }
