@@ -166,6 +166,16 @@
     "update_success": "Lien mis à jour avec succès",
     "create_success": "Lien créé avec succès",
     "preview_mode_tip": "Le lien en mode aperçu est valide jusqu'à 5 minutes.",
+    "preview": {
+      "title": "Aperçu du lien",
+      "short_url": "Lien court",
+      "destination_url": "URL de destination",
+      "copy_short": "Copier le lien court",
+      "copy_destination": "Copier l'URL de destination",
+      "copy_short_success": "Lien court copié dans le presse-papiers",
+      "copy_destination_success": "URL de destination copiée dans le presse-papiers",
+      "open_destination": "Ouvrir l'URL de destination dans un nouvel onglet"
+    },
     "search_placeholder": "Rechercher des liens...",
     "no_results": "Aucun lien trouvé.",
     "group_title": "Liens",

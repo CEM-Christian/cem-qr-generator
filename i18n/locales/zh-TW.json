@@ -167,6 +167,16 @@
     "update_success": "連結更新成功",
     "create_success": "連結創建成功",
     "preview_mode_tip": "預覽模式下的連結最多有效5分鐘",
+    "preview": {
+      "title": "連結預覽",
+      "short_url": "短連結",
+      "destination_url": "目標網址",
+      "copy_short": "複製短連結",
+      "copy_destination": "複製目標網址",
+      "copy_short_success": "短連結已複製到剪貼板",
+      "copy_destination_success": "目標網址已複製到剪貼板",
+      "open_destination": "在新分頁中開啟目標網址"
+    },
     "search_placeholder": "搜尋連結...",
     "no_results": "未找到連結。",
     "group_title": "連結列表",

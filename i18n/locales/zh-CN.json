@@ -166,6 +166,16 @@
     "update_success": "链接更新成功",
     "create_success": "链接创建成功",
     "preview_mode_tip": "预览模式下的链接最多有效5分钟。",
+    "preview": {
+      "title": "链接预览",
+      "short_url": "短链接",
+      "destination_url": "目标网址",
+      "copy_short": "复制短链接",
+      "copy_destination": "复制目标网址",
+      "copy_short_success": "短链接已复制到剪贴板",
+      "copy_destination_success": "目标网址已复制到剪贴板",
+      "open_destination": "在新标签页中打开目标网址"
+    },
     "search_placeholder": "搜索链接...",
     "no_results": "未找到链接。",
     "group_title": "链接列表",

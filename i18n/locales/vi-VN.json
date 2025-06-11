@@ -167,6 +167,16 @@
     "update_success": "Cập nhật liên kết thành công",
     "create_success": "Tạo liên kết thành công",
     "preview_mode_tip": "Liên kết ở chế độ xem trước có hiệu lực trong 5 phút.",
+    "preview": {
+      "title": "Xem trước liên kết",
+      "short_url": "Liên kết ngắn",
+      "destination_url": "URL đích",
+      "copy_short": "Sao chép liên kết ngắn",
+      "copy_destination": "Sao chép URL đích",
+      "copy_short_success": "Liên kết ngắn đã được sao chép vào clipboard",
+      "copy_destination_success": "URL đích đã được sao chép vào clipboard",
+      "open_destination": "Mở URL đích trong tab mới"
+    },
     "search_placeholder": "Tìm liên kết...",
     "no_results": "Không tìm thấy liên kết nào.",
     "group_title": "Liên kết",

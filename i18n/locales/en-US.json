@@ -167,6 +167,16 @@
     "update_success": "Link updated successfully",
     "create_success": "Link created successfully",
     "preview_mode_tip": "The preview mode link is valid for up to 5 minutes.",
+    "preview": {
+      "title": "Link Preview",
+      "short_url": "Short Link",
+      "destination_url": "Destination URL",
+      "copy_short": "Copy short link",
+      "copy_destination": "Copy destination URL",
+      "copy_short_success": "Short link copied to clipboard",
+      "copy_destination_success": "Destination URL copied to clipboard",
+      "open_destination": "Open destination URL in new tab"
+    },
     "search_placeholder": "Search links...",
     "no_results": "No links found.",
     "group_title": "Links",

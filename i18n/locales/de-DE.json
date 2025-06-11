@@ -166,6 +166,16 @@
     "update_success": "Link erfolgreich aktualisiert",
     "create_success": "Link erfolgreich erstellt",
     "preview_mode_tip": "Der Link im Vorschaumodus ist bis zu 5 Minuten gültig.",
+    "preview": {
+      "title": "Link-Vorschau",
+      "short_url": "Kurzer Link",
+      "destination_url": "Ziel-URL",
+      "copy_short": "Kurzen Link kopieren",
+      "copy_destination": "Ziel-URL kopieren",
+      "copy_short_success": "Kurzer Link in die Zwischenablage kopiert",
+      "copy_destination_success": "Ziel-URL in die Zwischenablage kopiert",
+      "open_destination": "Ziel-URL in neuem Tab öffnen"
+    },
     "search_placeholder": "Links suchen...",
     "no_results": "Keine Links gefunden.",
     "group_title": "Links",
