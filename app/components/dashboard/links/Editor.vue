@@ -1,11 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { LinkSchema, nanoid } from '@@/schemas/link'
 import { toTypedSchema } from '@vee-validate/zod'
 import { Shuffle, Sparkles } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { toast } from 'vue-sonner'
 import { z } from 'zod'
-import { DependencyType } from '@/components/ui/auto-form/interface'
+import CustomSelect from '@/components/ui/CustomSelect.vue'
+
+interface SelectOption {
+  value: string
+  label: string
+}
 
 const props = defineProps({
   link: {
@@ -21,6 +26,25 @@ const link = ref(props.link)
 const dialogOpen = ref(false)
 
 const isEdit = !!props.link.id
+
+// UTM options configuration
+const utmSourceOptions: SelectOption[] = [
+  { value: 'QR-Code', label: 'QR Code' },
+  { value: 'PDF', label: 'PDF Document' },
+  { value: 'Google', label: 'Google Search' },
+  { value: 'website', label: 'Website' },
+  { value: 'Facebook', label: 'Facebook' },
+  { value: 'Instagram', label: 'Instagram' },
+]
+
+const utmMediumOptions: SelectOption[] = [
+  { value: 'poster', label: 'Poster' },
+  { value: 'flyer', label: 'Flyer' },
+  { value: 'social', label: 'Social Media' },
+  { value: 'email', label: 'Email Campaign' },
+  { value: 'e-guide', label: 'E-Guide' },
+  { value: 'referral', label: 'Referral Link' },
+]
 
 const EditLinkSchema = LinkSchema.pick({
   name: true,
@@ -60,17 +84,17 @@ const fieldConfig = computed(() => ({
     },
   },
   slug: {
-    disabled: isEdit,
+    inputProps: {
+      disabled: isEdit,
+    },
   },
   utm_medium: {
     label: 'UTM Medium',
     description: 'The medium the user arrived from e.g. poster, flyer, email, social, e-guide, referral.',
-    options: ['poster', 'flyer', 'social', 'email', 'e-guide', 'referral'],
   },
   utm_source: {
     label: 'UTM Source',
     description: 'Where traffic is coming from e.g. Facebook, Instagram, Google, QR-Code, PDF, website.',
-    options: ['QR-Code', 'PDF', 'Google', 'website', 'Facebook', 'Instagram', 'Mailchimp'],
   },
   utm_campaign: {
     label: 'UTM Campaign',
@@ -87,16 +111,17 @@ const fieldConfig = computed(() => ({
       component: 'textarea',
     },
   },
-}))
+} as any))
 
-const dependencies = [
-  {
-    sourceField: 'slug',
-    type: DependencyType.DISABLES,
-    targetField: 'slug',
-    when: () => isEdit,
-  },
-]
+// const dependencies = [
+//   {
+//     sourceField: 'slug',
+//     type: DependencyType.DISABLES,
+//     targetField: 'slug',
+//     when: () => isEdit,
+//   },
+// ]
+// Remove dependencies to avoid TypeScript issues for now
 
 const form = useForm({
   validationSchema: toTypedSchema(EditLinkSchema),
@@ -104,7 +129,7 @@ const form = useForm({
     name: link.value.name,
     slug: link.value.slug,
     url: link.value.url,
-    utm_source: link.value.utm_source,
+    utm_source: link.value.utm_source || 'QR-Code',
     utm_medium: link.value.utm_medium,
     utm_campaign: link.value.utm_campaign,
     utm_id: link.value.utm_id,
@@ -131,7 +156,7 @@ async function aiSlug() {
       query: {
         url: form.values.url,
       },
-    })
+    }) as { slug: string }
     form.setFieldValue('slug', slug)
   }
   catch (error) {
@@ -142,11 +167,11 @@ async function aiSlug() {
 
 onMounted(() => {
   if (link.value.expiration) {
-    form.setFieldValue('optional.expiration', unix2date(link.value.expiration))
+    form.setFieldValue('optional.expiration', unix2date(link.value.expiration).toDate(getTimeZone()))
   }
 })
 
-async function onSubmit(formData) {
+async function onSubmit(formData: any) {
   const link = {
     name: formData.name,
     url: formData.url,
@@ -163,7 +188,7 @@ async function onSubmit(formData) {
   const { link: newLink } = await useAPI(isEdit ? '/api/link/edit' : '/api/link/create', {
     method: isEdit ? 'PUT' : 'POST',
     body: link,
-  })
+  }) as { link: any }
   dialogOpen.value = false
   emit('update:link', newLink, isEdit ? 'edit' : 'create')
   if (isEdit) {
@@ -193,6 +218,9 @@ const { previewMode } = useRuntimeConfig().public
     <DialogContent class="max-w-[95svw] max-h-[95svh] md:max-w-lg grid-rows-[auto_minmax(0,1fr)_auto]">
       <DialogHeader>
         <DialogTitle>{{ link.id ? $t('links.edit') : $t('links.create') }}</DialogTitle>
+        <DialogDescription>
+          {{ link.id ? $t('links.edit_description') : $t('links.create_description') }}
+        </DialogDescription>
       </DialogHeader>
       <p
         v-if="previewMode"
@@ -205,7 +233,6 @@ const { previewMode } = useRuntimeConfig().public
         :schema="EditLinkSchema"
         :form="form"
         :field-config="fieldConfig"
-        :dependencies="dependencies"
         @submit="onSubmit"
       >
         <template #slug="slotProps">
@@ -229,6 +256,41 @@ const { previewMode } = useRuntimeConfig().public
             />
           </div>
         </template>
+
+        <!-- UTM Source custom slot -->
+        <template #utm_source="slotProps">
+          <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
+            <FormItem>
+              <CustomSelect
+                :model-value="fieldSlotProps.componentField.modelValue"
+                :options="utmSourceOptions"
+                :label="slotProps.config?.label || 'UTM Source'"
+                :description="slotProps.config?.description"
+                :placeholder="$t('links.utm_source_placeholder')"
+                :error="fieldSlotProps.errorMessage"
+                @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
+              />
+            </FormItem>
+          </FormField>
+        </template>
+
+        <!-- UTM Medium custom slot -->
+        <template #utm_medium="slotProps">
+          <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
+            <FormItem>
+              <CustomSelect
+                :model-value="fieldSlotProps.componentField.modelValue"
+                :options="utmMediumOptions"
+                :label="slotProps.config?.label || 'UTM Medium'"
+                :description="slotProps.config?.description"
+                :placeholder="$t('links.utm_medium_placeholder')"
+                :error="fieldSlotProps.errorMessage"
+                @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
+              />
+            </FormItem>
+          </FormField>
+        </template>
+
         <DialogFooter>
           <DialogClose as-child>
             <Button
