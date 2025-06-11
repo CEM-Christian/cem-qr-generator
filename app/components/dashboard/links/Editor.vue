@@ -26,6 +26,11 @@ const link = ref(props.link)
 const dialogOpen = ref(false)
 const autoFormRef = ref()
 
+// Scroll indicator state
+const scrollContainer = ref<HTMLElement>()
+const showTopGradient = ref(false)
+const showBottomGradient = ref(false)
+
 const isEdit = !!props.link.id
 
 // UTM options configuration
@@ -172,7 +177,32 @@ onMounted(() => {
   if (link.value.expiration) {
     form.setFieldValue('optional.expiration', unix2date(link.value.expiration).toDate(getTimeZone()))
   }
+  // Initialize scroll indicators
+  nextTick(() => {
+    updateScrollIndicators()
+  })
 })
+
+// Scroll indicator functionality
+function updateScrollIndicators() {
+  if (!scrollContainer.value)
+    return
+
+  const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value
+
+  // Show top gradient if scrolled down
+  showTopGradient.value = scrollTop > 0
+
+  // Show bottom gradient if not at bottom
+  showBottomGradient.value = scrollTop < scrollHeight - clientHeight - 1
+}
+
+// Watch for content changes that might affect scroll
+watch([() => form.values, dialogOpen], () => {
+  nextTick(() => {
+    updateScrollIndicators()
+  })
+}, { deep: true })
 
 async function onSubmit(formData: any) {
   const link = {
@@ -249,118 +279,137 @@ const utmParams = computed(() => {
         <DialogDescription>
           {{ link.id ? $t('links.edit_description') : $t('links.create_description') }}
         </DialogDescription>
-      </DialogHeader>
-
-      <!-- Scrollable content area -->
-      <div class="overflow-y-auto px-1 space-y-4">
         <!-- Link Preview Section -->
         <LinkPreview
           :slug="form.values.slug"
           :url="form.values.url"
           :utm-params="utmParams"
           :base-url="baseUrl"
+          class="mt-2 mb-2"
+        />
+      </DialogHeader>
+
+      <!-- Scrollable content area with gradient indicators -->
+      <div class="relative">
+        <!-- Top gradient indicator -->
+        <div
+          v-if="showTopGradient"
+          class="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-background to-transparent pointer-events-none z-10"
         />
 
-        <p
-          v-if="previewMode"
-          class="text-sm text-muted-foreground px-1"
+        <!-- Scrollable content -->
+        <div
+          ref="scrollContainer"
+          class="overflow-y-auto px-1 space-y-4 max-h-full"
+          @scroll="updateScrollIndicators"
         >
-          {{ $t('links.preview_mode_tip') }}
-        </p>
-
-        <!-- Form Content -->
-        <div class="px-1">
-          <AutoForm
-            ref="autoFormRef"
-            class="space-y-2"
-            :schema="EditLinkSchema"
-            :form="form"
-            :field-config="fieldConfig"
-            @submit="onSubmit"
+          <p
+            v-if="previewMode"
+            class="text-sm text-muted-foreground px-1"
           >
-            <template #slug="slotProps">
-              <div
-                v-if="!isEdit"
-                class="relative"
-              >
-                <div class="flex absolute right-0 top-1 space-x-3">
-                  <Shuffle
-                    class="w-4 h-4 cursor-pointer"
-                    @click="randomSlug"
-                  />
-                  <Sparkles
-                    class="w-4 h-4 cursor-pointer"
-                    :class="{ 'animate-bounce': aiSlugPending }"
-                    @click="aiSlug"
+            {{ $t('links.preview_mode_tip') }}
+          </p>
+
+          <!-- Form Content -->
+          <div class="px-1">
+            <AutoForm
+              ref="autoFormRef"
+              class="space-y-2"
+              :schema="EditLinkSchema"
+              :form="form"
+              :field-config="fieldConfig"
+              @submit="onSubmit"
+            >
+              <template #slug="slotProps">
+                <div
+                  v-if="!isEdit"
+                  class="relative"
+                >
+                  <div class="flex absolute right-0 top-1 space-x-3">
+                    <Shuffle
+                      class="w-4 h-4 cursor-pointer"
+                      @click="randomSlug"
+                    />
+                    <Sparkles
+                      class="w-4 h-4 cursor-pointer"
+                      :class="{ 'animate-bounce': aiSlugPending }"
+                      @click="aiSlug"
+                    />
+                  </div>
+                  <AutoFormField
+                    v-bind="slotProps"
                   />
                 </div>
-                <AutoFormField
-                  v-bind="slotProps"
-                />
-              </div>
-            </template>
+              </template>
 
-            <!-- UTM Source custom slot -->
-            <template #utm_source="slotProps">
-              <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
-                <FormItem>
-                  <FormLabel>{{ slotProps.config?.label || 'UTM Source' }}</FormLabel>
-                  <FormDescription v-if="slotProps.config?.description">
-                    {{ slotProps.config.description }}
-                  </FormDescription>
-                  <Select
-                    :model-value="fieldSlotProps.componentField.modelValue"
-                    @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
-                  >
-                    <SelectTrigger>
-                      <SelectValue :placeholder="$t('links.utm_source_placeholder')" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem
-                        v-for="option in utmSourceOptions"
-                        :key="option.value"
-                        :value="option.value"
-                      >
-                        {{ option.label }}
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-            </template>
+              <!-- UTM Source custom slot -->
+              <template #utm_source="slotProps">
+                <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
+                  <FormItem>
+                    <FormLabel>{{ slotProps.config?.label || 'UTM Source' }}</FormLabel>
+                    <FormDescription v-if="slotProps.config?.description">
+                      {{ slotProps.config.description }}
+                    </FormDescription>
+                    <Select
+                      :model-value="fieldSlotProps.componentField.modelValue"
+                      @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
+                    >
+                      <SelectTrigger>
+                        <SelectValue :placeholder="$t('links.utm_source_placeholder')" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem
+                          v-for="option in utmSourceOptions"
+                          :key="option.value"
+                          :value="option.value"
+                        >
+                          {{ option.label }}
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                </FormField>
+              </template>
 
-            <!-- UTM Medium custom slot -->
-            <template #utm_medium="slotProps">
-              <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
-                <FormItem>
-                  <FormLabel>{{ slotProps.config?.label || 'UTM Medium' }}</FormLabel>
-                  <FormDescription v-if="slotProps.config?.description">
-                    {{ slotProps.config.description }}
-                  </FormDescription>
-                  <Select
-                    :model-value="fieldSlotProps.componentField.modelValue"
-                    @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
-                  >
-                    <SelectTrigger>
-                      <SelectValue :placeholder="$t('links.utm_medium_placeholder')" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem
-                        v-for="option in utmMediumOptions"
-                        :key="option.value"
-                        :value="option.value"
-                      >
-                        {{ option.label }}
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-            </template>
-          </AutoForm>
+              <!-- UTM Medium custom slot -->
+              <template #utm_medium="slotProps">
+                <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
+                  <FormItem>
+                    <FormLabel>{{ slotProps.config?.label || 'UTM Medium' }}</FormLabel>
+                    <FormDescription v-if="slotProps.config?.description">
+                      {{ slotProps.config.description }}
+                    </FormDescription>
+                    <Select
+                      :model-value="fieldSlotProps.componentField.modelValue"
+                      @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
+                    >
+                      <SelectTrigger>
+                        <SelectValue :placeholder="$t('links.utm_medium_placeholder')" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem
+                          v-for="option in utmMediumOptions"
+                          :key="option.value"
+                          :value="option.value"
+                        >
+                          {{ option.label }}
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                </FormField>
+              </template>
+            </AutoForm>
+          </div>
         </div>
+
+        <!-- Bottom gradient indicator -->
+        <div
+          v-if="showBottomGradient"
+          class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-background to-transparent pointer-events-none z-10"
+        />
       </div>
 
       <!-- Footer outside scrollable area -->
