@@ -11,7 +11,10 @@
     "edit": "编辑",
     "delete": "删除",
     "delete_success": "删除成功！",
-    "search": "搜索"
+    "search": "搜索",
+    "copy": "复制",
+    "copied_to_clipboard": "已复制到剪贴板",
+    "copy_failed": "复制失败"
   },
   "theme": {
     "toggle": "切换主题",
@@ -152,8 +155,17 @@
   },
   "links": {
     "name": "名称",
-    "name_description": "为您的链接设置一个友好的名称",
     "name_placeholder": "输入链接名称...",
+    "destination_url": "目标网址",
+    "destination_url_placeholder": "https://example.com",
+    "slug": "短链接标识",
+    "slug_description": "您链接的简短标识符",
+    "slug_placeholder": "输入自定义标识...",
+    "preview_label": "预览",
+    "short_url_preview": "短链接预览",
+    "generate_random_slug": "生成随机标识",
+    "generate_ai_slug": "生成AI标识",
+    "open_destination": "打开目标网址",
     "utm_source_placeholder": "选择流量来源",
     "utm_medium_placeholder": "选择媒体类型",
     "create": "创建链接",

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { LinkSchema, nanoid } from '@@/schemas/link'
 import { toTypedSchema } from '@vee-validate/zod'
-import { Shuffle, Sparkles } from 'lucide-vue-next'
+import { Copy, Shuffle, Sparkles } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { toast } from 'vue-sonner'
 import { z } from 'zod'
-import LinkPreview from './LinkPreview.vue'
 
 interface SelectOption {
   value: string
@@ -30,6 +29,8 @@ const autoFormRef = ref()
 const scrollContainer = ref<HTMLElement>()
 const showTopGradient = ref(false)
 const showBottomGradient = ref(false)
+const topGradientOpacity = ref(0)
+const bottomGradientOpacity = ref(0)
 
 const isEdit = !!props.link.id
 
@@ -86,14 +87,22 @@ const EditLinkSchema = LinkSchema.pick({
 const fieldConfig = computed(() => ({
   name: {
     label: t('links.name'),
-    description: t('links.name_description'),
     inputProps: {
       placeholder: t('links.name_placeholder'),
     },
   },
+  url: {
+    label: t('links.destination_url'),
+    inputProps: {
+      placeholder: t('links.destination_url_placeholder'),
+    },
+  },
   slug: {
+    label: t('links.slug'),
+    description: t('links.slug_description'),
     inputProps: {
       disabled: isEdit,
+      placeholder: t('links.slug_placeholder'),
     },
   },
   utm_source: {
@@ -189,12 +198,33 @@ function updateScrollIndicators() {
     return
 
   const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value
+  const maxScrollTop = scrollHeight - clientHeight
 
-  // Show top gradient if scrolled down
-  showTopGradient.value = scrollTop > 0
+  // Height of the gradient indicators in pixels
+  const indicatorHeight = 16 // h-4 = 16px
 
-  // Show bottom gradient if not at bottom
-  showBottomGradient.value = scrollTop < scrollHeight - clientHeight - 1
+  // Calculate top gradient opacity based on scroll distance
+  if (scrollTop > 0) {
+    showTopGradient.value = true
+    // Fade in over the indicator height distance
+    topGradientOpacity.value = Math.min(scrollTop / (indicatorHeight * 2), 1)
+  }
+  else {
+    showTopGradient.value = false
+    topGradientOpacity.value = 0
+  }
+
+  // Calculate bottom gradient opacity based on remaining scroll distance
+  const remainingScroll = maxScrollTop - scrollTop
+  if (remainingScroll > 0) {
+    showBottomGradient.value = true
+    // Fade in over the indicator height distance
+    bottomGradientOpacity.value = Math.min(remainingScroll / indicatorHeight, 1)
+  }
+  else {
+    showBottomGradient.value = false
+    bottomGradientOpacity.value = 0
+  }
 }
 
 // Watch for content changes that might affect scroll
@@ -240,9 +270,6 @@ function handleExternalSubmit() {
 
 const { previewMode } = useRuntimeConfig().public
 
-// Composable for UTM parameter building
-const { buildUtmParams } = useUtmBuilder()
-
 // Computed properties for link preview
 const baseUrl = computed(() => {
   if (import.meta.server)
@@ -250,14 +277,35 @@ const baseUrl = computed(() => {
   return window.location.origin
 })
 
-const utmParams = computed(() => {
-  return buildUtmParams({
-    utm_source: form.values.utm_source,
-    utm_medium: form.values.utm_medium,
-    utm_campaign: form.values.utm_campaign,
-    utm_id: form.values.utm_id,
-  })
+// Computed properties for inline preview
+const shortUrl = computed(() => {
+  if (!form.values.slug || !baseUrl.value)
+    return ''
+  return `${baseUrl.value}/${form.values.slug}`
 })
+
+async function copyShortUrl() {
+  if (!shortUrl.value)
+    return
+
+  try {
+    await navigator.clipboard.writeText(shortUrl.value)
+    toast.success(t('common.copied_to_clipboard'))
+  }
+  catch (error) {
+    console.error('Failed to copy to clipboard:', error)
+    toast.error(t('common.copy_failed'))
+  }
+}
+
+// Computed styles for gradient indicators with dynamic opacity
+const topGradientStyle = computed(() => ({
+  opacity: topGradientOpacity.value,
+}))
+
+const bottomGradientStyle = computed(() => ({
+  opacity: bottomGradientOpacity.value,
+}))
 </script>
 
 <template>
@@ -273,28 +321,21 @@ const utmParams = computed(() => {
         </Button>
       </slot>
     </DialogTrigger>
-    <DialogContent class="max-w-[95svw] max-h-[95svh] md:max-w-lg grid grid-rows-[auto_minmax(0,1fr)_auto]">
+    <DialogContent class="max-w-[95svw] max-h-[95svh] md:max-w-2xl grid grid-rows-[auto_minmax(0,1fr)_auto]">
       <DialogHeader>
         <DialogTitle>{{ link.id ? $t('links.edit') : $t('links.create') }}</DialogTitle>
         <DialogDescription>
           {{ link.id ? $t('links.edit_description') : $t('links.create_description') }}
         </DialogDescription>
-        <!-- Link Preview Section -->
-        <LinkPreview
-          :slug="form.values.slug"
-          :url="form.values.url"
-          :utm-params="utmParams"
-          :base-url="baseUrl"
-          class="mt-2 mb-2"
-        />
       </DialogHeader>
 
-      <!-- Scrollable content area with gradient indicators -->
+      <!-- Scrollable content area with shadow indicators -->
       <div class="relative">
         <!-- Top gradient indicator -->
         <div
           v-if="showTopGradient"
-          class="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-background to-transparent pointer-events-none z-10"
+          class="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-black/20 via-black/10 to-transparent dark:from-white/20 dark:via-white/10 dark:to-transparent pointer-events-none z-10"
+          :style="topGradientStyle"
         />
 
         <!-- Scrollable content -->
@@ -321,25 +362,57 @@ const utmParams = computed(() => {
               @submit="onSubmit"
             >
               <template #slug="slotProps">
-                <div
-                  v-if="!isEdit"
-                  class="relative"
-                >
-                  <div class="flex absolute right-0 top-1 space-x-3">
-                    <Shuffle
-                      class="w-4 h-4 cursor-pointer"
-                      @click="randomSlug"
-                    />
-                    <Sparkles
-                      class="w-4 h-4 cursor-pointer"
-                      :class="{ 'animate-bounce': aiSlugPending }"
-                      @click="aiSlug"
-                    />
-                  </div>
-                  <AutoFormField
-                    v-bind="slotProps"
-                  />
-                </div>
+                <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
+                  <FormItem>
+                    <FormLabel>{{ slotProps.config?.label || $t('links.slug') }}</FormLabel>
+                    <div class="relative">
+                      <div
+                        v-if="!isEdit"
+                        class="flex absolute right-3 top-3 space-x-3 z-10"
+                      >
+                        <Shuffle
+                          class="w-4 h-4 cursor-pointer"
+                          :title="$t('links.generate_random_slug')"
+                          @click="randomSlug"
+                        />
+                        <Sparkles
+                          class="w-4 h-4 cursor-pointer"
+                          :class="{ 'animate-bounce': aiSlugPending }"
+                          :title="$t('links.generate_ai_slug')"
+                          @click="aiSlug"
+                        />
+                      </div>
+                      <FormControl>
+                        <Input
+                          v-bind="fieldSlotProps.componentField"
+                          :placeholder="slotProps.config?.inputProps?.placeholder || $t('links.slug_placeholder')"
+                          :disabled="slotProps.config?.inputProps?.disabled || false"
+                        />
+                      </FormControl>
+                    </div>
+
+                    <!-- Short URL Preview in Description -->
+                    <FormDescription v-if="shortUrl" class="flex items-center gap-2">
+                      <span>{{ $t('links.preview_label') }}: </span>
+                      <span class="text-sm break-all">{{ shortUrl }}</span>
+                      <div class="flex items-center gap-1 flex-shrink-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          class="h-6 w-6 p-0"
+                          :title="$t('common.copy')"
+                          @click="copyShortUrl"
+                        >
+                          <Copy class="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </FormDescription>
+                    <FormDescription v-else>
+                      {{ slotProps.config?.description || $t('links.slug_description') }}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                </FormField>
               </template>
 
               <!-- UTM Source custom slot -->
@@ -408,7 +481,8 @@ const utmParams = computed(() => {
         <!-- Bottom gradient indicator -->
         <div
           v-if="showBottomGradient"
-          class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-background to-transparent pointer-events-none z-10"
+          class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-black/20 via-black/10 to-transparent dark:from-white/20 dark:via-white/10 dark:to-transparent pointer-events-none z-10"
+          :style="bottomGradientStyle"
         />
       </div>
 

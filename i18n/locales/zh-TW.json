@@ -12,7 +12,10 @@
     "delete": "刪除",
     "delete_success": "刪除成功！",
     "search": "搜尋",
-    "download": "下載"
+    "download": "下載",
+    "copy": "複製",
+    "copied_to_clipboard": "已複製到剪貼簿",
+    "copy_failed": "複製失敗"
   },
   "theme": {
     "toggle": "切換主题",
@@ -153,8 +156,17 @@
   },
   "links": {
     "name": "名稱",
-    "name_description": "為您的連結設置一個友好的名稱",
     "name_placeholder": "輸入連結名稱...",
+    "destination_url": "目標網址",
+    "destination_url_placeholder": "https://example.com",
+    "slug": "短連結標識",
+    "slug_description": "您連結的簡短標識符",
+    "slug_placeholder": "輸入自定義標識...",
+    "preview_label": "預覽",
+    "short_url_preview": "短連結預覽",
+    "generate_random_slug": "生成隨機標識",
+    "generate_ai_slug": "生成AI標識",
+    "open_destination": "打開目標網址",
     "utm_source_placeholder": "選擇流量來源",
     "utm_medium_placeholder": "選擇媒體類型",
     "create": "創建連結",

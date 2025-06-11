@@ -12,7 +12,10 @@
     "delete": "Xóa",
     "delete_success": "Xóa thành công!",
     "search": "Tìm kiếm",
-    "download": "Tải xuống"
+    "download": "Tải xuống",
+    "copy": "Sao chép",
+    "copied_to_clipboard": "Đã sao chép vào clipboard",
+    "copy_failed": "Sao chép thất bại"
   },
   "theme": {
     "toggle": "Chuyển đổi giao diện",
@@ -153,8 +156,17 @@
   },
   "links": {
     "name": "Tên",
-    "name_description": "Tên thân thiện cho liên kết của bạn",
     "name_placeholder": "Nhập tên liên kết...",
+    "destination_url": "URL đích",
+    "destination_url_placeholder": "https://vidu.com",
+    "slug": "Slug",
+    "slug_description": "Định danh ngắn cho liên kết của bạn",
+    "slug_placeholder": "Nhập slug tùy chỉnh...",
+    "preview_label": "Xem trước",
+    "short_url_preview": "Xem trước URL ngắn",
+    "generate_random_slug": "Tạo slug ngẫu nhiên",
+    "generate_ai_slug": "Tạo slug AI",
+    "open_destination": "Mở URL đích",
     "utm_source_placeholder": "Chọn nguồn traffic",
     "utm_medium_placeholder": "Chọn loại phương tiện",
     "create": "Tạo liên kết",
