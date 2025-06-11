@@ -158,7 +158,7 @@
     "utm_source_placeholder": "Select traffic source",
     "utm_medium_placeholder": "Select medium type",
     "create": "Create Link",
-    "create_description": "Fill in the details below to create a new shortened link with optional UTM tracking parameters.",
+    "create_description": "Create a new shortened link with optional UTM tracking parameters.",
     "edit": "Edit Link",
     "edit_description": "Update the link details and UTM tracking parameters below.",
     "delete_confirm_title": "Are you absolutely sure?",

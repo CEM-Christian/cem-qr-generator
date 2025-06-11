@@ -29,21 +29,23 @@ const isEdit = !!props.link.id
 
 // UTM options configuration
 const utmSourceOptions: SelectOption[] = [
-  { value: 'QR-Code', label: 'QR Code' },
-  { value: 'PDF', label: 'PDF Document' },
-  { value: 'Google', label: 'Google Search' },
-  { value: 'website', label: 'Website' },
-  { value: 'Facebook', label: 'Facebook' },
-  { value: 'Instagram', label: 'Instagram' },
+  { value: 'qr-code', label: 'QR Code' },
+  { value: 'pdf', label: 'PDF Document' },
+  { value: 'google', label: 'Google Search' },
+  { value: 'bing', label: 'Bing Search' },
+  { value: 'facebook', label: 'Facebook' },
+  { value: 'instagram', label: 'Instagram' },
+  { value: 'email', label: 'Email' },
 ]
 
 const utmMediumOptions: SelectOption[] = [
-  { value: 'poster', label: 'Poster' },
   { value: 'flyer', label: 'Flyer' },
+  { value: 'poster', label: 'Poster' },
+  { value: 'banner', label: 'Banner' },
+  { value: 'e-guide', label: 'E-Guide' },
   { value: 'social', label: 'Social Media' },
   { value: 'email', label: 'Email Campaign' },
-  { value: 'e-guide', label: 'E-Guide' },
-  { value: 'referral', label: 'Referral Link' },
+  { value: 'website', label: 'Website' },
 ]
 
 const EditLinkSchema = LinkSchema.pick({
@@ -88,22 +90,22 @@ const fieldConfig = computed(() => ({
       disabled: isEdit,
     },
   },
-  utm_medium: {
-    label: 'UTM Medium',
-    description: 'The medium the user arrived from e.g. poster, flyer, email, social, e-guide, referral.',
-  },
   utm_source: {
     label: 'UTM Source',
-    description: 'Where traffic is coming from e.g. Facebook, Instagram, Google, QR-Code, PDF, website.',
+    description: 'Where user is coming from',
+  },
+  utm_medium: {
+    label: 'UTM Medium',
+    description: 'The medium of the source',
   },
   utm_campaign: {
     label: 'UTM Campaign',
-    description: 'A product promotion or strategic campaign e.g. Excelencia-Live-25, Kindy-Open-Day, Principals-Tour',
+    description: 'A promotion or strategic campaign e.g. Excelencia-Live-25, Kindy-Open-Day, Principals-Tour',
     options: ['Excelencia-Live', 'Kindy-Open-Day', 'Principals-Tour'],
   },
   utm_id: {
     label: 'UTM ID',
-    description: 'Specific instance of an ads campaign (usually just copy-paste the campaign name)',
+    description: 'Specific instance of a campaign (usually just copy-paste the campaign name)',
     options: ['Excelencia-Live-07-25', 'Kindy-Open-Day-11-24', 'Principals-Tour-01-25'],
   },
   optional: {
