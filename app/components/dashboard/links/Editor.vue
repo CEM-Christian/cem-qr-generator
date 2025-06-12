@@ -337,7 +337,7 @@ const bottomGradientStyle = computed(() => ({
     <DialogTrigger as-child>
       <slot>
         <Button
-          class="ml-2"
+          class="sm:ml-2"
           variant="outline"
           @click="randomSlug"
         >
