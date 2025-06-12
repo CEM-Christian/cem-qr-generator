@@ -423,6 +423,7 @@ const bottomGradientStyle = computed(() => ({
                           variant="ghost"
                           size="sm"
                           class="h-6 w-6 p-0"
+                          type="button"
                           :title="$t('common.copy')"
                           @click="copyShortUrl"
                         >
