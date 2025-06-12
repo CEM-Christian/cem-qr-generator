@@ -5,6 +5,7 @@ import { BarChart3, Copy, Shuffle, Sparkles } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { toast } from 'vue-sonner'
 import { z } from 'zod'
+import { ScrollIndicators } from '@/components/ui/scroll-indicators'
 
 interface SelectOption {
   value: string
@@ -24,13 +25,6 @@ const { t } = useI18n()
 const link = ref(props.link)
 const dialogOpen = ref(false)
 const autoFormRef = ref()
-
-// Scroll indicator state
-const scrollContainer = ref<HTMLElement>()
-const showTopGradient = ref(false)
-const showBottomGradient = ref(false)
-const topGradientOpacity = ref(0)
-const bottomGradientOpacity = ref(0)
 
 const isEdit = !!props.link.id
 
@@ -179,6 +173,12 @@ const form = useForm({
   keepValuesOnUnmount: isEdit,
 })
 
+// Scroll indicators setup
+const scrollContainer = ref<HTMLElement>()
+const scrollIndicators = useScrollIndicators(scrollContainer, {
+  watchTargets: [() => form.values, () => dialogOpen.value],
+})
+
 function randomSlug() {
   form.setFieldValue('slug', nanoid()())
 }
@@ -207,53 +207,25 @@ onMounted(() => {
   if (link.value.expiration) {
     form.setFieldValue('optional.expiration', unix2date(link.value.expiration).toDate(getTimeZone()))
   }
-  // Initialize scroll indicators
+
+  // Set up a final fallback observer for AutoForm changes
   nextTick(() => {
-    updateScrollIndicators()
+    if (scrollContainer.value) {
+      // Observe for any click events that might trigger accordion changes
+      scrollContainer.value.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement
+        // Check if clicked element looks like an accordion trigger
+        if (target.matches('button') || target.closest('button')) {
+          console.log('Button clicked, scheduling update:', target)
+          // Schedule update after potential accordion animation
+          setTimeout(() => {
+            scrollIndicators.scheduleUpdate()
+          }, 150)
+        }
+      })
+    }
   })
 })
-
-// Scroll indicator functionality
-function updateScrollIndicators() {
-  if (!scrollContainer.value)
-    return
-
-  const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value
-  const maxScrollTop = scrollHeight - clientHeight
-
-  // Height of the gradient indicators in pixels
-  const indicatorHeight = 16 // h-4 = 16px
-
-  // Calculate top gradient opacity based on scroll distance
-  if (scrollTop > 0) {
-    showTopGradient.value = true
-    // Fade in over the indicator height distance
-    topGradientOpacity.value = Math.min(scrollTop / (indicatorHeight * 2), 1)
-  }
-  else {
-    showTopGradient.value = false
-    topGradientOpacity.value = 0
-  }
-
-  // Calculate bottom gradient opacity based on remaining scroll distance
-  const remainingScroll = maxScrollTop - scrollTop
-  if (remainingScroll > 0) {
-    showBottomGradient.value = true
-    // Fade in over the indicator height distance
-    bottomGradientOpacity.value = Math.min(remainingScroll / indicatorHeight, 1)
-  }
-  else {
-    showBottomGradient.value = false
-    bottomGradientOpacity.value = 0
-  }
-}
-
-// Watch for content changes that might affect scroll
-watch([() => form.values, dialogOpen], () => {
-  nextTick(() => {
-    updateScrollIndicators()
-  })
-}, { deep: true })
 
 async function onSubmit(formData: any) {
   // Convert nested form data back to flat structure for API
@@ -321,15 +293,6 @@ async function copyShortUrl() {
     toast.error(t('common.copy_failed'))
   }
 }
-
-// Computed styles for gradient indicators with dynamic opacity
-const topGradientStyle = computed(() => ({
-  opacity: topGradientOpacity.value,
-}))
-
-const bottomGradientStyle = computed(() => ({
-  opacity: bottomGradientOpacity.value,
-}))
 </script>
 
 <template>
@@ -355,18 +318,19 @@ const bottomGradientStyle = computed(() => ({
 
       <!-- Scrollable content area with shadow indicators -->
       <div class="relative">
-        <!-- Top gradient indicator -->
-        <div
-          v-if="showTopGradient"
-          class="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-black/20 via-black/10 to-transparent dark:from-white/20 dark:via-white/10 dark:to-transparent pointer-events-none z-10"
-          :style="topGradientStyle"
+        <!-- Scroll indicators component -->
+        <ScrollIndicators
+          :show-top-gradient="scrollIndicators.showTopGradient.value"
+          :show-bottom-gradient="scrollIndicators.showBottomGradient.value"
+          :top-gradient-opacity="scrollIndicators.topGradientOpacity.value"
+          :bottom-gradient-opacity="scrollIndicators.bottomGradientOpacity.value"
         />
 
         <!-- Scrollable content -->
         <div
           ref="scrollContainer"
           class="overflow-y-auto px-1 space-y-4 max-h-full"
-          @scroll="updateScrollIndicators"
+          @scroll="scrollIndicators.updateScrollIndicators"
         >
           <p
             v-if="previewMode"
@@ -425,7 +389,7 @@ const bottomGradientStyle = computed(() => ({
                           class="h-6 w-6 p-0"
                           type="button"
                           :title="$t('common.copy')"
-                          @click="copyShortUrl"
+                          @click.stop.prevent="copyShortUrl"
                         >
                           <Copy class="h-3 w-3" />
                         </Button>
@@ -493,9 +457,9 @@ const bottomGradientStyle = computed(() => ({
                             @update:model-value="mediumSlotProps.componentField['onUpdate:modelValue']"
                           >
                             <SelectTrigger
-                                class="data-[placeholder]:text-muted-foreground"
-                                >
-                              <SelectValue 
+                              class="data-[placeholder]:text-muted-foreground"
+                            >
+                              <SelectValue
                                 :placeholder="$t('links.form.utm.medium.placeholder')"
                               />
                             </SelectTrigger>
@@ -553,13 +517,6 @@ const bottomGradientStyle = computed(() => ({
             </AutoForm>
           </div>
         </div>
-
-        <!-- Bottom gradient indicator -->
-        <div
-          v-if="showBottomGradient"
-          class="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-black/20 via-black/10 to-transparent dark:from-white/20 dark:via-white/10 dark:to-transparent pointer-events-none z-10"
-          :style="bottomGradientStyle"
-        />
       </div>
 
       <!-- Footer outside scrollable area -->

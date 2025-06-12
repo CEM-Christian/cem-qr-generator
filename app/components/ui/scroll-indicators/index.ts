@@ -1,0 +1,1 @@
+export { default as ScrollIndicators } from './ScrollIndicators.vue'
