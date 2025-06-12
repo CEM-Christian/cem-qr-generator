@@ -416,7 +416,7 @@ const bottomGradientStyle = computed(() => ({
                     </div>
 
                     <!-- Short URL Preview in Description -->
-                    <FormDescription v-if="shortUrl" class="flex items-center text-xs gap-2">
+                    <FormDescription v-if="shortUrl" class="flex items-center text-sm gap-2">
                       <span class="pl-1 break-all">{{ shortUrl }}</span>
                       <div class="flex items-center gap-1 flex-shrink-0">
                         <Button
@@ -491,8 +491,12 @@ const bottomGradientStyle = computed(() => ({
                             :model-value="mediumSlotProps.componentField.modelValue"
                             @update:model-value="mediumSlotProps.componentField['onUpdate:modelValue']"
                           >
-                            <SelectTrigger>
-                              <SelectValue :placeholder="$t('links.form.utm.medium.placeholder')" />
+                            <SelectTrigger
+                                class="data-[placeholder]:text-muted-foreground"
+                                >
+                              <SelectValue 
+                                :placeholder="$t('links.form.utm.medium.placeholder')"
+                              />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem
