@@ -392,17 +392,17 @@ const bottomGradientStyle = computed(() => ({
                     <div class="relative">
                       <div
                         v-if="!isEdit"
-                        class="flex absolute right-3 top-3 space-x-3 z-10"
+                        class="flex h-full items-center absolute right-3 space-x-3 z-10"
                       >
                         <Shuffle
                           class="w-4 h-4 cursor-pointer"
-                          :title="$t('links.generate_random_slug')"
+                          :title="$t('links.actions.generate_random_slug')"
                           @click="randomSlug"
                         />
                         <Sparkles
                           class="w-4 h-4 cursor-pointer"
                           :class="{ 'animate-bounce': aiSlugPending }"
-                          :title="$t('links.generate_ai_slug')"
+                          :title="$t('links.actions.generate_ai_slug')"
                           @click="aiSlug"
                         />
                       </div>
@@ -440,7 +440,7 @@ const bottomGradientStyle = computed(() => ({
 
               <!-- Custom UTM slot with styled container -->
               <template #utm>
-                <div class="bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 shadow-md rounded-lg p-4 lg:p-6">
+                <div class="bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 rounded-lg p-4 lg:p-6">
                   <div class="flex items-center mb-4">
                     <BarChart3 class="w-5 h-5 mr-2" />
                     <h3 class="text-lg font-semibold">

@@ -175,12 +175,12 @@
         "section_title": "UTM Tracking Parameters",
         "source": {
           "label": "Source",
-          // "description": "Where user is coming from",
+          "description": "Where user is coming from",
           "placeholder": "Select traffic source"
         },
         "medium": {
           "label": "Medium",
-          // "description": "The medium of the source",
+          "description": "The medium of the source",
           "placeholder": "Select medium type"
         },
         "campaign": {
