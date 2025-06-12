@@ -155,30 +155,63 @@
     }
   },
   "links": {
-    "name": "名稱",
-    "name_placeholder": "輸入連結名稱...",
-    "destination_url": "目標網址",
-    "destination_url_placeholder": "https://example.com",
-    "slug": "短連結標識",
-    "slug_description": "您連結的簡短標識符",
-    "slug_placeholder": "輸入自定義標識...",
-    "preview_label": "預覽",
-    "short_url_preview": "短連結預覽",
-    "generate_random_slug": "生成隨機標識",
-    "generate_ai_slug": "生成AI標識",
-    "open_destination": "打開目標網址",
-    "utm_source_placeholder": "選擇流量來源",
-    "utm_medium_placeholder": "選擇媒體類型",
-    "create": "創建連結",
-    "create_description": "填寫下面的詳細信息以創建帶有可選UTM跟蹤參數的新短連結。",
-    "edit": "編輯連結",
-    "edit_description": "在下面更新連結詳細信息和UTM跟蹤參數。",
-    "delete_confirm_title": "確定要刪除嗎？",
-    "delete_confirm_desc": "此操作無法撤銷。这將從伺服器中永久刪除您的連結。",
-    "delete_success": "刪除成功！",
-    "update_success": "連結更新成功",
-    "create_success": "連結創建成功",
-    "preview_mode_tip": "預覽模式下的連結最多有效5分鐘",
+    "form": {
+      "name": {
+        "label": "名稱",
+        "description": "連結的友好名稱",
+        "placeholder": "輸入連結名稱..."
+      },
+      "destination_url": {
+        "label": "目標網址",
+        "description": "用戶將被重新導向到的URL",
+        "placeholder": "https://example.com"
+      },
+      "slug": {
+        "label": "短連結標識",
+        "description": "您連結的簡短標識符",
+        "placeholder": "輸入自定義標識..."
+      },
+      "utm": {
+        "section_title": "UTM跟蹤參數",
+        "source": {
+          "label": "UTM來源",
+          "description": "用戶來自哪裡",
+          "placeholder": "選擇流量來源"
+        },
+        "medium": {
+          "label": "UTM媒介",
+          "description": "來源的媒介",
+          "placeholder": "選擇媒體類型"
+        },
+        "campaign": {
+          "label": "UTM活動",
+          "description": "促銷或戰略活動，例如：Excelencia-Live-25, Kindy-Open-Day, Principals-Tour"
+        },
+        "id": {
+          "label": "UTM ID",
+          "description": "活動的具體實例（通常只需複製貼上活動名稱）"
+        }
+      }
+    },
+    "actions": {
+      "create": "創建連結",
+      "edit": "編輯連結",
+      "preview_label": "預覽",
+      "short_url_preview": "短連結預覽",
+      "generate_random_slug": "生成隨機標識",
+      "generate_ai_slug": "生成AI標識",
+      "open_destination": "打開目標網址"
+    },
+    "messages": {
+      "create_description": "創建帶有可選UTM跟蹤參數的新短連結。",
+      "edit_description": "在下面更新連結詳細信息和UTM跟蹤參數。",
+      "delete_confirm_title": "確定要刪除嗎？",
+      "delete_confirm_desc": "此操作無法撤銷。这將從伺服器中永久刪除您的連結。",
+      "delete_success": "刪除成功！",
+      "update_success": "連結更新成功",
+      "create_success": "連結創建成功",
+      "preview_mode_tip": "預覽模式下的連結最多有效5分鐘"
+    },
     "preview": {
       "title": "連結預覽",
       "short_url": "短連結",

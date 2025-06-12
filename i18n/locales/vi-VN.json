@@ -155,30 +155,63 @@
     }
   },
   "links": {
-    "name": "Tên",
-    "name_placeholder": "Nhập tên liên kết...",
-    "destination_url": "URL đích",
-    "destination_url_placeholder": "https://vidu.com",
-    "slug": "Slug",
-    "slug_description": "Định danh ngắn cho liên kết của bạn",
-    "slug_placeholder": "Nhập slug tùy chỉnh...",
-    "preview_label": "Xem trước",
-    "short_url_preview": "Xem trước URL ngắn",
-    "generate_random_slug": "Tạo slug ngẫu nhiên",
-    "generate_ai_slug": "Tạo slug AI",
-    "open_destination": "Mở URL đích",
-    "utm_source_placeholder": "Chọn nguồn traffic",
-    "utm_medium_placeholder": "Chọn loại phương tiện",
-    "create": "Tạo liên kết",
-    "create_description": "Điền thông tin chi tiết bên dưới để tạo liên kết rút gọn mới với các tham số theo dõi UTM tùy chọn.",
-    "edit": "Chỉnh sửa liên kết",
-    "edit_description": "Cập nhật chi tiết liên kết và các tham số theo dõi UTM bên dưới.",
-    "delete_confirm_title": "Bạn có chắc chắn không?",
-    "delete_confirm_desc": "Hành động này không thể hoàn tác. Điều này sẽ xóa hoàn toàn liên kết khỏi máy chủ.",
-    "delete_success": "Xóa thành công!",
-    "update_success": "Cập nhật liên kết thành công",
-    "create_success": "Tạo liên kết thành công",
-    "preview_mode_tip": "Liên kết ở chế độ xem trước có hiệu lực trong 5 phút.",
+    "form": {
+      "name": {
+        "label": "Tên",
+        "description": "Tên thân thiện cho liên kết của bạn",
+        "placeholder": "Nhập tên liên kết..."
+      },
+      "destination_url": {
+        "label": "URL đích",
+        "description": "URL mà người dùng sẽ được chuyển hướng đến",
+        "placeholder": "https://vidu.com"
+      },
+      "slug": {
+        "label": "Slug",
+        "description": "Định danh ngắn cho liên kết của bạn",
+        "placeholder": "Nhập slug tùy chỉnh..."
+      },
+      "utm": {
+        "section_title": "Tham số theo dõi UTM",
+        "source": {
+          "label": "Nguồn UTM",
+          "description": "Người dùng đến từ đâu",
+          "placeholder": "Chọn nguồn traffic"
+        },
+        "medium": {
+          "label": "Phương tiện UTM",
+          "description": "Phương tiện của nguồn",
+          "placeholder": "Chọn loại phương tiện"
+        },
+        "campaign": {
+          "label": "Chiến dịch UTM",
+          "description": "Một chương trình khuyến mãi hoặc chiến dịch chiến lược ví dụ: Excelencia-Live-25, Kindy-Open-Day, Principals-Tour"
+        },
+        "id": {
+          "label": "ID UTM",
+          "description": "Trường hợp cụ thể của một chiến dịch (thường chỉ sao chép tên chiến dịch)"
+        }
+      }
+    },
+    "actions": {
+      "create": "Tạo liên kết",
+      "edit": "Chỉnh sửa liên kết",
+      "preview_label": "Xem trước",
+      "short_url_preview": "Xem trước URL ngắn",
+      "generate_random_slug": "Tạo slug ngẫu nhiên",
+      "generate_ai_slug": "Tạo slug AI",
+      "open_destination": "Mở URL đích"
+    },
+    "messages": {
+      "create_description": "Tạo liên kết rút gọn mới với các tham số theo dõi UTM tùy chọn.",
+      "edit_description": "Cập nhật chi tiết liên kết và các tham số theo dõi UTM bên dưới.",
+      "delete_confirm_title": "Bạn có chắc chắn không?",
+      "delete_confirm_desc": "Hành động này không thể hoàn tác. Điều này sẽ xóa hoàn toàn liên kết khỏi máy chủ.",
+      "delete_success": "Xóa thành công!",
+      "update_success": "Cập nhật liên kết thành công",
+      "create_success": "Tạo liên kết thành công",
+      "preview_mode_tip": "Liên kết ở chế độ xem trước có hiệu lực trong 5 phút."
+    },
     "preview": {
       "title": "Xem trước liên kết",
       "short_url": "Liên kết ngắn",

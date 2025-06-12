@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LinkSchema, nanoid } from '@@/schemas/link'
 import { toTypedSchema } from '@vee-validate/zod'
-import { Copy, Shuffle, Sparkles } from 'lucide-vue-next'
+import { BarChart3, Copy, Shuffle, Sparkles } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { toast } from 'vue-sonner'
 import { z } from 'zod'
@@ -55,73 +55,96 @@ const utmMediumOptions: SelectOption[] = [
   { value: 'website', label: 'Website' },
 ]
 
-const EditLinkSchema = LinkSchema.pick({
-  name: true,
-  url: true,
-  slug: true,
-  utm_source: true,
-  utm_medium: true,
-  utm_campaign: true,
-  utm_id: true,
-}).extend({
-  optional: LinkSchema.omit({
-    id: true,
-    name: true,
-    url: true,
-    slug: true,
-    utm_source: true,
-    utm_medium: true,
-    utm_campaign: true,
-    utm_id: true,
-    createdAt: true,
-    updatedAt: true,
-    title: true,
-    description: true,
-    image: true,
-    qr_style_options: true,
-  }).extend({
+// Editor-specific schema with nested UTM structure for form rendering
+const EditorFormSchema = z.object({
+  name: LinkSchema.shape.name,
+  url: LinkSchema.shape.url,
+  slug: LinkSchema.shape.slug,
+  utm: z.object({
+    source: LinkSchema.shape.utm_source,
+    medium: LinkSchema.shape.utm_medium,
+    campaign: LinkSchema.shape.utm_campaign,
+    id: LinkSchema.shape.utm_id,
+  }).optional(),
+  optional: z.object({
+    comment: LinkSchema.shape.comment,
     expiration: z.coerce.date().optional(),
   }).optional(),
 })
 
+// Data mapping functions
+function flatToNested(linkData: any) {
+  return {
+    name: linkData.name,
+    url: linkData.url,
+    slug: linkData.slug,
+    utm: {
+      source: linkData.utm_source,
+      medium: linkData.utm_medium,
+      campaign: linkData.utm_campaign,
+      id: linkData.utm_id,
+    },
+    optional: {
+      comment: linkData.comment,
+      expiration: linkData.expiration,
+    },
+  }
+}
+
+function nestedToFlat(formData: any) {
+  return {
+    name: formData.name,
+    url: formData.url,
+    slug: formData.slug,
+    utm_source: formData.utm?.source,
+    utm_medium: formData.utm?.medium,
+    utm_campaign: formData.utm?.campaign,
+    utm_id: formData.utm?.id,
+    comment: formData.optional?.comment,
+    expiration: formData.optional?.expiration,
+  }
+}
+
 const fieldConfig = computed(() => ({
   name: {
-    label: t('links.name'),
+    label: t('links.form.name.label'),
     inputProps: {
-      placeholder: t('links.name_placeholder'),
+      placeholder: t('links.form.name.placeholder'),
     },
   },
   url: {
-    label: t('links.destination_url'),
+    label: t('links.form.destination_url.label'),
     inputProps: {
-      placeholder: t('links.destination_url_placeholder'),
+      placeholder: t('links.form.destination_url.placeholder'),
     },
   },
   slug: {
-    label: t('links.slug'),
-    description: t('links.slug_description'),
+    label: t('links.form.slug.label'),
+    description: t('links.form.slug.description'),
     inputProps: {
       disabled: isEdit,
-      placeholder: t('links.slug_placeholder'),
+      placeholder: t('links.form.slug.placeholder'),
     },
   },
-  utm_source: {
-    label: 'UTM Source',
-    description: 'Where user is coming from',
-  },
-  utm_medium: {
-    label: 'UTM Medium',
-    description: 'The medium of the source',
-  },
-  utm_campaign: {
-    label: 'UTM Campaign',
-    description: 'A promotion or strategic campaign e.g. Excelencia-Live-25, Kindy-Open-Day, Principals-Tour',
-    options: ['Excelencia-Live', 'Kindy-Open-Day', 'Principals-Tour'],
-  },
-  utm_id: {
-    label: 'UTM ID',
-    description: 'Specific instance of a campaign (usually just copy-paste the campaign name)',
-    options: ['Excelencia-Live-07-25', 'Kindy-Open-Day-11-24', 'Principals-Tour-01-25'],
+  utm: {
+    source: {
+      label: t('links.form.utm.source.label'),
+      // description: t('links.form.utm.source.description'),
+    },
+    medium: {
+      label: t('links.form.utm.medium.label'),
+      // description: t('links.form.utm.medium.description'),
+    },
+    campaign: {
+      label: t('links.form.utm.campaign.label'),
+      description: t('links.form.utm.campaign.description'),
+      options: ['Excelencia-Live', 'Kindy-Open-Day', 'Principals-Tour'],
+    },
+    id: {
+      label: t('links.form.utm.id.label'),
+      description: t('links.form.utm.id.description'),
+      options: ['Excelencia-Live-07-25', 'Kindy-Open-Day-11-24', 'Principals-Tour-01-25'],
+    },
   },
   optional: {
     comment: {
@@ -141,19 +164,17 @@ const fieldConfig = computed(() => ({
 // Remove dependencies to avoid TypeScript issues for now
 
 const form = useForm({
-  validationSchema: toTypedSchema(EditLinkSchema),
-  initialValues: {
+  validationSchema: toTypedSchema(EditorFormSchema),
+  initialValues: flatToNested({
     name: link.value.name,
     slug: link.value.slug,
     url: link.value.url,
-    utm_source: link.value.utm_source || 'QR-Code',
+    utm_source: link.value.utm_source || 'qr-code',
     utm_medium: link.value.utm_medium,
     utm_campaign: link.value.utm_campaign,
     utm_id: link.value.utm_id,
-    optional: {
-      comment: link.value.comment,
-    },
-  },
+    comment: link.value.comment,
+  }),
   validateOnMount: isEdit,
   keepValuesOnUnmount: isEdit,
 })
@@ -235,16 +256,19 @@ watch([() => form.values, dialogOpen], () => {
 }, { deep: true })
 
 async function onSubmit(formData: any) {
+  // Convert nested form data back to flat structure for API
+  const flatData = nestedToFlat(formData)
+
   const link = {
-    name: formData.name,
-    url: formData.url,
-    slug: formData.slug,
-    utm_source: formData.utm_source,
-    utm_medium: formData.utm_medium,
-    utm_campaign: formData.utm_campaign,
-    utm_id: formData.utm_id,
-    ...(formData.optional || []),
-    expiration: formData.optional?.expiration ? date2unix(formData.optional?.expiration, 'end') : undefined,
+    name: flatData.name,
+    url: flatData.url,
+    slug: flatData.slug,
+    utm_source: flatData.utm_source,
+    utm_medium: flatData.utm_medium,
+    utm_campaign: flatData.utm_campaign,
+    utm_id: flatData.utm_id,
+    comment: flatData.comment,
+    expiration: flatData.expiration ? date2unix(flatData.expiration, 'end') : undefined,
     // Preserve existing QR style options when editing
     ...(isEdit && props.link.qr_style_options && { qr_style_options: props.link.qr_style_options }),
   }
@@ -255,10 +279,10 @@ async function onSubmit(formData: any) {
   dialogOpen.value = false
   emit('update:link', newLink, isEdit ? 'edit' : 'create')
   if (isEdit) {
-    toast(t('links.update_success'))
+    toast(t('links.messages.update_success'))
   }
   else {
-    toast(t('links.create_success'))
+    toast(t('links.messages.create_success'))
   }
 }
 
@@ -317,15 +341,15 @@ const bottomGradientStyle = computed(() => ({
           variant="outline"
           @click="randomSlug"
         >
-          {{ $t('links.create') }}
+          {{ $t('links.actions.create') }}
         </Button>
       </slot>
     </DialogTrigger>
     <DialogContent class="max-w-[95svw] max-h-[95svh] md:max-w-2xl grid grid-rows-[auto_minmax(0,1fr)_auto]">
       <DialogHeader>
-        <DialogTitle>{{ link.id ? $t('links.edit') : $t('links.create') }}</DialogTitle>
+        <DialogTitle>{{ link.id ? $t('links.actions.edit') : $t('links.actions.create') }}</DialogTitle>
         <DialogDescription>
-          {{ link.id ? $t('links.edit_description') : $t('links.create_description') }}
+          {{ link.id ? $t('links.messages.edit_description') : $t('links.messages.create_description') }}
         </DialogDescription>
       </DialogHeader>
 
@@ -356,7 +380,7 @@ const bottomGradientStyle = computed(() => ({
             <AutoForm
               ref="autoFormRef"
               class="space-y-2"
-              :schema="EditLinkSchema"
+              :schema="EditorFormSchema"
               :form="form"
               :field-config="fieldConfig"
               @submit="onSubmit"
@@ -392,9 +416,8 @@ const bottomGradientStyle = computed(() => ({
                     </div>
 
                     <!-- Short URL Preview in Description -->
-                    <FormDescription v-if="shortUrl" class="flex items-center gap-2">
-                      <span>{{ $t('links.preview_label') }}: </span>
-                      <span class="text-sm break-all">{{ shortUrl }}</span>
+                    <FormDescription v-if="shortUrl" class="flex items-center text-xs gap-2">
+                      <span class="pl-1 break-all">{{ shortUrl }}</span>
                       <div class="flex items-center gap-1 flex-shrink-0">
                         <Button
                           variant="ghost"
@@ -415,64 +438,112 @@ const bottomGradientStyle = computed(() => ({
                 </FormField>
               </template>
 
-              <!-- UTM Source custom slot -->
-              <template #utm_source="slotProps">
-                <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
-                  <FormItem>
-                    <FormLabel>{{ slotProps.config?.label || 'UTM Source' }}</FormLabel>
-                    <FormDescription v-if="slotProps.config?.description">
-                      {{ slotProps.config.description }}
-                    </FormDescription>
-                    <Select
-                      :model-value="fieldSlotProps.componentField.modelValue"
-                      @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
-                    >
-                      <SelectTrigger>
-                        <SelectValue :placeholder="$t('links.utm_source_placeholder')" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem
-                          v-for="option in utmSourceOptions"
-                          :key="option.value"
-                          :value="option.value"
-                        >
-                          {{ option.label }}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                </FormField>
-              </template>
+              <!-- Custom UTM slot with styled container -->
+              <template #utm>
+                <div class="bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 shadow-md rounded-lg p-4 lg:p-6">
+                  <div class="flex items-center mb-4">
+                    <BarChart3 class="w-5 h-5 mr-2" />
+                    <h3 class="text-lg font-semibold">
+                      {{ $t('links.form.utm.section_title') }}
+                    </h3>
+                  </div>
 
-              <!-- UTM Medium custom slot -->
-              <template #utm_medium="slotProps">
-                <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
-                  <FormItem>
-                    <FormLabel>{{ slotProps.config?.label || 'UTM Medium' }}</FormLabel>
-                    <FormDescription v-if="slotProps.config?.description">
-                      {{ slotProps.config.description }}
-                    </FormDescription>
-                    <Select
-                      :model-value="fieldSlotProps.componentField.modelValue"
-                      @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
-                    >
-                      <SelectTrigger>
-                        <SelectValue :placeholder="$t('links.utm_medium_placeholder')" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem
-                          v-for="option in utmMediumOptions"
-                          :key="option.value"
-                          :value="option.value"
-                        >
-                          {{ option.label }}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                </FormField>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- UTM Source -->
+                    <FormField v-slot="sourceSlotProps" name="utm.source">
+                      <FormItem>
+                        <FormLabel>{{ fieldConfig.utm.source.label }}</FormLabel>
+                        <FormDescription v-if="fieldConfig.utm.source.description">
+                          {{ fieldConfig.utm.source.description }}
+                        </FormDescription>
+                        <FormControl>
+                          <Select
+                            :model-value="sourceSlotProps.componentField.modelValue"
+                            @update:model-value="sourceSlotProps.componentField['onUpdate:modelValue']"
+                          >
+                            <SelectTrigger>
+                              <SelectValue :placeholder="$t('links.form.utm.source.placeholder')" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem
+                                v-for="option in utmSourceOptions"
+                                :key="option.value"
+                                :value="option.value"
+                              >
+                                {{ option.label }}
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    </FormField>
+
+                    <!-- UTM Medium -->
+                    <FormField v-slot="mediumSlotProps" name="utm.medium">
+                      <FormItem>
+                        <FormLabel>{{ fieldConfig.utm.medium.label }}</FormLabel>
+                        <FormDescription v-if="fieldConfig.utm.medium.description">
+                          {{ fieldConfig.utm.medium.description }}
+                        </FormDescription>
+                        <FormControl>
+                          <Select
+                            :model-value="mediumSlotProps.componentField.modelValue"
+                            @update:model-value="mediumSlotProps.componentField['onUpdate:modelValue']"
+                          >
+                            <SelectTrigger>
+                              <SelectValue :placeholder="$t('links.form.utm.medium.placeholder')" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem
+                                v-for="option in utmMediumOptions"
+                                :key="option.value"
+                                :value="option.value"
+                              >
+                                {{ option.label }}
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    </FormField>
+
+                    <!-- UTM Campaign -->
+                    <FormField v-slot="campaignSlotProps" name="utm.campaign">
+                      <FormItem>
+                        <FormLabel>{{ fieldConfig.utm.campaign.label }}</FormLabel>
+                        <FormControl>
+                          <Input
+                            v-bind="campaignSlotProps.componentField"
+                            placeholder="Enter campaign name"
+                          />
+                        </FormControl>
+                        <FormDescription v-if="fieldConfig.utm.campaign.description" class="pl-1">
+                          {{ fieldConfig.utm.campaign.description }}
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    </FormField>
+
+                    <!-- UTM ID -->
+                    <FormField v-slot="idSlotProps" name="utm.id">
+                      <FormItem>
+                        <FormLabel>{{ fieldConfig.utm.id.label }}</FormLabel>
+                        <FormControl>
+                          <Input
+                            v-bind="idSlotProps.componentField"
+                            placeholder="Enter campaign ID"
+                          />
+                        </FormControl>
+                        <FormDescription v-if="fieldConfig.utm.id.description" class="pl-1">
+                          {{ fieldConfig.utm.id.description }}
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    </FormField>
+                  </div>
+                </div>
               </template>
             </AutoForm>
           </div>

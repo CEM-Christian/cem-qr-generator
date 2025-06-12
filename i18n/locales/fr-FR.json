@@ -154,32 +154,63 @@
     }
   },
   "links": {
-    "name": "Nom",
-    "name_description": "Un nom convivial pour votre lien",
-    "name_placeholder": "Entrez le nom du lien...",
-    "destination_url": "URL de destination",
-    "destination_url_description": "L'URL vers laquelle les utilisateurs seront redirigés",
-    "destination_url_placeholder": "https://exemple.com",
-    "slug": "Slug",
-    "slug_description": "L'identifiant court pour votre lien",
-    "slug_placeholder": "Entrez un slug personnalisé...",
-    "preview_label": "Aperçu",
-    "short_url_preview": "Aperçu de l'URL courte",
-    "generate_random_slug": "Générer un slug aléatoire",
-    "generate_ai_slug": "Générer un slug IA",
-    "open_destination": "Ouvrir l'URL de destination",
-    "utm_source_placeholder": "Sélectionner la source de trafic",
-    "utm_medium_placeholder": "Sélectionner le type de média",
-    "create": "Créer un lien",
-    "create_description": "Remplissez les détails ci-dessous pour créer un nouveau lien raccourci avec des paramètres de suivi UTM optionnels.",
-    "edit": "Modifier le lien",
-    "edit_description": "Mettez à jour les détails du lien et les paramètres de suivi UTM ci-dessous.",
-    "delete_confirm_title": "Êtes-vous absolument sûr ?",
-    "delete_confirm_desc": "Cette action est irréversible. Cela supprimera votre lien des serveurs.",
-    "delete_success": "Suppression réussie !",
-    "update_success": "Lien mis à jour avec succès",
-    "create_success": "Lien créé avec succès",
-    "preview_mode_tip": "Le lien en mode aperçu est valide jusqu'à 5 minutes.",
+    "form": {
+      "name": {
+        "label": "Nom",
+        "description": "Un nom convivial pour votre lien",
+        "placeholder": "Entrez le nom du lien..."
+      },
+      "destination_url": {
+        "label": "URL de destination",
+        "description": "L'URL vers laquelle les utilisateurs seront redirigés",
+        "placeholder": "https://exemple.com"
+      },
+      "slug": {
+        "label": "Slug",
+        "description": "L'identifiant court pour votre lien",
+        "placeholder": "Entrez un slug personnalisé..."
+      },
+      "utm": {
+        "section_title": "Paramètres de suivi UTM",
+        "source": {
+          "label": "Source UTM",
+          "description": "D'où vient l'utilisateur",
+          "placeholder": "Sélectionner la source de trafic"
+        },
+        "medium": {
+          "label": "Média UTM",
+          "description": "Le média de la source",
+          "placeholder": "Sélectionner le type de média"
+        },
+        "campaign": {
+          "label": "Campagne UTM",
+          "description": "Une promotion ou campagne stratégique par ex. Excelencia-Live-25, Kindy-Open-Day, Principals-Tour"
+        },
+        "id": {
+          "label": "ID UTM",
+          "description": "Instance spécifique d'une campagne (généralement copier-coller le nom de la campagne)"
+        }
+      }
+    },
+    "actions": {
+      "create": "Créer un lien",
+      "edit": "Modifier le lien",
+      "preview_label": "Aperçu",
+      "short_url_preview": "Aperçu de l'URL courte",
+      "generate_random_slug": "Générer un slug aléatoire",
+      "generate_ai_slug": "Générer un slug IA",
+      "open_destination": "Ouvrir l'URL de destination"
+    },
+    "messages": {
+      "create_description": "Créer un nouveau lien raccourci avec des paramètres de suivi UTM optionnels.",
+      "edit_description": "Mettez à jour les détails du lien et les paramètres de suivi UTM ci-dessous.",
+      "delete_confirm_title": "Êtes-vous absolument sûr ?",
+      "delete_confirm_desc": "Cette action est irréversible. Cela supprimera votre lien des serveurs.",
+      "delete_success": "Suppression réussie !",
+      "update_success": "Lien mis à jour avec succès",
+      "create_success": "Lien créé avec succès",
+      "preview_mode_tip": "Le lien en mode aperçu est valide jusqu'à 5 minutes."
+    },
     "preview": {
       "title": "Aperçu du lien",
       "short_url": "Lien court",

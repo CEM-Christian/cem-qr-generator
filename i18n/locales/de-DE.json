@@ -154,32 +154,63 @@
     }
   },
   "links": {
-    "name": "Name",
-    "name_description": "Ein freundlicher Name für Ihren Link",
-    "name_placeholder": "Link-Namen eingeben...",
-    "destination_url": "Ziel-URL",
-    "destination_url_description": "Die URL, zu der Benutzer weitergeleitet werden",
-    "destination_url_placeholder": "https://beispiel.com",
-    "slug": "Slug",
-    "slug_description": "Die kurze Kennung für Ihren Link",
-    "slug_placeholder": "Benutzerdefinierten Slug eingeben...",
-    "preview_label": "Vorschau",
-    "short_url_preview": "Kurz-URL Vorschau",
-    "generate_random_slug": "Zufälligen Slug generieren",
-    "generate_ai_slug": "KI-Slug generieren",
-    "open_destination": "Ziel-URL öffnen",
-    "utm_source_placeholder": "Traffic-Quelle auswählen",
-    "utm_medium_placeholder": "Medium-Typ auswählen",
-    "create": "Link erstellen",
-    "create_description": "Füllen Sie die Details unten aus, um einen neuen verkürzten Link mit optionalen UTM-Tracking-Parametern zu erstellen.",
-    "edit": "Link bearbeiten",
-    "edit_description": "Aktualisieren Sie die Link-Details und UTM-Tracking-Parameter unten.",
-    "delete_confirm_title": "Bist du dir absolut sicher?",
-    "delete_confirm_desc": "Diese Aktion kann nicht rückgängig gemacht werden. Dadurch wird dein Link wirklich von den Servern gelöscht.",
-    "delete_success": "Erfolgreich gelöscht!",
-    "update_success": "Link erfolgreich aktualisiert",
-    "create_success": "Link erfolgreich erstellt",
-    "preview_mode_tip": "Der Link im Vorschaumodus ist bis zu 5 Minuten gültig.",
+    "form": {
+      "name": {
+        "label": "Name",
+        "description": "Ein freundlicher Name für Ihren Link",
+        "placeholder": "Link-Namen eingeben..."
+      },
+      "destination_url": {
+        "label": "Ziel-URL",
+        "description": "Die URL, zu der Benutzer weitergeleitet werden",
+        "placeholder": "https://beispiel.com"
+      },
+      "slug": {
+        "label": "Slug",
+        "description": "Die kurze Kennung für Ihren Link",
+        "placeholder": "Benutzerdefinierten Slug eingeben..."
+      },
+      "utm": {
+        "section_title": "UTM-Tracking-Parameter",
+        "source": {
+          "label": "UTM-Quelle",
+          "description": "Woher der Benutzer kommt",
+          "placeholder": "Traffic-Quelle auswählen"
+        },
+        "medium": {
+          "label": "UTM-Medium",
+          "description": "Das Medium der Quelle",
+          "placeholder": "Medium-Typ auswählen"
+        },
+        "campaign": {
+          "label": "UTM-Kampagne",
+          "description": "Eine Promotion oder strategische Kampagne z.B. Excelencia-Live-25, Kindy-Open-Day, Principals-Tour"
+        },
+        "id": {
+          "label": "UTM-ID",
+          "description": "Spezifische Instanz einer Kampagne (normalerweise einfach den Kampagnennamen kopieren)"
+        }
+      }
+    },
+    "actions": {
+      "create": "Link erstellen",
+      "edit": "Link bearbeiten",
+      "preview_label": "Vorschau",
+      "short_url_preview": "Kurz-URL Vorschau",
+      "generate_random_slug": "Zufälligen Slug generieren",
+      "generate_ai_slug": "KI-Slug generieren",
+      "open_destination": "Ziel-URL öffnen"
+    },
+    "messages": {
+      "create_description": "Füllen Sie die Details unten aus, um einen neuen verkürzten Link mit optionalen UTM-Tracking-Parametern zu erstellen.",
+      "edit_description": "Aktualisieren Sie die Link-Details und UTM-Tracking-Parameter unten.",
+      "delete_confirm_title": "Bist du dir absolut sicher?",
+      "delete_confirm_desc": "Diese Aktion kann nicht rückgängig gemacht werden. Dadurch wird dein Link wirklich von den Servern gelöscht.",
+      "delete_success": "Erfolgreich gelöscht!",
+      "update_success": "Link erfolgreich aktualisiert",
+      "create_success": "Link erfolgreich erstellt",
+      "preview_mode_tip": "Der Link im Vorschaumodus ist bis zu 5 Minuten gültig."
+    },
     "preview": {
       "title": "Link-Vorschau",
       "short_url": "Kurzer Link",

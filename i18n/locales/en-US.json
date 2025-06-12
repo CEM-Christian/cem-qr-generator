@@ -155,32 +155,63 @@
     }
   },
   "links": {
-    "name": "Name",
-    "name_description": "A friendly name for your link",
-    "name_placeholder": "Enter link name...",
-    "destination_url": "Destination URL",
-    "destination_url_description": "The URL where users will be redirected",
-    "destination_url_placeholder": "https://example.com",
-    "slug": "Slug",
-    "slug_description": "The short identifier for your link",
-    "slug_placeholder": "Enter custom slug...",
-    "preview_label": "Preview",
-    "short_url_preview": "Short URL Preview",
-    "generate_random_slug": "Generate random slug",
-    "generate_ai_slug": "Generate AI slug",
-    "open_destination": "Open destination URL",
-    "utm_source_placeholder": "Select traffic source",
-    "utm_medium_placeholder": "Select medium type",
-    "create": "Create Link",
-    "create_description": "Create a new shortened link with optional UTM tracking parameters.",
-    "edit": "Edit Link",
-    "edit_description": "Update the link details and UTM tracking parameters below.",
-    "delete_confirm_title": "Are you absolutely sure?",
-    "delete_confirm_desc": "This action cannot be undone. This will really delete your link from servers.",
-    "delete_success": "Delete successful!",
-    "update_success": "Link updated successfully",
-    "create_success": "Link created successfully",
-    "preview_mode_tip": "The preview mode link is valid for up to 5 minutes.",
+    "form": {
+      "name": {
+        "label": "Name",
+        "description": "A friendly name for your link",
+        "placeholder": "Enter link name..."
+      },
+      "destination_url": {
+        "label": "Destination URL",
+        "description": "The URL where users will be redirected",
+        "placeholder": "https://example.com"
+      },
+      "slug": {
+        "label": "Slug",
+        "description": "Your link's short identifier",
+        "placeholder": "Enter custom slug..."
+      },
+      "utm": {
+        "section_title": "UTM Tracking Parameters",
+        "source": {
+          "label": "Source",
+          // "description": "Where user is coming from",
+          "placeholder": "Select traffic source"
+        },
+        "medium": {
+          "label": "Medium",
+          // "description": "The medium of the source",
+          "placeholder": "Select medium type"
+        },
+        "campaign": {
+          "label": "Campaign Name",
+          "description": "A promotion or strategic campaign e.g. Kindy-Open-Day"
+        },
+        "id": {
+          "label": "Campaign ID",
+          "description": "Specific instance of a campaign (usually just copy-paste the campaign name)"
+        }
+      }
+    },
+    "actions": {
+      "create": "Create Link",
+      "edit": "Edit Link",
+      "preview_label": "Preview",
+      "short_url_preview": "Short URL Preview",
+      "generate_random_slug": "Generate random slug",
+      "generate_ai_slug": "Generate AI slug",
+      "open_destination": "Open destination URL"
+    },
+    "messages": {
+      "create_description": "Create a new shortened link with optional UTM tracking parameters.",
+      "edit_description": "Update the link details and UTM tracking parameters below.",
+      "delete_confirm_title": "Are you absolutely sure?",
+      "delete_confirm_desc": "This action cannot be undone. This will really delete your link from servers.",
+      "delete_success": "Delete successful!",
+      "update_success": "Link updated successfully",
+      "create_success": "Link created successfully",
+      "preview_mode_tip": "The preview mode link is valid for up to 5 minutes."
+    },
     "preview": {
       "title": "Link Preview",
       "short_url": "Short Link",
