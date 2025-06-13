@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LinkSchema, nanoid } from '@@/schemas/link'
+import { OrganizationSchema } from '@@/schemas/organization'
 import { toTypedSchema } from '@vee-validate/zod'
 import { BarChart3, Copy, Shuffle, Sparkles } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
@@ -22,6 +23,7 @@ const props = defineProps({
 const emit = defineEmits(['update:link'])
 
 const { t } = useI18n()
+const { organizations } = useOrganizations()
 const link = ref(props.link)
 const dialogOpen = ref(false)
 const autoFormRef = ref()
@@ -54,6 +56,7 @@ const EditorFormSchema = z.object({
   name: LinkSchema.shape.name,
   url: LinkSchema.shape.url,
   slug: LinkSchema.shape.slug,
+  organization: OrganizationSchema,
   utm: z.object({
     source: LinkSchema.shape.utm_source,
     medium: LinkSchema.shape.utm_medium,
@@ -72,6 +75,7 @@ function flatToNested(linkData: any) {
     name: linkData.name,
     url: linkData.url,
     slug: linkData.slug,
+    organization: linkData.organization || 'none',
     utm: {
       source: linkData.utm_source,
       medium: linkData.utm_medium,
@@ -90,6 +94,7 @@ function nestedToFlat(formData: any) {
     name: formData.name,
     url: formData.url,
     slug: formData.slug,
+    organization: formData.organization === 'none' ? undefined : formData.organization,
     utm_source: formData.utm?.source,
     utm_medium: formData.utm?.medium,
     utm_campaign: formData.utm?.campaign,
@@ -118,6 +123,13 @@ const fieldConfig = computed(() => ({
     inputProps: {
       disabled: isEdit,
       placeholder: t('links.form.slug.placeholder'),
+    },
+  },
+  organization: {
+    label: t('links.form.organization.label'),
+    description: t('links.form.organization.description'),
+    inputProps: {
+      placeholder: t('links.form.organization.placeholder'),
     },
   },
   utm: {
@@ -163,6 +175,7 @@ const form = useForm({
     name: link.value.name,
     slug: link.value.slug,
     url: link.value.url,
+    organization: link.value.organization,
     utm_source: link.value.utm_source || 'qr-code',
     utm_medium: link.value.utm_medium,
     utm_campaign: link.value.utm_campaign,
@@ -235,6 +248,7 @@ async function onSubmit(formData: any) {
     name: flatData.name,
     url: flatData.url,
     slug: flatData.slug,
+    organization: flatData.organization,
     utm_source: flatData.utm_source,
     utm_medium: flatData.utm_medium,
     utm_campaign: flatData.utm_campaign,
@@ -397,6 +411,48 @@ async function copyShortUrl() {
                     </FormDescription>
                     <FormDescription v-else>
                       {{ slotProps.config?.description || $t('links.slug_description') }}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                </FormField>
+              </template>
+
+              <!-- Organization field -->
+              <template #organization="slotProps">
+                <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
+                  <FormItem>
+                    <FormLabel>{{ slotProps.config?.label || $t('links.form.organization.label') }}</FormLabel>
+                    <FormControl>
+                      <Select
+                        :model-value="fieldSlotProps.componentField.modelValue"
+                        @update:model-value="fieldSlotProps.componentField['onUpdate:modelValue']"
+                      >
+                        <SelectTrigger>
+                          <SelectValue :placeholder="slotProps.config?.inputProps?.placeholder || $t('links.form.organization.placeholder')" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">
+                            {{ $t('organization.none') }}
+                          </SelectItem>
+                          <SelectItem
+                            v-for="org in organizations"
+                            :key="org.id"
+                            :value="org.id"
+                          >
+                            <div class="flex items-center gap-2">
+                              <img
+                                :src="`/logos/${org.logo}`"
+                                :alt="org.name"
+                                class="h-4 w-4 object-contain"
+                              >
+                              <span>{{ org.name }}</span>
+                            </div>
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormDescription v-if="slotProps.config?.description">
+                      {{ slotProps.config.description }}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

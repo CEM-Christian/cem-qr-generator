@@ -170,6 +170,11 @@
         "description": "您链接的简短标识符",
         "placeholder": "输入自定义标识..."
       },
+      "organization": {
+        "label": "组织机构",
+        "description": "将链接分配给组织机构",
+        "placeholder": "选择组织机构（可选）"
+      },
       "utm": {
         "section_title": "UTM跟踪参数",
         "source": {
@@ -225,6 +230,7 @@
     "no_results": "未找到链接。",
     "group_title": "链接列表",
     "copy_success": "复制成功！",
+    "click_to_copy": "点击复制",
     "created_at": "创建时间",
     "updated_at": "更新时间",
     "expires_at": "过期时间",
@@ -334,5 +340,12 @@
       "extra_rounded": "超圆角",
       "dot": "点"
     }
+  },
+  "organization": {
+    "filter_placeholder": "按组织机构筛选",
+    "filter_tip": "按组织机构筛选链接",
+    "all": "所有组织机构",
+    "none": "无组织机构",
+    "select_placeholder": "选择组织机构"
   }
 }

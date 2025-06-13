@@ -1,6 +1,6 @@
 <script setup>
 import { useClipboard } from '@vueuse/core'
-import { CalendarPlus2, Copy, CopyCheck, Eraser, Hourglass, Link as LinkIcon, QrCode, SquareChevronDown, SquarePen } from 'lucide-vue-next'
+import { BarChart3, CalendarPlus2, Copy, CopyCheck, Eraser, Link as LinkIcon, QrCode, SquareChevronDown, SquarePen, ExternalLink } from 'lucide-vue-next'
 import { parseURL } from 'ufo'
 import { toast } from 'vue-sonner'
 import QRCode from './QRCode.vue'
@@ -14,6 +14,7 @@ const props = defineProps({
 const emit = defineEmits(['update:link'])
 
 const { t } = useI18n()
+const { getOrganizationById } = useOrganizations()
 const editPopoverOpen = ref(false)
 
 const { host, origin } = location
@@ -29,6 +30,14 @@ const linkIcon = computed(() => `https://unavatar.io/${getLinkHost(props.link.ur
 const hasUtmParams = computed(() => {
   return !!(props.link.utm_source || props.link.utm_medium || props.link.utm_campaign || props.link.utm_id)
 })
+
+const organizationConfig = computed(() => {
+  return props.link.organization ? getOrganizationById(props.link.organization) : null
+})
+
+// const organizationTooltip = computed(() => {
+//   return organizationConfig.value?.name || ''
+// })
 
 const { copy, copied } = useClipboard({ source: shortLink.value, copiedDuring: 400 })
 
@@ -46,7 +55,7 @@ function copyLink() {
 <template>
   <Card>
     <NuxtLink
-      class="flex flex-col p-4 space-y-3"
+      class="flex flex-col p-4 space-y-3 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
       :to="`/dashboard/link?slug=${link.slug}`"
     >
       <div class="flex items-center justify-center space-x-3">
@@ -67,32 +76,22 @@ function copyLink() {
 
         <div class="flex-1 overflow-hidden">
           <div class="flex items-center">
-            <div class="font-bold leading-5 truncate text-md">
+            <div class="font-bold leading-5 truncate text-lg">
               {{ link.name || `${host}/${link.slug}` }}
             </div>
-
-            <CopyCheck
-              v-if="copied"
-              class="w-4 h-4 ml-1 shrink-0"
-              @click.prevent
-            />
-            <Copy
-              v-else
-              class="w-4 h-4 ml-1 shrink-0"
-              @click.prevent="copyLink"
-            />
           </div>
 
-          <TooltipProvider>
+          <!-- Optional comment/description below name -->
+          <TooltipProvider v-if="link.comment || link.title || link.description">
             <Tooltip>
               <TooltipTrigger as-child>
-                <p class="text-sm truncate">
-                  {{ link.name ? `${host}/${link.slug}` : (link.comment || link.title || link.description) }}
+                <p class="text-sm text-muted-foreground truncate">
+                  {{ link.comment || link.title || link.description }}
                 </p>
               </TooltipTrigger>
               <TooltipContent>
                 <p class="max-w-[90svw] break-all">
-                  {{ link.name ? `${host}/${link.slug}` : (link.comment || link.title || link.description) }}
+                  {{ link.comment || link.title || link.description }}
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -167,59 +166,127 @@ function copyLink() {
           </PopoverContent>
         </Popover>
       </div>
-      <div class="flex w-full h-5 space-x-2 text-sm">
+
+      <!-- Footer content reorganized into three rows -->
+      <div class="text-sm">
+        <!-- First row: Shortened URL -->
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger as-child>
-              <span class="inline-flex items-center leading-5 whitespace-nowrap"><CalendarPlus2 class="w-4 h-4 mr-1" /> {{ shortDate(link.createdAt) }}</span>
+              <div
+                class="inline-flex items-center mb-1 cursor-pointer hover:bg-accent/50 hover:underline rounded px-1 -mx-1"
+                @click.prevent="copyLink"
+              >
+                <span class="truncate">{{ shortLink }}</span>
+                <CopyCheck
+                  v-if="copied"
+                  class="w-4 h-4 ml-2 shrink-0"
+                />
+                <Copy
+                  v-else
+                  class="w-4 h-4 ml-2 shrink-0"
+                />
+              </div>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Created At: {{ longDate(link.createdAt) }}</p>
-              <p>Updated At: {{ longDate(link.updatedAt) }}</p>
+              <p>{{ $t('links.click_to_copy') }}: {{ shortLink }}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <template v-if="link.expiration">
-          <Separator orientation="vertical" />
+
+        <!-- Second row: Destination URL -->
+        <div class="flex items-center space-x-1 mb-2">
+          <span class="text-muted-foreground">↳</span>
+          <a
+            :href="link.url"
+            class="inline-flex items-center hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+            @click.stop
+          >
+            <span class="truncate">{{ link.url }}</span>
+            <ExternalLink class="w-4 h-4 ml-2 shrink-0" />
+          </a>
+        </div>
+
+        <!-- Third row: Creation date, organization, and UTM tags -->
+        <div class="flex items-center space-x-2 text-muted-foreground">
+          <!-- Creation date -->
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger as-child>
-                <span class="inline-flex items-center leading-5 whitespace-nowrap"><Hourglass class="w-4 h-4 mr-1" /> {{ shortDate(link.expiration) }}</span>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Expires At: {{ longDate(link.expiration) }}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </template>
-        <Separator orientation="vertical" />
-        <span class="truncate">{{ link.url }}</span>
-        <template v-if="hasUtmParams">
-          <Separator orientation="vertical" />
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger as-child>
-                <span class="inline-flex items-center leading-5 whitespace-nowrap text-blue-600">UTM</span>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div class="space-y-1">
-                  <p v-if="link.utm_source">
-                    <strong>Source:</strong> {{ link.utm_source }}
-                  </p>
-                  <p v-if="link.utm_medium">
-                    <strong>Medium:</strong> {{ link.utm_medium }}
-                  </p>
-                  <p v-if="link.utm_campaign">
-                    <strong>Campaign:</strong> {{ link.utm_campaign }}
-                  </p>
-                  <p v-if="link.utm_id">
-                    <strong>ID:</strong> {{ link.utm_id }}
-                  </p>
+                <div class="flex items-center shrink-0">
+                  <CalendarPlus2 class="w-3 h-3 mr-1" />
+                  <span>{{ shortDate(link.createdAt) }}</span>
                 </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Created At: {{ longDate(link.createdAt) }}</p>
+                <p>Updated At: {{ longDate(link.updatedAt) }}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-        </template>
+
+          <!-- Organization -->
+          <template v-if="organizationConfig">
+            <span class="text-muted-foreground">|</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger as-child>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <!-- Logo or initials -->
+                    <div
+                      v-if="organizationConfig.logo"
+                      class="flex items-center justify-center w-3 h-3"
+                    >
+                      <img
+                        :src="`/logos/${organizationConfig.logo}`"
+                        :alt="organizationConfig.name"
+                        class="w-3 h-3 object-contain"
+                        loading="lazy"
+                      >
+                    </div>
+                    <span>{{ organizationConfig.initials }}</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{{ organizationConfig.name }}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </template>
+
+          <!-- UTM tags -->
+          <template v-if="hasUtmParams">
+            <span class="text-muted-foreground">|</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger as-child>
+                  <div class="flex items-center text-blue-600 shrink-0">
+                    <BarChart3 class="w-3 h-3 mr-1" />
+                    <span>UTM</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div class="space-y-1">
+                    <p v-if="link.utm_source">
+                      <strong>Source:</strong> {{ link.utm_source }}
+                    </p>
+                    <p v-if="link.utm_medium">
+                      <strong>Medium:</strong> {{ link.utm_medium }}
+                    </p>
+                    <p v-if="link.utm_campaign">
+                      <strong>Campaign:</strong> {{ link.utm_campaign }}
+                    </p>
+                    <p v-if="link.utm_id">
+                      <strong>ID:</strong> {{ link.utm_id }}
+                    </p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </template>
+        </div>
       </div>
     </NuxtLink>
   </Card>

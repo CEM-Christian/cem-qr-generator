@@ -171,6 +171,11 @@
         "description": "Định danh ngắn cho liên kết của bạn",
         "placeholder": "Nhập slug tùy chỉnh..."
       },
+      "organization": {
+        "label": "Tổ chức",
+        "description": "Gán liên kết cho một tổ chức",
+        "placeholder": "Chọn tổ chức (tùy chọn)"
+      },
       "utm": {
         "section_title": "Tham số theo dõi UTM",
         "source": {
@@ -226,6 +231,7 @@
     "no_results": "Không tìm thấy liên kết nào.",
     "group_title": "Liên kết",
     "copy_success": "Sao chép thành công!",
+    "click_to_copy": "Nhấp để sao chép",
     "created_at": "Ngày tạo",
     "updated_at": "Ngày cập nhật",
     "expires_at": "Ngày hết hạn",
@@ -344,5 +350,12 @@
     "save_success": "Đã lưu kiểu QR thành công!",
     "save_error": "Không thể lưu kiểu QR",
     "reset_success": "Đã đặt lại thành mặc định"
+  },
+  "organization": {
+    "filter_placeholder": "Lọc theo tổ chức",
+    "filter_tip": "Lọc liên kết theo tổ chức",
+    "all": "Tất cả tổ chức",
+    "none": "Không có tổ chức",
+    "select_placeholder": "Chọn tổ chức"
   }
 }

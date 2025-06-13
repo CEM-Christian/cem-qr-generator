@@ -1,5 +1,6 @@
 import { customAlphabet } from 'nanoid'
 import { z } from 'zod'
+import { OrganizationSchema } from './organization'
 import { QRStyleOptionsSchema } from './qr-style'
 
 const { slugRegex } = useAppConfig()
@@ -44,5 +45,8 @@ export const LinkSchema = z.object({
   ]).optional(),
   utm_campaign: z.string().trim().max(255).optional(),
   utm_id: z.string().trim().max(255).optional(),
+  organization: OrganizationSchema,
   qr_style_options: QRStyleOptionsSchema,
 })
+
+export type Link = z.infer<typeof LinkSchema>

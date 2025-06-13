@@ -36,6 +36,26 @@ export function useScrollIndicators(
   // Debounced update mechanism
   let updateTimeout: ReturnType<typeof setTimeout> | null = null
 
+  // Cleanup resources
+  let resizeObserver: ResizeObserver | null = null
+  let currentContainer: HTMLElement | null = null
+
+  // Cleanup function
+  function cleanup() {
+    if (resizeObserver) {
+      resizeObserver.disconnect()
+      resizeObserver = null
+    }
+    if (currentContainer) {
+      currentContainer.removeEventListener('scroll', updateScrollIndicators)
+      currentContainer = null
+    }
+    if (updateTimeout) {
+      clearTimeout(updateTimeout)
+      updateTimeout = null
+    }
+  }
+
   // Core scroll indicator calculation
   function updateScrollIndicators() {
     if (!scrollContainer.value)
@@ -77,11 +97,21 @@ export function useScrollIndicators(
     }, debounceDelay)
   }
 
+  // Centralized cleanup function
+  function performCleanup() {
+    cleanup()
+  }
+
   // Set up observers when container is available
-  watch(scrollContainer, (newContainer) => {
+  watch(scrollContainer, (newContainer, _oldContainer) => {
+    // Cleanup previous setup
+    performCleanup()
+
     if (newContainer) {
+      currentContainer = newContainer
+
       // **Primary: ResizeObserver for height changes**
-      const resizeObserver = new ResizeObserver(() => {
+      resizeObserver = new ResizeObserver(() => {
         scheduleUpdate()
       })
       resizeObserver.observe(newContainer)
@@ -93,16 +123,11 @@ export function useScrollIndicators(
       nextTick(() => {
         updateScrollIndicators()
       })
-
-      // Cleanup on unmount
-      onUnmounted(() => {
-        resizeObserver.disconnect()
-        newContainer.removeEventListener('scroll', updateScrollIndicators)
-        if (updateTimeout)
-          clearTimeout(updateTimeout)
-      })
     }
   }, { immediate: true })
+
+  // Global cleanup on unmount - register at component level
+  onUnmounted(performCleanup)
 
   // Watch additional targets for immediate updates
   if (watchTargets.length > 0) {

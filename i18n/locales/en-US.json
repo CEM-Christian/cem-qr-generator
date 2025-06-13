@@ -171,6 +171,11 @@
         "description": "Your link's short identifier",
         "placeholder": "Enter custom slug..."
       },
+      "organization": {
+        "label": "Organization",
+        "description": "Assign link to an organization",
+        "placeholder": "Select organization (optional)"
+      },
       "utm": {
         "section_title": "UTM Tracking Parameters",
         "source": {
@@ -226,6 +231,7 @@
     "no_results": "No links found.",
     "group_title": "Links",
     "copy_success": "Copy successful!",
+    "click_to_copy": "Click to copy",
     "created_at": "Created At",
     "updated_at": "Updated At",
     "expires_at": "Expires At",
@@ -335,5 +341,12 @@
     "download_success": "QR code downloaded successfully",
     "download_error": "Failed to download QR code",
     "edit_style": "Edit Style"
+  },
+  "organization": {
+    "filter_placeholder": "Filter by organization",
+    "filter_tip": "Filter links by organization",
+    "all": "All Organizations",
+    "none": "No Organization",
+    "select_placeholder": "Select organization"
   }
 }

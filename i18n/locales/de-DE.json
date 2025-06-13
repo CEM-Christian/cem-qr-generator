@@ -170,6 +170,11 @@
         "description": "Die kurze Kennung für Ihren Link",
         "placeholder": "Benutzerdefinierten Slug eingeben..."
       },
+      "organization": {
+        "label": "Organisation",
+        "description": "Link einer Organisation zuweisen",
+        "placeholder": "Organisation auswählen (optional)"
+      },
       "utm": {
         "section_title": "UTM-Tracking-Parameter",
         "source": {
@@ -225,6 +230,7 @@
     "no_results": "Keine Links gefunden.",
     "group_title": "Links",
     "copy_success": "Erfolgreich kopiert!",
+    "click_to_copy": "Zum Kopieren klicken",
     "created_at": "Erstellt am",
     "updated_at": "Aktualisiert am",
     "expires_at": "Läuft ab am",
@@ -334,5 +340,12 @@
       "extra_rounded": "Extra abgerundet",
       "dot": "Punkt"
     }
+  },
+  "organization": {
+    "filter_placeholder": "Nach Organisation filtern",
+    "filter_tip": "Links nach Organisation filtern",
+    "all": "Alle Organisationen",
+    "none": "Keine Organisation",
+    "select_placeholder": "Organisation auswählen"
   }
 }

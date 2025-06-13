@@ -53,6 +53,7 @@ export default eventHandler(async (event) => {
         url: link.url,
         name: link.name,
         comment: link.comment,
+        organization: link.organization,
         utm_source: link.utm_source,
         utm_medium: link.utm_medium,
         utm_campaign: link.utm_campaign,

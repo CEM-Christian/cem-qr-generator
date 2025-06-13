@@ -30,6 +30,7 @@ export default eventHandler(async (event) => {
         url: newLink.url,
         name: newLink.name,
         comment: newLink.comment,
+        organization: newLink.organization,
         utm_source: newLink.utm_source,
         utm_medium: newLink.utm_medium,
         utm_campaign: newLink.utm_campaign,

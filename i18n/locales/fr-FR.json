@@ -170,6 +170,11 @@
         "description": "L'identifiant court pour votre lien",
         "placeholder": "Entrez un slug personnalisé..."
       },
+      "organization": {
+        "label": "Organisation",
+        "description": "Assigner le lien à une organisation",
+        "placeholder": "Sélectionner une organisation (optionnel)"
+      },
       "utm": {
         "section_title": "Paramètres de suivi UTM",
         "source": {
@@ -225,6 +230,7 @@
     "no_results": "Aucun lien trouvé.",
     "group_title": "Liens",
     "copy_success": "Copie réussie !",
+    "click_to_copy": "Cliquez pour copier",
     "created_at": "Créé le",
     "updated_at": "Mis à jour le",
     "expires_at": "Expire le",
@@ -334,5 +340,12 @@
       "extra_rounded": "Extra arrondi",
       "dot": "Point"
     }
+  },
+  "organization": {
+    "filter_placeholder": "Filtrer par organisation",
+    "filter_tip": "Filtrer les liens par organisation",
+    "all": "Toutes les organisations",
+    "none": "Aucune organisation",
+    "select_placeholder": "Sélectionner une organisation"
   }
 }

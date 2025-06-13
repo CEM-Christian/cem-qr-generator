@@ -3,6 +3,7 @@ interface Link {
   url: string
   name?: string
   comment?: string
+  organization?: string
   utm_source?: string
   utm_medium?: string
   utm_campaign?: string
@@ -34,6 +35,7 @@ export default eventHandler(async (event) => {
                 url: key.metadata.url,
                 name: key.metadata.name,
                 comment: key.metadata.comment,
+                organization: key.metadata.organization,
                 utm_source: key.metadata.utm_source,
                 utm_medium: key.metadata.utm_medium,
                 utm_campaign: key.metadata.utm_campaign,
@@ -49,6 +51,7 @@ export default eventHandler(async (event) => {
                   url: link.url,
                   name: link.name,
                   comment: link.comment,
+                  organization: link.organization,
                   utm_source: link.utm_source,
                   utm_medium: link.utm_medium,
                   utm_campaign: link.utm_campaign,
@@ -61,6 +64,7 @@ export default eventHandler(async (event) => {
                     url: link.url,
                     name: link.name,
                     comment: link.comment,
+                    organization: link.organization,
                     utm_source: link.utm_source,
                     utm_medium: link.utm_medium,
                     utm_campaign: link.utm_campaign,

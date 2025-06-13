@@ -171,6 +171,11 @@
         "description": "您連結的簡短標識符",
         "placeholder": "輸入自定義標識..."
       },
+      "organization": {
+        "label": "組織機構",
+        "description": "將連結分配給組織機構",
+        "placeholder": "選擇組織機構（可選）"
+      },
       "utm": {
         "section_title": "UTM跟蹤參數",
         "source": {
@@ -226,6 +231,7 @@
     "no_results": "未找到連結。",
     "group_title": "連結列表",
     "copy_success": "複製成功！",
+    "click_to_copy": "點擊複製",
     "created_at": "創建時間",
     "updated_at": "更新時間",
     "expires_at": "過期時間",
@@ -344,5 +350,12 @@
     "save_success": "QR樣式保存成功！",
     "save_error": "無法保存QR樣式",
     "reset_success": "已重置為預設值"
+  },
+  "organization": {
+    "filter_placeholder": "按組織機構篩選",
+    "filter_tip": "按組織機構篩選連結",
+    "all": "所有組織機構",
+    "none": "無組織機構",
+    "select_placeholder": "選擇組織機構"
   }
 }
