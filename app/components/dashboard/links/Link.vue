@@ -98,14 +98,14 @@ function copyLink() {
           </TooltipProvider>
         </div>
 
-        <a
+        <!-- <a
           :href="link.url"
           target="_blank"
           rel="noopener noreferrer"
           @click.stop
         >
           <LinkIcon class="w-5 h-5" />
-        </a>
+        </a> -->
 
         <Popover>
           <PopoverTrigger>
