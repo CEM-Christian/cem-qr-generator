@@ -10,6 +10,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:link'])
 
+const { t } = useI18n()
+
 async function deleteLink() {
   await useAPI('/api/link/delete', {
     method: 'POST',
@@ -18,7 +20,7 @@ async function deleteLink() {
     },
   })
   emit('update:link', props.link, 'delete')
-  toast('Delete successful!')
+  toast(t('links.messages.delete_success'))
 }
 </script>
 
@@ -29,9 +31,9 @@ async function deleteLink() {
     </AlertDialogTrigger>
     <AlertDialogContent class="max-w-[95svw] max-h-[95svh] md:max-w-lg grid-rows-[auto_minmax(0,1fr)_auto]">
       <AlertDialogHeader>
-        <AlertDialogTitle>{{ $t('links.delete_confirm_title') }}</AlertDialogTitle>
+        <AlertDialogTitle>{{ $t('links.messages.delete_confirm_title') }}</AlertDialogTitle>
         <AlertDialogDescription>
-          {{ $t('links.delete_confirm_desc') }}
+          {{ $t('links.messages.delete_confirm_desc') }}
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>

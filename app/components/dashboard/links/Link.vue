@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { LayoutType } from '~/composables/useLayoutPreference'
+import { nanoid } from '@@/schemas/link'
 import { useClipboard } from '@vueuse/core'
-import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Edit3, Eraser, ExternalLink, QrCode, SquareChevronDown, SquarePen } from 'lucide-vue-next'
+import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Eraser, ExternalLink, Paintbrush, QrCode, SquareChevronDown, SquarePen } from 'lucide-vue-next'
 import { parseURL } from 'ufo'
 import { toast } from 'vue-sonner'
 import QRCode from './QRCode.vue'
@@ -60,6 +61,23 @@ function handleQRDownload() {
 
 function handleQRStyleEdit() {
   qrCodeRef.value?.handleOpenStyleEditor()
+}
+
+function handleDuplicateLink() {
+  // Create a duplicate of the current link with a new slug
+  const duplicateData = {
+    ...props.link,
+    slug: nanoid()(), // Generate new slug
+    name: props.link.name ? `${props.link.name} (Copy)` : undefined,
+    // Remove ID and timestamps as these will be generated fresh
+    id: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,
+  }
+
+  // Emit as a create event to add to the list
+  emit('update:link', duplicateData, 'create')
+  toast(t('links.messages.create_success'))
 }
 </script>
 
@@ -148,7 +166,7 @@ function handleQRStyleEdit() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <Edit3
+              <Paintbrush
                 class="w-5 h-5 cursor-pointer hover:text-primary"
                 @click.prevent="handleQRStyleEdit"
               />
@@ -186,12 +204,24 @@ function handleQRStyleEdit() {
 
             <Separator />
 
+            <div
+              class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
+              @click.prevent="handleDuplicateLink"
+            >
+              <Copy
+                class="w-5 h-5 mr-2"
+              />
+              {{ $t('common.duplicate') }}
+            </div>
+
+            <Separator />
+
             <DashboardLinksDelete
               :link="link"
               @update:link="updateLink"
             >
               <div
-                class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
+                class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground text-destructive"
               >
                 <Eraser
                   class="w-5 h-5 mr-2"
@@ -371,7 +401,7 @@ function handleQRStyleEdit() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <Edit3
+                  <Paintbrush
                     class="w-5 h-5 cursor-pointer hover:text-primary"
                     @click.prevent="handleQRStyleEdit"
                   />
@@ -407,12 +437,22 @@ function handleQRStyleEdit() {
 
                 <Separator />
 
+                <div
+                  class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
+                  @click.prevent="handleDuplicateLink"
+                >
+                  <Copy class="w-5 h-5 mr-2" />
+                  {{ $t('common.duplicate') }}
+                </div>
+
+                <Separator />
+
                 <DashboardLinksDelete
                   :link="link"
                   @update:link="updateLink"
                 >
                   <div
-                    class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
+                    class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground text-destructive"
                   >
                     <Eraser class="w-5 h-5 mr-2" />
                     {{ $t('common.delete') }}
