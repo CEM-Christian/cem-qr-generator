@@ -276,7 +276,7 @@
     "title": "二维码样式编辑器",
     "description": "使用高级样式选项自定义二维码的外观。",
     "preview": "预览",
-    "edit_style": "编辑样式",
+    "edit_style": "Customize QR",
     "reset": "重置",
     "save": "保存",
     "save_and_download": "保存并下载",

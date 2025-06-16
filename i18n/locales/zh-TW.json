@@ -357,7 +357,8 @@
     },
     "save_success": "QR樣式保存成功！",
     "save_error": "無法保存QR樣式",
-    "reset_success": "已重置為預設值"
+    "reset_success": "已重置為預設值",
+    "edit_style": "Customize QR"
   },
   "organization": {
     "filter_placeholder": "按組織機構篩選",

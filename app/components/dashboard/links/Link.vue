@@ -395,7 +395,7 @@ function handleDuplicateLink() {
                   </DashboardLinksEditor>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{{ $t('common.edit') }}</p>
+                  <p>{{ $t('links.actions.edit') }}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

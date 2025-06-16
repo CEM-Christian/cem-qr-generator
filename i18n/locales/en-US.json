@@ -348,7 +348,7 @@
     "save_error": "Failed to save QR code style",
     "download_success": "QR code downloaded successfully",
     "download_error": "Failed to download QR code",
-    "edit_style": "Edit Style"
+    "edit_style": "Customize QR"
   },
   "organization": {
     "filter_placeholder": "Filter by organization",

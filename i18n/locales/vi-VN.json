@@ -357,7 +357,8 @@
     },
     "save_success": "Đã lưu kiểu QR thành công!",
     "save_error": "Không thể lưu kiểu QR",
-    "reset_success": "Đã đặt lại thành mặc định"
+    "reset_success": "Đã đặt lại thành mặc định",
+    "edit_style": "Customize QR"
   },
   "organization": {
     "filter_placeholder": "Lọc theo tổ chức",
