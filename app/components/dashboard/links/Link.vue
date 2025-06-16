@@ -2,7 +2,7 @@
 import type { LayoutType } from '~/composables/useLayoutPreference'
 import { nanoid } from '@@/schemas/link'
 import { useClipboard } from '@vueuse/core'
-import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Eraser, ExternalLink, Paintbrush, QrCode, SquareChevronDown, SquarePen } from 'lucide-vue-next'
+import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Eraser, ExternalLink, Palette, QrCode, SquareChevronDown, SquarePen } from 'lucide-vue-next'
 import { parseURL } from 'ufo'
 import { toast } from 'vue-sonner'
 import QRCode from './QRCode.vue'
@@ -166,7 +166,7 @@ function handleDuplicateLink() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <Paintbrush
+              <Palette
                 class="w-5 h-5 cursor-pointer hover:text-primary"
                 @click.prevent="handleQRStyleEdit"
               />
@@ -383,12 +383,29 @@ function handleDuplicateLink() {
             {{ link.name || `${host}/${link.slug}` }}
           </h3>
           <div class="flex items-center space-x-2 flex-shrink-0">
+            <!-- Edit Button - NEW -->
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <DashboardLinksEditor :link="link" @update:link="updateLink">
+                    <SquarePen
+                      class="w-5 h-5 cursor-pointer hover:text-primary"
+                      @click.prevent
+                    />
+                  </DashboardLinksEditor>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{{ $t('common.edit') }}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
             <!-- QR Action Buttons -->
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
                   <Download
-                    class="w-5 h-5 cursor-pointer hover:text-primary"
+                    class="w-5 h-5 cursor-pointer hover:text-primary hover:bg-accent"
                     @click.prevent="handleQRDownload"
                   />
                 </TooltipTrigger>
@@ -401,7 +418,7 @@ function handleDuplicateLink() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <Paintbrush
+                  <Palette
                     class="w-5 h-5 cursor-pointer hover:text-primary"
                     @click.prevent="handleQRStyleEdit"
                   />
@@ -412,6 +429,7 @@ function handleDuplicateLink() {
               </Tooltip>
             </TooltipProvider>
 
+            <!-- Dropdown for remaining actions -->
             <Popover v-model:open="editPopoverOpen">
               <PopoverTrigger>
                 <SquareChevronDown
@@ -423,20 +441,6 @@ function handleDuplicateLink() {
                 class="w-auto p-0"
                 :hide-when-detached="false"
               >
-                <DashboardLinksEditor
-                  :link="link"
-                  @update:link="updateLink"
-                >
-                  <div
-                    class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
-                  >
-                    <SquarePen class="w-5 h-5 mr-2" />
-                    {{ $t('common.edit') }}
-                  </div>
-                </DashboardLinksEditor>
-
-                <Separator />
-
                 <div
                   class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
                   @click.prevent="handleDuplicateLink"
