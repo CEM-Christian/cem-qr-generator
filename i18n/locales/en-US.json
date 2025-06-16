@@ -263,6 +263,13 @@
       "slug_az": "Slug A-Z",
       "slug_za": "Slug Z-A",
       "tip": "Experience: Only for loaded links"
+    },
+    "layout": {
+      "details": "Details",
+      "details_description": "Focus on link metadata and information",
+      "qr": "QR Code",
+      "qr_description": "Emphasize QR code visualization",
+      "toggle_tooltip": "Switch between detail and QR code layouts"
     }
   },
   "qr_style_editor": {

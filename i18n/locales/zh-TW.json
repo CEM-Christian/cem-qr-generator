@@ -263,6 +263,13 @@
       "slug_az": "短連結(A-Z)",
       "slug_za": "短連結(Z-A)",
       "tip": "體驗功能: 僅對已經加載的連結有效"
+    },
+    "layout": {
+      "details": "詳情",
+      "details_description": "專注於連結後設資料和資訊",
+      "qr": "QR碼",
+      "qr_description": "強調QR碼視覺化",
+      "toggle_tooltip": "在詳情和QR碼佈局之間切換"
     }
   },
   "qr_style_editor": {

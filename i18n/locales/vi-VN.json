@@ -263,6 +263,13 @@
       "slug_az": "Slug A-Z",
       "slug_za": "Slug Z-A",
       "tip": "Trải nghiệm: Chỉ áp dụng với các liên kết đã tải"
+    },
+    "layout": {
+      "details": "Chi tiết",
+      "details_description": "Tập trung vào siêu dữ liệu và thông tin liên kết",
+      "qr": "Mã QR",
+      "qr_description": "Nhấn mạnh hiển thị mã QR",
+      "toggle_tooltip": "Chuyển đổi giữa bố cục chi tiết và mã QR"
     }
   },
   "qr_style_editor": {

@@ -13,6 +13,9 @@ let listError = false
 const sortBy = ref('newest')
 const selectedOrganization = ref<OrganizationId | '' | 'all'>('all')
 
+// Layout preference integration
+const { layout, setLayout } = useLayoutPreference()
+
 // URL parameter persistence
 const route = useRoute()
 const router = useRouter()
@@ -116,7 +119,7 @@ const { isLoading } = useInfiniteScroll(
   },
 )
 
-function updateLinkList(link: Link, type: 'edit' | 'delete' | 'create') {
+function updateLinkList(link: Link, type?: 'edit' | 'delete' | 'create') {
   if (type === 'edit') {
     const index = links.value.findIndex(l => l.id === link.id)
     links.value[index] = link
@@ -142,15 +145,25 @@ function updateLinkList(link: Link, type: 'edit' | 'delete' | 'create') {
         <div class="flex items-center gap-2">
           <DashboardLinksSort v-model:sort-by="sortBy" />
           <DashboardLinksOrganizationFilter v-model:selected-organization="selectedOrganization" />
+          <DashboardLinksLayoutToggle
+            :layout="layout"
+            @update:layout="setLayout"
+          />
         </div>
         <LazyDashboardLinksSearch />
       </div>
     </div>
-    <section class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <section
+      class="grid gap-4"
+      :class="layout === 'qr'
+        ? 'grid-cols-1 md:grid-cols-2'
+        : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'"
+    >
       <DashboardLinksLink
         v-for="link in displayedLinks"
         :key="link.id"
         :link="link"
+        :layout="layout"
         @update:link="updateLinkList"
       />
     </section>

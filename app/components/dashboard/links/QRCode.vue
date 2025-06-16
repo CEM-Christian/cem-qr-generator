@@ -1,25 +1,31 @@
-<script setup>
+<script setup lang="ts">
 import { Download, Edit3 } from 'lucide-vue-next'
 import QRCodeStyling from 'qr-code-styling'
 import { DownloadOptionsModal } from '../../ui/download-options-modal'
 import QRStyleEditor from '../../ui/qr-style-editor/QRStyleEditor.vue'
 
-const props = defineProps({
-  data: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    default: '',
-  },
-  link: {
-    type: Object,
-    default: () => ({}),
-  },
+interface Props {
+  data: string
+  image?: string
+  link?: Record<string, any>
+  size?: 'sm' | 'md' | 'lg' | 'xl' | number
+  buttonMode?: 'full' | 'icon' | 'hidden'
+  compact?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  image: '',
+  link: () => ({}),
+  size: 'md',
+  buttonMode: 'full',
+  compact: false,
 })
 
-const emit = defineEmits(['update:link'])
+const emit = defineEmits<{
+  'update:link': [link: any, type?: 'edit' | 'delete' | 'create']
+  'download': []
+  'editStyle': []
+}>()
 
 // Default QR style options based on current implementation
 const defaultOptions = {
@@ -52,12 +58,26 @@ const imageUrl = computed(() => {
   return props.image
 })
 
+// QR code dimensions based on size prop
+const qrDimensions = computed(() => {
+  if (typeof props.size === 'number') {
+    return props.size
+  }
+  const sizeMap = {
+    sm: 128,
+    md: 256,
+    lg: 320,
+    xl: 512,
+  }
+  return sizeMap[props.size]
+})
+
 const options = computed(() => ({
-  width: 256,
-  height: 256,
+  width: qrDimensions.value,
+  height: qrDimensions.value,
   data: props.data,
   margin: 10,
-  qrOptions: { typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'Q' },
+  qrOptions: { typeNumber: 0 as any, mode: 'Byte' as const, errorCorrectionLevel: 'Q' as const },
   imageOptions: {
     ...currentStyleOptions.value.imageOptions,
     crossOrigin: 'anonymous',
@@ -138,10 +158,11 @@ watch(() => imageUrl.value, (newImageUrl) => {
 })
 
 function handleDirectDownload() {
+  emit('download')
   showDownloadModal.value = true
 }
 
-function handleDownloadConfirm(downloadOptions) {
+function handleDownloadConfirm(downloadOptions: any) {
   try {
     // Create temporary QR code instance with download-specific settings
     const downloadQrOptions = {
@@ -173,16 +194,25 @@ function handleDownloadConfirm(downloadOptions) {
 }
 
 function handleOpenStyleEditor() {
+  emit('editStyle')
   showStyleEditor.value = true
 }
 
-function handleStyleSave(updatedLink) {
+function handleStyleSave(updatedLink: any) {
   // The QR Style Editor now emits the full updated link from the API
   emit('update:link', updatedLink, 'edit')
 }
 
+// Expose functions for external use
+defineExpose({
+  handleDirectDownload,
+  handleOpenStyleEditor,
+})
+
 onMounted(() => {
-  qrCode.append(qrCodeEl.value)
+  if (qrCodeEl.value) {
+    qrCode.append(qrCodeEl.value)
+  }
 })
 </script>
 
@@ -194,15 +224,18 @@ onMounted(() => {
       class="bg-white p-1 rounded-lg"
     />
 
-    <!-- Action Buttons -->
-    <div class="flex items-center gap-2">
+    <!-- Action Buttons - Responsive based on buttonMode prop -->
+    <div
+      v-if="buttonMode !== 'hidden'"
+      class="flex items-center gap-2"
+    >
       <Button
         variant="outline"
         size="sm"
         @click="handleDirectDownload"
       >
-        <Download class="w-4 h-4 mr-2" />
-        {{ $t('common.download') }}
+        <Download class="w-4 h-4" :class="buttonMode === 'full' ? 'mr-2' : ''" />
+        <span v-if="buttonMode === 'full'">{{ $t('common.download') }}</span>
       </Button>
 
       <Button
@@ -210,8 +243,8 @@ onMounted(() => {
         size="sm"
         @click="handleOpenStyleEditor"
       >
-        <Edit3 class="w-4 h-4 mr-2" />
-        {{ $t('qr_style_editor.edit_style') }}
+        <Edit3 class="w-4 h-4" :class="buttonMode === 'full' ? 'mr-2' : ''" />
+        <span v-if="buttonMode === 'full'">{{ $t('qr_style_editor.edit_style') }}</span>
       </Button>
     </div>
 

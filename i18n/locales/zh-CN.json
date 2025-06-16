@@ -262,6 +262,13 @@
       "slug_az": "短链(A-Z)",
       "slug_za": "短链(Z-A)",
       "tip": "体验功能: 仅对已经加载的链接有效"
+    },
+    "layout": {
+      "details": "详情",
+      "details_description": "专注于链接元数据和信息",
+      "qr": "二维码",
+      "qr_description": "强调二维码可视化",
+      "toggle_tooltip": "在详情和二维码布局之间切换"
     }
   },
   "qr_style_editor": {
