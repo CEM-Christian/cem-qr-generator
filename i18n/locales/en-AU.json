@@ -172,7 +172,7 @@
         "description": "Your link's short identifier",
         "placeholder": "Enter custom slug..."
       },
-      "organisation": {
+      "organization": {
         "label": "Organisation",
         "description": "Assign link to an organisation",
         "placeholder": "Select organisation (optional)"

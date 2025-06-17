@@ -186,6 +186,32 @@ const form = useForm({
   keepValuesOnUnmount: isEdit,
 })
 
+// Organization auto-detection for new links only
+const organizationDetection = useOrganizationDetection({
+  enableAutoDetection: !isEdit, // Only enable for new links
+  onDetection: (organizationId, url) => {
+    if (!isEdit && organizationId && !organizationDetection.manualOverride.value) {
+      // Auto-populate organization field
+      form.setFieldValue('organization', organizationId)
+      console.debug('Auto-detected organization:', organizationId, 'for URL:', url)
+    }
+  },
+})
+
+// Watch for manual organization changes to enable override
+watch(() => form.values.organization, (newOrg, oldOrg) => {
+  if (!isEdit && newOrg && newOrg !== oldOrg && organizationDetection.detectedOrganization.value !== newOrg) {
+    organizationDetection.enableManualOverride()
+  }
+})
+
+// Function to handle URL blur for auto-detection
+function handleUrlBlur(url: string) {
+  if (!isEdit && url && url.trim() !== '') {
+    organizationDetection.processUrl(url.trim())
+  }
+}
+
 // Scroll indicators setup
 const scrollContainer = ref<HTMLElement>()
 const scrollIndicators = useScrollIndicators(scrollContainer, {
@@ -363,6 +389,26 @@ async function copyShortUrl() {
               :field-config="fieldConfig"
               @submit="onSubmit"
             >
+              <!-- Custom URL field template with blur handler for auto-detection -->
+              <template #url="slotProps">
+                <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
+                  <FormItem>
+                    <FormLabel>{{ slotProps.config?.label || $t('links.form.destination_url.label') }}</FormLabel>
+                    <FormControl>
+                      <Input
+                        v-bind="fieldSlotProps.componentField"
+                        :placeholder="slotProps.config?.inputProps?.placeholder || $t('links.form.destination_url.placeholder')"
+                        @blur="handleUrlBlur(fieldSlotProps.componentField.modelValue)"
+                      />
+                    </FormControl>
+                    <FormDescription v-if="slotProps.config?.description">
+                      {{ slotProps.config.description }}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                </FormField>
+              </template>
+
               <template #slug="slotProps">
                 <FormField v-slot="fieldSlotProps" :name="slotProps.fieldName">
                   <FormItem>

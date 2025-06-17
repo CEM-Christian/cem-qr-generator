@@ -1,6 +1,14 @@
 import type { OrganizationId } from '../../schemas/organization'
 
 /**
+ * URL pattern configuration for organization auto-detection
+ */
+export interface OrganizationUrlPatterns {
+  domain?: string
+  path?: string
+}
+
+/**
  * Organization configuration for CEM QR Generator
  * Contains metadata for each organization including display names and logos
  */
@@ -11,6 +19,7 @@ export interface OrganizationConfig {
   initials: string
   color?: string
   description?: string
+  urlPatterns?: OrganizationUrlPatterns
 }
 
 /**
@@ -25,6 +34,9 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'CEM',
     color: '#1e40af',
     description: 'Christian Education Ministries',
+    urlPatterns: {
+      domain: 'cem.edu.au',
+    },
   },
   'acc': {
     id: 'acc',
@@ -33,6 +45,9 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC',
     color: '#059669',
     description: 'Australian Christian College',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+    },
   },
   'acc-benalla': {
     id: 'acc-benalla',
@@ -41,6 +56,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Ben',
     color: '#059669',
     description: 'ACC Benalla',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/benalla/',
+    },
   },
   'acc-burnie': {
     id: 'acc-burnie',
@@ -49,6 +68,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Bur',
     color: '#059669',
     description: 'ACC Burnie',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/burnie/',
+    },
   },
   'acc-casey': {
     id: 'acc-casey',
@@ -57,6 +80,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Cas',
     color: '#059669',
     description: 'ACC Casey',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/casey/',
+    },
   },
   'acc-darlingdowns': {
     id: 'acc-darlingdowns',
@@ -65,6 +92,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC DD',
     color: '#059669',
     description: 'ACC Darling Downs',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/darlingdowns/',
+    },
   },
   'acc-echuca': {
     id: 'acc-echuca',
@@ -73,6 +104,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Ech',
     color: '#059669',
     description: 'ACC Echuca',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/echuca/',
+    },
   },
   'acc-hobart': {
     id: 'acc-hobart',
@@ -81,6 +116,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Hob',
     color: '#059669',
     description: 'ACC Hobart',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/hobart/',
+    },
   },
   'acc-launceston': {
     id: 'acc-launceston',
@@ -89,6 +128,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Lau',
     color: '#059669',
     description: 'ACC Launceston',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/launceston/',
+    },
   },
   'acc-marsdenpark': {
     id: 'acc-marsdenpark',
@@ -97,6 +140,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC MP',
     color: '#059669',
     description: 'ACC Marsden Park',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/marsdenpark/',
+    },
   },
   'acc-moreton': {
     id: 'acc-moreton',
@@ -105,6 +152,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Mor',
     color: '#059669',
     description: 'ACC Moreton',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/moreton/',
+    },
   },
   'acc-singleton': {
     id: 'acc-singleton',
@@ -113,6 +164,10 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Sing',
     color: '#059669',
     description: 'ACC Singleton',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/singleton/',
+    },
   },
   'acc-southlands': {
     id: 'acc-southlands',
@@ -121,6 +176,22 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'ACC Sou',
     color: '#059669',
     description: 'ACC Southlands',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/southlands/',
+    },
+  },
+  'acc-victoria-online': {
+    id: 'acc-victoria-online',
+    name: 'ACC Victoria Online',
+    logo: 'acc.svg',
+    initials: 'ACC VO',
+    color: '#059669',
+    description: 'ACC Victoria Online',
+    urlPatterns: {
+      domain: 'acc.edu.au',
+      path: '/victoria-online/',
+    },
   },
   'bairnsdale': {
     id: 'bairnsdale',
@@ -129,6 +200,9 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'BCC',
     color: '#dc2626',
     description: 'Bairnsdale Christian College',
+    urlPatterns: {
+      domain: 'bairnsdale.vic.edu.au',
+    },
   },
   'brightwaters': {
     id: 'brightwaters',
@@ -137,6 +211,9 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'BWCC',
     color: '#7c3aed',
     description: 'Brightwaters Christian College',
+    urlPatterns: {
+      domain: 'brightwaters.nsw.edu.au',
+    },
   },
   'heritage': {
     id: 'heritage',
@@ -145,6 +222,9 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'HCS',
     color: '#ea580c',
     description: 'Heritage Christian School',
+    urlPatterns: {
+      domain: 'heritage.nsw.edu.au',
+    },
   },
   'medowie': {
     id: 'medowie',
@@ -153,6 +233,9 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'MCS',
     color: '#0891b2',
     description: 'Medowie Christian School',
+    urlPatterns: {
+      domain: 'mcs.nsw.edu.au',
+    },
   },
   'smartplay': {
     id: 'smartplay',
@@ -161,6 +244,9 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'SP',
     color: '#65a30d',
     description: 'SmartPlay Educational Resources',
+    urlPatterns: {
+      domain: 'smartplay.edu.au',
+    },
   },
   'swanhill': {
     id: 'swanhill',
@@ -169,6 +255,9 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
     initials: 'SHCS',
     color: '#c2410c',
     description: 'Swan Hill Christian School',
+    urlPatterns: {
+      domain: 'shcs.vic.edu.au',
+    },
   },
 } as const
 
