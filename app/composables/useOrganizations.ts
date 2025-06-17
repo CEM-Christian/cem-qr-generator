@@ -64,6 +64,37 @@ export function useOrganizations() {
     }))
   }
 
+  /**
+   * Check if an organization ID is ACC-related
+   */
+  const isAccOrganization = (id: OrganizationId): boolean => {
+    return id === 'acc' || id.startsWith('acc-')
+  }
+
+  /**
+   * Get all ACC organization IDs (parent + children)
+   */
+  const getAccOrganizations = (): OrganizationId[] => {
+    return ORGANIZATION_LIST
+      .map(org => org.id)
+      .filter(id => isAccOrganization(id))
+  }
+
+  /**
+   * Get filtered organizations based on hierarchical selection
+   * When 'acc' is selected, returns all ACC organizations
+   * Otherwise returns the specific organization or all organizations
+   */
+  const getFilteredOrganizations = (selectedId: OrganizationId | 'all'): OrganizationId[] => {
+    if (selectedId === 'all') {
+      return ORGANIZATION_LIST.map(org => org.id)
+    }
+    if (selectedId === 'acc') {
+      return getAccOrganizations()
+    }
+    return [selectedId]
+  }
+
   return {
     organizations,
     organizationMap,
@@ -72,5 +103,8 @@ export function useOrganizations() {
     getOrganizationLogoUrl,
     isValidOrganization,
     getOrganizationOptions,
+    isAccOrganization,
+    getAccOrganizations,
+    getFilteredOrganizations,
   }
 }

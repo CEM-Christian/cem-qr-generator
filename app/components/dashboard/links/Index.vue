@@ -16,6 +16,9 @@ const selectedOrganization = ref<OrganizationId | '' | 'all'>('all')
 // Layout preference integration
 const { layout, setLayout } = useLayoutPreference()
 
+// Organization filtering integration
+const { getFilteredOrganizations } = useOrganizations()
+
 // URL parameter persistence
 const route = useRoute()
 const router = useRouter()
@@ -54,10 +57,11 @@ watch([selectedOrganization, sortBy], ([newOrg, newSort]) => {
 const displayedLinks = computed(() => {
   let filtered = [...links.value]
 
-  // Filter by organization if selected (and not 'all')
+  // Filter by organization using hierarchical logic
   if (selectedOrganization.value && selectedOrganization.value !== 'all') {
+    const allowedOrganizations = getFilteredOrganizations(selectedOrganization.value)
     filtered = filtered.filter(link =>
-      link.organization === selectedOrganization.value,
+      link.organization && allowedOrganizations.includes(link.organization),
     )
   }
 
