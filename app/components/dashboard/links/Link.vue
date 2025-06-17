@@ -5,6 +5,9 @@ import { useClipboard } from '@vueuse/core'
 import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Eraser, ExternalLink, Palette, PenLine, QrCode, SquareChevronDown } from 'lucide-vue-next'
 import { parseURL } from 'ufo'
 import { toast } from 'vue-sonner'
+import { useQRCode } from '~/composables/useQRCode'
+import { DownloadOptionsModal } from '../../ui/download-options-modal'
+import { QRStyleEditor } from '../../ui/qr-style-editor'
 import QRCode from './QRCode.vue'
 
 interface Props {
@@ -23,7 +26,13 @@ const emit = defineEmits<{
 const { t } = useI18n()
 const { getOrganizationById } = useOrganizations()
 const editPopoverOpen = ref(false)
+const qrPopoverOpen = ref(false)
 const qrCodeRef = ref<InstanceType<typeof QRCode> | null>(null)
+
+// QR Code background operations
+const showDownloadModal = ref(false)
+const showStyleEditor = ref(false)
+const { downloadQRCode } = useQRCode()
 
 const { host, origin } = location
 
@@ -56,11 +65,33 @@ function copyLink() {
 }
 
 function handleQRDownload() {
-  qrCodeRef.value?.handleDirectDownload()
+  // Open download modal directly without QR popup
+  showDownloadModal.value = true
 }
 
 function handleQRStyleEdit() {
-  qrCodeRef.value?.handleOpenStyleEditor()
+  // Open style editor directly without QR popup
+  showStyleEditor.value = true
+}
+
+function handleDownloadConfirm(downloadOptions: any) {
+  try {
+    downloadQRCode({
+      data: shortLink.value,
+      image: linkIcon.value,
+      link: props.link,
+      format: downloadOptions.format,
+      resolution: downloadOptions.resolution,
+    })
+  }
+  catch (error) {
+    console.error('Failed to download QR code:', error)
+    toast.error(t('qr_style_editor.save_error'))
+  }
+}
+
+function handleStyleSave(updatedLink: any) {
+  updateLink(updatedLink, 'edit')
 }
 
 function handleDuplicateLink() {
@@ -84,13 +115,12 @@ function handleDuplicateLink() {
 <template>
   <Card>
     <!-- Details Layout (default) -->
-    <NuxtLink
+    <div
       v-if="layout === 'condensed'"
       class="flex flex-col p-4 space-y-3 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
-      :to="`/dashboard/link?slug=${link.slug}`"
     >
       <div class="flex items-center justify-center space-x-1">
-        <Avatar shape="square">
+        <Avatar class="mr-2" shape="square">
           <AvatarImage
             :src="linkIcon"
             alt="@radix-vue"
@@ -106,11 +136,12 @@ function handleDuplicateLink() {
         </Avatar>
 
         <div class="flex-1 overflow-hidden">
-          <div class="flex items-center">
-            <div class="font-bold leading-5 truncate text-lg">
-              {{ link.name || `${host}/${link.slug}` }}
-            </div>
-          </div>
+          <NuxtLink
+            class="font-bold leading-5 truncate text-lg hover:underline"
+            :to="`/dashboard/link?slug=${link.slug}`"
+          >
+            {{ link.name || `${host}/${link.slug}` }}
+          </NuxtLink>
 
           <!-- Optional comment/description below name -->
           <TooltipProvider v-if="link.comment || link.title || link.description">
@@ -129,7 +160,7 @@ function handleDuplicateLink() {
           </TooltipProvider>
         </div>
 
-        <Popover>
+        <Popover v-model:open="qrPopoverOpen">
           <PopoverTrigger as-child>
             <Button
               variant="ghost"
@@ -369,13 +400,12 @@ function handleDuplicateLink() {
           </template>
         </div>
       </div>
-    </NuxtLink>
+    </div>
 
     <!-- QR Layout -->
-    <NuxtLink
+    <div
       v-else-if="layout === 'qr-code'"
       class="flex flex-col md:flex-row items-start md:items-center p-4 space-y-4 md:space-y-0 md:space-x-4 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
-      :to="`/dashboard/link?slug=${link.slug}`"
     >
       <!-- Left: QR Code Section -->
       <div class="flex-shrink-0 w-full md:w-auto flex justify-center md:justify-start">
@@ -396,23 +426,29 @@ function handleDuplicateLink() {
         <!-- Title and actions -->
         <div class="flex items-center justify-between">
           <h3 class="font-bold text-lg truncate">
-            {{ link.name || `${host}/${link.slug}` }}
+            <NuxtLink
+              class="hover:underline"
+              :to="`/dashboard/link?slug=${link.slug}`"
+            >
+              {{ link.name || `${host}/${link.slug}` }}
+            </NuxtLink>
           </h3>
           <div class="flex items-center space-x-1 flex-shrink-0">
             <!-- Edit Button - NEW -->
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger as-child>
-                  <DashboardLinksEditor :link="link" @update:link="updateLink">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      class="h-8 w-8"
-                      @click.prevent
-                    >
-                      <PenLine class="w-5 h-5" />
-                    </Button>
-                  </DashboardLinksEditor>
+                  <div>
+                    <DashboardLinksEditor :link="link" @update:link="updateLink">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        class="h-8 w-8"
+                      >
+                        <PenLine class="w-5 h-5" />
+                      </Button>
+                    </DashboardLinksEditor>
+                  </div>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{{ $t('links.actions.edit') }}</p>
@@ -536,7 +572,7 @@ function handleDuplicateLink() {
             <span class="text-muted-foreground">↳</span>
             <a
               :href="link.url"
-              class="inline-flex items-center hover:underline flex-1 min-w-0"
+              class="inline-flex items-center hover:underline"
               target="_blank"
               rel="noopener noreferrer"
               @click.stop
@@ -625,6 +661,22 @@ function handleDuplicateLink() {
           </div>
         </div>
       </div>
-    </NuxtLink>
+    </div>
   </Card>
+
+  <!-- QR Download Modal -->
+  <DownloadOptionsModal
+    v-model:open="showDownloadModal"
+    @download="handleDownloadConfirm"
+  />
+
+  <!-- QR Style Editor Modal -->
+  <QRStyleEditor
+    v-model:open="showStyleEditor"
+    :data="shortLink"
+    :image="linkIcon"
+    :initial-options="link.qr_style_options || {}"
+    :link="link"
+    @save="handleStyleSave"
+  />
 </template>
