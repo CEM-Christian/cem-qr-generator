@@ -2,7 +2,7 @@
 import type { LayoutType } from '~/composables/useLayoutPreference'
 import { nanoid } from '@@/schemas/link'
 import { useClipboard } from '@vueuse/core'
-import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Eraser, ExternalLink, Palette, QrCode, SquareChevronDown, PenLine } from 'lucide-vue-next'
+import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Eraser, ExternalLink, Palette, PenLine, QrCode, SquareChevronDown } from 'lucide-vue-next'
 import { parseURL } from 'ufo'
 import { toast } from 'vue-sonner'
 import QRCode from './QRCode.vue'
@@ -89,7 +89,7 @@ function handleDuplicateLink() {
       class="flex flex-col p-4 space-y-3 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
       :to="`/dashboard/link?slug=${link.slug}`"
     >
-      <div class="flex items-center justify-center space-x-3">
+      <div class="flex items-center justify-center space-x-1">
         <Avatar shape="square">
           <AvatarImage
             :src="linkIcon"
@@ -130,11 +130,15 @@ function handleDuplicateLink() {
         </div>
 
         <Popover>
-          <PopoverTrigger>
-            <QrCode
-              class="w-5 h-5"
+          <PopoverTrigger as-child>
+            <Button
+              variant="ghost"
+              size="icon"
+              class="h-8 w-8"
               @click.prevent
-            />
+            >
+              <QrCode class="w-5 h-5" />
+            </Button>
           </PopoverTrigger>
           <PopoverContent>
             <QRCode
@@ -151,11 +155,15 @@ function handleDuplicateLink() {
         <!-- QR Action Buttons -->
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
-              <Download
-                class="w-5 h-5 cursor-pointer hover:text-primary"
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="h-8 w-8"
                 @click.prevent="handleQRDownload"
-              />
+              >
+                <Download class="w-5 h-5" />
+              </Button>
             </TooltipTrigger>
             <TooltipContent>
               <p>{{ $t('common.download') }} QR</p>
@@ -165,11 +173,15 @@ function handleDuplicateLink() {
 
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
-              <Palette
-                class="w-5 h-5 cursor-pointer hover:text-primary"
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="icon"
+                class="h-8 w-8"
                 @click.prevent="handleQRStyleEdit"
-              />
+              >
+                <Palette class="w-5 h-5" />
+              </Button>
             </TooltipTrigger>
             <TooltipContent>
               <p>{{ $t('qr_style_editor.edit_style') }}</p>
@@ -178,11 +190,15 @@ function handleDuplicateLink() {
         </TooltipProvider>
 
         <Popover v-model:open="editPopoverOpen">
-          <PopoverTrigger>
-            <SquareChevronDown
-              class="w-5 h-5"
+          <PopoverTrigger as-child>
+            <Button
+              variant="ghost"
+              size="icon"
+              class="h-8 w-8"
               @click.prevent
-            />
+            >
+              <SquareChevronDown class="w-5 h-5" />
+            </Button>
           </PopoverTrigger>
           <PopoverContent
             class="w-auto p-0"
@@ -254,7 +270,7 @@ function handleDuplicateLink() {
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{{ $t('links.click_to_copy') }}: {{ shortLink }}</p>
+              <p>{{ $t('links.click_to_copy') }}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -376,22 +392,26 @@ function handleDuplicateLink() {
       </div>
 
       <!-- Right: Condensed Details -->
-      <div class="flex-1 min-w-0 space-y-3 w-full">
+      <div class="flex-1 min-w-0 w-full">
         <!-- Title and actions -->
         <div class="flex items-center justify-between">
           <h3 class="font-bold text-lg truncate">
             {{ link.name || `${host}/${link.slug}` }}
           </h3>
-          <div class="flex items-center space-x-2 flex-shrink-0">
+          <div class="flex items-center space-x-1 flex-shrink-0">
             <!-- Edit Button - NEW -->
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger as-child>
                   <DashboardLinksEditor :link="link" @update:link="updateLink">
-                    <PenLine
-                      class="w-5 h-5 cursor-pointer hover:text-primary"
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      class="h-8 w-8"
                       @click.prevent
-                    />
+                    >
+                      <PenLine class="w-5 h-5" />
+                    </Button>
                   </DashboardLinksEditor>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -403,11 +423,15 @@ function handleDuplicateLink() {
             <!-- QR Action Buttons -->
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger>
-                  <Download
-                    class="w-5 h-5 cursor-pointer hover:text-primary"
+                <TooltipTrigger as-child>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    class="h-8 w-8"
                     @click.prevent="handleQRDownload"
-                  />
+                  >
+                    <Download class="w-5 h-5" />
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{{ $t('common.download') }} QR</p>
@@ -417,11 +441,15 @@ function handleDuplicateLink() {
 
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger>
-                  <Palette
-                    class="w-5 h-5 cursor-pointer hover:text-primary"
+                <TooltipTrigger as-child>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    class="h-8 w-8"
                     @click.prevent="handleQRStyleEdit"
-                  />
+                  >
+                    <Palette class="w-5 h-5" />
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{{ $t('qr_style_editor.edit_style') }}</p>
@@ -431,11 +459,15 @@ function handleDuplicateLink() {
 
             <!-- Dropdown for remaining actions -->
             <Popover v-model:open="editPopoverOpen">
-              <PopoverTrigger>
-                <SquareChevronDown
-                  class="w-5 h-5"
+              <PopoverTrigger as-child>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  class="h-8 w-8"
                   @click.prevent
-                />
+                >
+                  <SquareChevronDown class="w-5 h-5" />
+                </Button>
               </PopoverTrigger>
               <PopoverContent
                 class="w-auto p-0"
@@ -468,23 +500,12 @@ function handleDuplicateLink() {
         </div>
 
         <!-- Optional comment/description -->
-        <TooltipProvider v-if="link.comment || link.title || link.description">
-          <Tooltip>
-            <TooltipTrigger as-child>
-              <p class="text-sm text-muted-foreground truncate">
-                {{ link.comment || link.title || link.description }}
-              </p>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p class="max-w-[90svw] break-all">
-                {{ link.comment || link.title || link.description }}
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <p v-if="link.comment || link.title || link.description" class="text-sm text-muted-foreground truncate mt-1">
+          {{ link.comment || link.title || link.description }}
+        </p>
 
         <!-- URLs and metadata -->
-        <div class="space-y-2 text-sm">
+        <div class="space-y-2 text-sm mt-3">
           <!-- Shortened URL -->
           <TooltipProvider>
             <Tooltip>
@@ -505,7 +526,7 @@ function handleDuplicateLink() {
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{{ $t('links.click_to_copy') }}: {{ shortLink }}</p>
+                <p>{{ $t('links.click_to_copy') }}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
