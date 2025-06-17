@@ -265,6 +265,10 @@
       "tip": "Hinweis: Nur für geladene Links"
     },
     "layout": {
+      "condensed": "Kompakt",
+      "condensed_tooltip": "Links in kompakter Rasteransicht anzeigen",
+      "qr_code": "QR-Code",
+      "qr_code_tooltip": "Links mit QR-Code-Vorschau anzeigen",
       "details": "Details",
       "details_description": "Fokus auf Link-Metadaten und Informationen",
       "qr": "QR-Code",

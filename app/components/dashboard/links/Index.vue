@@ -155,7 +155,7 @@ function updateLinkList(link: Link, type?: 'edit' | 'delete' | 'create') {
     </div>
     <section
       class="grid gap-4"
-      :class="layout === 'qr'
+      :class="layout === 'qr-code'
         ? 'grid-cols-1 md:grid-cols-2'
         : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'"
     >

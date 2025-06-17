@@ -265,6 +265,10 @@
       "tip": "体验功能: 仅对已经加载的链接有效"
     },
     "layout": {
+      "condensed": "紧凑",
+      "condensed_tooltip": "以紧凑网格视图显示链接",
+      "qr_code": "二维码",
+      "qr_code_tooltip": "显示带有二维码预览的链接",
       "details": "详情",
       "details_description": "专注于链接元数据和信息",
       "qr": "二维码",

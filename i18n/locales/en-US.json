@@ -266,6 +266,10 @@
       "tip": "Experience: Only for loaded links"
     },
     "layout": {
+      "condensed": "Condensed",
+      "condensed_tooltip": "Show links in a condensed grid view",
+      "qr_code": "QR Code",
+      "qr_code_tooltip": "Show links with QR code previews",
       "details": "Details",
       "details_description": "Focus on link metadata and information",
       "qr": "QR Code",

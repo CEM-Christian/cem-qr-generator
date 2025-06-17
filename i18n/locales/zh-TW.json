@@ -266,6 +266,10 @@
       "tip": "體驗功能: 僅對已經加載的連結有效"
     },
     "layout": {
+      "condensed": "緊湊",
+      "condensed_tooltip": "以緊湊網格視圖顯示連結",
+      "qr_code": "QR碼",
+      "qr_code_tooltip": "顯示帶有QR碼預覽的連結",
       "details": "詳情",
       "details_description": "專注於連結後設資料和資訊",
       "qr": "QR碼",

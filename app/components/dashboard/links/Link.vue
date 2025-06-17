@@ -13,7 +13,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  layout: 'details',
+  layout: 'condensed',
 })
 
 const emit = defineEmits<{
@@ -85,7 +85,7 @@ function handleDuplicateLink() {
   <Card>
     <!-- Details Layout (default) -->
     <NuxtLink
-      v-if="layout === 'details'"
+      v-if="layout === 'condensed'"
       class="flex flex-col p-4 space-y-3 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
       :to="`/dashboard/link?slug=${link.slug}`"
     >
@@ -357,7 +357,7 @@ function handleDuplicateLink() {
 
     <!-- QR Layout -->
     <NuxtLink
-      v-else-if="layout === 'qr'"
+      v-else-if="layout === 'qr-code'"
       class="flex flex-col md:flex-row items-start md:items-center p-4 space-y-4 md:space-y-0 md:space-x-4 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
       :to="`/dashboard/link?slug=${link.slug}`"
     >

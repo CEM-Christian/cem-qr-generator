@@ -266,6 +266,10 @@
       "tip": "Trải nghiệm: Chỉ áp dụng với các liên kết đã tải"
     },
     "layout": {
+      "condensed": "Thu gọn",
+      "condensed_tooltip": "Hiển thị liên kết dạng lưới thu gọn",
+      "qr_code": "Mã QR",
+      "qr_code_tooltip": "Hiển thị liên kết với bản xem trước mã QR",
       "details": "Chi tiết",
       "details_description": "Tập trung vào siêu dữ liệu và thông tin liên kết",
       "qr": "Mã QR",

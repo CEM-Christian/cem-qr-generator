@@ -265,6 +265,10 @@
       "tip": "Essai : uniquement pour les liens chargés"
     },
     "layout": {
+      "condensed": "Condensé",
+      "condensed_tooltip": "Afficher les liens dans une vue en grille condensée",
+      "qr_code": "QR Code",
+      "qr_code_tooltip": "Afficher les liens avec des aperçus de QR Code",
       "details": "Détails",
       "details_description": "Se concentrer sur les métadonnées et informations du lien",
       "qr": "QR Code",
