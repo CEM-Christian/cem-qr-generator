@@ -2,7 +2,7 @@
   "common": {
     "i18n": "Multi Language",
     "abbreviations": "En",
-    "current_language": "American 🦅",
+    "current_language": "English",
     "try_again": "Try again",
     "cancel": "Cancel",
     "continue": "Continue",
@@ -75,8 +75,8 @@
         "description": "Deploy without the need for traditional servers"
       },
       "customizable_slug": {
-        "title": "Customizable Slug",
-        "description": "Support for personalized slugs and case sensitivity"
+        "title": "Customisable Slug",
+        "description": "Support for personalised slugs and case sensitivity"
       },
       "ai_slug": {
         "title": "AI Slug",
@@ -88,7 +88,7 @@
       }
     },
     "cta": {
-      "title": "Deployment immediately",
+      "title": "Deploy immediately",
       "description": "With just a few simple clicks, you can start deploying without any expenses",
       "button": "Start Deploy"
     },
@@ -172,10 +172,10 @@
         "description": "Your link's short identifier",
         "placeholder": "Enter custom slug..."
       },
-      "organization": {
-        "label": "Organization",
-        "description": "Assign link to an organization",
-        "placeholder": "Select organization (optional)"
+      "organisation": {
+        "label": "Organisation",
+        "description": "Assign link to an organisation",
+        "placeholder": "Select organisation (optional)"
       },
       "utm": {
         "section_title": "UTM Tracking Parameters",
@@ -279,7 +279,7 @@
   },
   "qr_style_editor": {
     "title": "QR Code Style Editor",
-    "description": "Customize the appearance of your QR code with advanced styling options.",
+    "description": "Customise the appearance of your QR code with advanced styling options.",
     "preview": "Preview",
     "base_style": {
       "title": "Base Style",
@@ -291,9 +291,9 @@
       "title": "Logo Selection",
       "description": "Choose between website favicon, organization logo, or no image",
       "use_favicon": "Use website favicon",
-      "use_organization": "Use organization logo",
+      "use_organization": "Use organisation logo",
       "use_none": "No image",
-      "select_logo": "Select Organization Logo",
+      "select_logo": "Select Organisation Logo",
       "no_logo_selected": "Please select a logo from the options above"
     },
     "override_indicators": {
@@ -355,10 +355,10 @@
     "edit_style": "Customize QR"
   },
   "organization": {
-    "filter_placeholder": "Filter by organization",
-    "filter_tip": "Filter links by organization",
-    "all": "All Organizations",
-    "none": "No Organization",
-    "select_placeholder": "Select organization"
+    "filter_placeholder": "Filter by organisation",
+    "filter_tip": "Filter links by organisation",
+    "all": "All Organisations",
+    "none": "No Organisation",
+    "select_placeholder": "Select organisation"
   }
 }

@@ -2,9 +2,15 @@ import type { LocaleObject } from '@nuxtjs/i18n'
 
 const locales: LocaleObject[] = [
   {
+    code: 'en-AU',
+    file: 'en-AU.json',
+    name: 'English',
+    emoji: '🇦🇺',
+  },
+  {
     code: 'en-US',
     file: 'en-US.json',
-    name: 'English',
+    name: 'American 🦅',
     emoji: '🇺🇸',
   },
   {

@@ -2,7 +2,7 @@
 import type { LayoutType } from '~/composables/useLayoutPreference'
 import { nanoid } from '@@/schemas/link'
 import { useClipboard } from '@vueuse/core'
-import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Eraser, ExternalLink, Palette, QrCode, SquareChevronDown, SquarePen } from 'lucide-vue-next'
+import { BarChart3, CalendarPlus2, Copy, CopyCheck, Download, Eraser, ExternalLink, Palette, QrCode, SquareChevronDown, PenLine } from 'lucide-vue-next'
 import { parseURL } from 'ufo'
 import { toast } from 'vue-sonner'
 import QRCode from './QRCode.vue'
@@ -195,7 +195,7 @@ function handleDuplicateLink() {
               <div
                 class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
               >
-                <SquarePen
+                <PenLine
                   class="w-5 h-5 mr-2"
                 />
                 {{ $t('common.edit') }}
@@ -388,7 +388,7 @@ function handleDuplicateLink() {
               <Tooltip>
                 <TooltipTrigger>
                   <DashboardLinksEditor :link="link" @update:link="updateLink">
-                    <SquarePen
+                    <PenLine
                       class="w-5 h-5 cursor-pointer hover:text-primary"
                       @click.prevent
                     />
@@ -405,7 +405,7 @@ function handleDuplicateLink() {
               <Tooltip>
                 <TooltipTrigger>
                   <Download
-                    class="w-5 h-5 cursor-pointer hover:text-primary hover:bg-accent"
+                    class="w-5 h-5 cursor-pointer hover:text-primary"
                     @click.prevent="handleQRDownload"
                   />
                 </TooltipTrigger>

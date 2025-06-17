@@ -137,7 +137,7 @@ export default defineNuxtConfig({
       redirectOn: 'root',
     },
     baseUrl: '/',
-    defaultLocale: 'en-US',
+    defaultLocale: 'en-AU',
   },
 
   shadcn: {
