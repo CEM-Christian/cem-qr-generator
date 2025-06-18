@@ -48,7 +48,7 @@ function handleDuplicateLink() {
         <Button
           variant="ghost"
           size="icon"
-          class="h-8 w-8"
+          class="h-7 w-7"
           @click.prevent
         >
           <QrCode class="w-5 h-5" />
@@ -66,7 +66,7 @@ function handleDuplicateLink() {
           <Button
             variant="ghost"
             size="icon"
-            class="h-8 w-8"
+            class="h-7 w-7"
             @click.prevent="handleQRDownload"
           >
             <Download class="w-5 h-5" />
@@ -84,7 +84,7 @@ function handleDuplicateLink() {
           <Button
             variant="ghost"
             size="icon"
-            class="h-8 w-8"
+            class="h-7 w-7"
             @click.prevent="handleQRStyleEdit"
           >
             <Palette class="w-5 h-5" />
@@ -101,7 +101,7 @@ function handleDuplicateLink() {
         <Button
           variant="ghost"
           size="icon"
-          class="h-8 w-8"
+          class="h-7 w-7"
           @click.prevent
         >
           <SquareChevronDown class="w-5 h-5" />

@@ -14,7 +14,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  layout: 'condensed',
+  layout: 'qr-code',
 })
 
 const emit = defineEmits<{
@@ -117,7 +117,7 @@ function handleActionsDuplicate() {
     <!-- QR Code Layout -->
     <div
       v-else-if="layout === 'qr-code'"
-      class="flex flex-col md:flex-row items-start md:items-center p-4 space-y-4 md:space-y-0 md:space-x-4 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
+      class="flex flex-col md:flex-row items-start md:items-center p-3 space-y-4 md:space-y-0 md:space-x-4 hover:bg-accent/50 hover:text-accent-foreground transition-colors"
     >
       <!-- Left: QR Code Section -->
       <div class="flex-shrink-0 w-full md:w-auto flex justify-center md:justify-start">

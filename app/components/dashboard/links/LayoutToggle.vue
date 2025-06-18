@@ -17,16 +17,16 @@ const { t } = useI18n()
 
 const layoutOptions = [
   {
-    value: 'condensed' as const,
-    icon: Grid3x3,
-    label: t('links.layout.condensed'),
-    tooltip: t('links.layout.condensed_tooltip'),
-  },
-  {
     value: 'qr-code' as const,
     icon: QrCode,
     label: t('links.layout.qr_code'),
     tooltip: t('links.layout.qr_code_tooltip'),
+  },
+  {
+    value: 'condensed' as const,
+    icon: Grid3x3,
+    label: t('links.layout.condensed'),
+    tooltip: t('links.layout.condensed_tooltip'),
   },
 ]
 

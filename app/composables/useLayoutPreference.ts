@@ -3,18 +3,18 @@ export type LayoutType = 'condensed' | 'qr-code'
 // Migration function for backward compatibility
 function migrateOldLayoutValue(value: string): LayoutType {
   switch (value) {
-    case 'qr':
-      return 'qr-code'
+    case 'condensed':
+      return 'condensed'
     case 'details':
     case 'grid':
     case 'list':
     default:
-      return 'condensed'
+      return 'qr-code'
   }
 }
 
 export function useLayoutPreference() {
-  const layout = ref<LayoutType>('condensed')
+  const layout = ref<LayoutType>('qr-code')
 
   // Persist preference to localStorage
   watchEffect(() => {
