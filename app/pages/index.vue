@@ -2,7 +2,7 @@
   <main class="flex flex-col justify-center">
     <!-- <HomeTwitter /> -->
     <HomeHero />
-    <HomeFeatures />
+    <!-- <HomeFeatures /> -->
     <!-- <HomeLogos /> -->
   </main>
 </template>
