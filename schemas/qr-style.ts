@@ -34,15 +34,15 @@ export const QRStyleOptionsSchema = z.object({
     dots: z.object({
       color: z.string().regex(hexColorRegex).optional(),
       type: z.enum(['square', 'rounded', 'dots', 'classy', 'classy-rounded', 'extra-rounded']).optional(),
-    }).optional(),
+    }).nullish(),
     cornerSquares: z.object({
       color: z.string().regex(hexColorRegex).optional(),
       type: z.enum(['dot', 'square', 'extra-rounded', 'rounded', 'dots', 'classy', 'classy-rounded']).optional(),
-    }).optional(),
+    }).nullish(),
     cornerDots: z.object({
       color: z.string().regex(hexColorRegex).optional(),
       type: z.enum(['dot', 'square', 'rounded', 'dots', 'classy', 'classy-rounded', 'extra-rounded']).optional(),
-    }).optional(),
+    }).nullish(),
   }).default({}),
 
   // Legacy component options (maintained for backward compatibility)

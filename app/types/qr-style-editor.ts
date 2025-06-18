@@ -1,39 +1,50 @@
+import type { Link } from '@@/schemas/link'
+
 export interface QRStyleOptions {
   // Base style options that apply to all components
-  baseOptions: {
-    color: string
-    type: string
+  baseOptions?: {
+    color?: string
+    type?: string
   }
   // Individual component overrides
-  componentOverrides: {
-    dots: Record<string, any>
-    cornerSquares: Record<string, any>
-    cornerDots: Record<string, any>
+  componentOverrides?: {
+    dots?: {
+      color?: string
+      type?: string
+    } | null
+    cornerSquares?: {
+      color?: string
+      type?: string
+    } | null
+    cornerDots?: {
+      color?: string
+      type?: string
+    } | null
   }
   // Legacy component options (maintained for backward compatibility)
-  dotsOptions: {
-    color: string
-    type: string
-    roundSize: boolean
+  dotsOptions?: {
+    color?: string
+    type?: string
+    roundSize?: boolean
   }
-  backgroundOptions: {
-    color: string
+  backgroundOptions?: {
+    color?: string
   }
-  cornersSquareOptions: {
-    color: string
-    type: string
+  cornersSquareOptions?: {
+    color?: string
+    type?: string
   }
-  cornersDotOptions: {
-    color: string
-    type: string
+  cornersDotOptions?: {
+    color?: string
+    type?: string
   }
-  imageOptions: {
-    hideBackgroundDots: boolean
-    imageSize: number
-    margin: number
+  imageOptions?: {
+    hideBackgroundDots?: boolean
+    imageSize?: number
+    margin?: number
   }
-  logoSelection: {
-    logoType: 'favicon' | 'organization' | 'none'
+  logoSelection?: {
+    logoType?: 'favicon' | 'organization' | 'none'
     selectedLogoId?: string
   }
 }
@@ -43,12 +54,12 @@ export interface QRStyleEditorProps {
   data: string
   image: string
   initialOptions: Partial<QRStyleOptions>
-  link: Record<string, any>
+  link: Link
 }
 
 export interface QRStyleEditorEmits {
   'update:open': [open: boolean]
-  'save': [link: Record<string, any>]
+  'save': [link: Link]
 }
 
 export type QRComponentType = 'dots' | 'cornerSquares' | 'cornerDots'
