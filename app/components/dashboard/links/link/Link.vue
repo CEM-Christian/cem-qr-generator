@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Link } from '@@/schemas/link'
 import type { LinkCardLayout, LinkUpdateType } from '@@/schemas/link-display'
+import type LinkQRCode from './LinkQRCode.vue'
 import { DownloadOptionsModal } from '../../../ui/download-options-modal'
 import { QRStyleEditor } from '../../../ui/qr-style-editor'
 // import LinkCardActions from './LinkCardActions.vue'
 // import LinkCardFooter from './LinkCardFooter.vue'
 // import LinkCardHeader from './LinkCardHeader.vue'
-// import QRCode from './QRCode.vue'
 
 interface Props {
   link: Link
@@ -91,7 +91,7 @@ function handleActionsDuplicate() {
             @duplicate="handleActionsDuplicate"
           >
             <template #qr-code>
-              <DashboardLinksQRCode
+              <DashboardLinksLinkQRCode
                 ref="qrCodeRef"
                 :data="shortLink"
                 :image="linkIcon"
@@ -121,7 +121,7 @@ function handleActionsDuplicate() {
     >
       <!-- Left: QR Code Section -->
       <div class="flex-shrink-0 w-full md:w-auto flex justify-center md:justify-start">
-        <DashboardLinksQRCode
+        <DashboardLinksLinkQRCode
           ref="qrCodeRef"
           :data="shortLink"
           :image="linkIcon"
