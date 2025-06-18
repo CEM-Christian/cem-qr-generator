@@ -24,6 +24,11 @@ function handleColorInput(event: Event) {
   const target = event.target as HTMLInputElement
   props.onColorChange(target.value)
 }
+
+// Handle color change from Input component (can be string | number)
+function handleColorChange(value: string | number) {
+  props.onColorChange(String(value))
+}
 </script>
 
 <template>
@@ -54,7 +59,7 @@ function handleColorInput(event: Event) {
             :model-value="color"
             class="flex-1"
             placeholder="#000000"
-            @update:model-value="onColorChange"
+            @update:model-value="handleColorChange"
           />
         </div>
       </div>
