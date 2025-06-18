@@ -133,3 +133,4 @@ This is a Vue.js/Nuxt.js application for generating QR codes and shortening URLs
 - Follow the established component patterns in the codebase
 - Use the same formatting and style as existing code
 - Reference existing similar components when creating new ones
+- When writing documentation for task summaries and PRDs, save the file in the `docs/ai-edits/` directory

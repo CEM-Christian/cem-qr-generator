@@ -221,7 +221,7 @@ onMounted(() => {
     <div
       ref="qrCodeEl"
       :data-text="data"
-      class="bg-white p-1 rounded-lg"
+      class="rounded-lg overflow-hidden"
     />
 
     <!-- Action Buttons - Responsive based on buttonMode prop -->

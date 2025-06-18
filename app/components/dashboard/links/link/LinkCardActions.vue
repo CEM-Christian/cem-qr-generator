@@ -59,7 +59,6 @@ function handleDuplicateLink() {
       </PopoverContent>
     </Popover>
 
-    <!-- QR Action Buttons -->
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger as-child>
@@ -78,7 +77,7 @@ function handleDuplicateLink() {
       </Tooltip>
     </TooltipProvider>
 
-    <TooltipProvider>
+    <!-- <TooltipProvider>
       <Tooltip>
         <TooltipTrigger as-child>
           <Button
@@ -94,7 +93,7 @@ function handleDuplicateLink() {
           <p>{{ $t('qr_style_editor.edit_style') }}</p>
         </TooltipContent>
       </Tooltip>
-    </TooltipProvider>
+    </TooltipProvider> -->
 
     <Popover v-model:open="editPopoverOpen">
       <PopoverTrigger as-child>
@@ -119,9 +118,19 @@ function handleDuplicateLink() {
             class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
           >
             <PenLine class="w-5 h-5 mr-2" />
-            {{ $t('common.edit') }}
+            {{ $t('links.actions.edit') }}
           </div>
         </DashboardLinksEditor>
+
+        <Separator />
+
+        <div
+          class="cursor-pointer flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
+          @click.prevent="handleQRStyleEdit"
+        >
+          <Palette class="w-5 h-5 mr-2" />
+          {{ $t('qr_style_editor.edit_style') }}
+        </div>
 
         <Separator />
 
@@ -174,25 +183,6 @@ function handleDuplicateLink() {
       </Tooltip>
     </TooltipProvider>
 
-    <!-- QR Action Buttons -->
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger as-child>
-          <Button
-            variant="ghost"
-            size="icon"
-            class="h-8 w-8"
-            @click.prevent="handleQRDownload"
-          >
-            <Download class="w-5 h-5" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{{ $t('common.download') }} QR</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger as-child>
@@ -207,6 +197,24 @@ function handleDuplicateLink() {
         </TooltipTrigger>
         <TooltipContent>
           <p>{{ $t('qr_style_editor.edit_style') }}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger as-child>
+          <Button
+            variant="ghost"
+            size="icon"
+            class="h-8 w-8"
+            @click.prevent="handleQRDownload"
+          >
+            <Download class="w-5 h-5" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{{ $t('common.download') }} QR</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
