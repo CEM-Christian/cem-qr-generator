@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Download, Edit3 } from 'lucide-vue-next'
 import QRCodeStyling from 'qr-code-styling'
-import { DownloadOptionsModal } from '../../ui/download-options-modal'
-import QRStyleEditor from '../../ui/qr-style-editor/QRStyleEditor.vue'
+import { DownloadOptionsModal } from '../../../ui/download-options-modal'
+import QRStyleEditor from '../../../ui/qr-style-editor/QRStyleEditor.vue'
 
 interface Props {
   data: string

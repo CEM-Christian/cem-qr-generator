@@ -1,1 +1,6 @@
 export { default as QRStyleEditor } from './QRStyleEditor.vue'
+export { default as BaseStyleControl } from './BaseStyleControl.vue'
+export { default as ComponentStyleControl } from './ComponentStyleControl.vue'
+export { default as ColorControl } from './ColorControl.vue'
+export { default as TypeControl } from './TypeControl.vue'
+export { default as AdvancedControls } from './AdvancedControls.vue'
