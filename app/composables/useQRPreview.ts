@@ -1,9 +1,33 @@
-import type { QRStyleOptions } from '@/types/qr-style-editor'
+import type { EffectiveColors, QRStyleOptions } from '@@/schemas/qr-style'
+import type { Ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import QRCodeStyling from 'qr-code-styling'
 import { ref } from 'vue'
 
-export function useQRPreview() {
+// Define proper TypeScript interfaces
+interface UseQRPreviewReturn {
+  previewContainer: Ref<HTMLElement | null>
+  initializePreview: (
+    data: string,
+    image: string,
+    styleOptions: QRStyleOptions,
+    effectiveColors: EffectiveColors,
+  ) => void
+  updatePreview: (
+    data: string,
+    image: string,
+    styleOptions: QRStyleOptions,
+    effectiveColors: EffectiveColors,
+  ) => void
+  debouncedUpdatePreview: (
+    data: string,
+    image: string,
+    styleOptions: QRStyleOptions,
+    effectiveColors: EffectiveColors,
+  ) => void
+}
+
+export function useQRPreview(): UseQRPreviewReturn {
   const previewContainer = ref<HTMLElement | null>(null)
   let qrCodePreview: QRCodeStyling | null = null
 
@@ -11,22 +35,15 @@ export function useQRPreview() {
     data: string,
     image: string,
     styleOptions: QRStyleOptions,
-    effectiveColors: {
-      dotsColor: string
-      dotsType: string
-      cornerSquareColor: string
-      cornerSquareType: string
-      cornerDotColor: string
-      cornerDotType: string
-    },
+    effectiveColors: EffectiveColors,
   ) {
     // Determine the image to use based on logo selection
     let imageUrl: string | undefined = image // Default to favicon
 
-    if (styleOptions.logoSelection.logoType === 'none') {
+    if (styleOptions?.logoSelection?.logoType === 'none') {
       imageUrl = undefined // No image for QR code
     }
-    else if (styleOptions.logoSelection.logoType === 'organization' && styleOptions.logoSelection.selectedLogoId) {
+    else if (styleOptions?.logoSelection?.logoType === 'organization' && styleOptions?.logoSelection?.selectedLogoId) {
       const { getLogoUrl } = useLogoSelection()
       imageUrl = getLogoUrl(styleOptions.logoSelection.selectedLogoId)
     }
@@ -46,7 +63,7 @@ export function useQRPreview() {
       dotsOptions: {
         color: effectiveColors.dotsColor,
         type: effectiveColors.dotsType as any,
-        roundSize: styleOptions.dotsOptions.roundSize,
+        roundSize: styleOptions?.dotsOptions?.roundSize ?? false,
       },
       cornersSquareOptions: {
         color: effectiveColors.cornerSquareColor,
@@ -57,10 +74,12 @@ export function useQRPreview() {
         type: effectiveColors.cornerDotType as any,
       },
       backgroundOptions: {
-        color: styleOptions.backgroundOptions.color,
+        color: styleOptions?.backgroundOptions?.color ?? '#ffffff',
       },
       imageOptions: {
-        ...styleOptions.imageOptions,
+        hideBackgroundDots: styleOptions?.imageOptions?.hideBackgroundDots ?? false,
+        imageSize: styleOptions?.imageOptions?.imageSize ?? 0.4,
+        margin: styleOptions?.imageOptions?.margin ?? 5,
         crossOrigin: 'anonymous',
       },
     }
@@ -70,14 +89,7 @@ export function useQRPreview() {
     data: string,
     image: string,
     styleOptions: QRStyleOptions,
-    effectiveColors: {
-      dotsColor: string
-      dotsType: string
-      cornerSquareColor: string
-      cornerSquareType: string
-      cornerDotColor: string
-      cornerDotType: string
-    },
+    effectiveColors: EffectiveColors,
   ): void {
     if (!previewContainer.value || !qrCodePreview)
       return
@@ -95,14 +107,7 @@ export function useQRPreview() {
     data: string,
     image: string,
     styleOptions: QRStyleOptions,
-    effectiveColors: {
-      dotsColor: string
-      dotsType: string
-      cornerSquareColor: string
-      cornerSquareType: string
-      cornerDotColor: string
-      cornerDotType: string
-    },
+    effectiveColors: EffectiveColors,
   ): void {
     if (!previewContainer.value)
       return
@@ -127,14 +132,7 @@ export function useQRPreview() {
     data: string,
     image: string,
     styleOptions: QRStyleOptions,
-    effectiveColors: {
-      dotsColor: string
-      dotsType: string
-      cornerSquareColor: string
-      cornerSquareType: string
-      cornerDotColor: string
-      cornerDotType: string
-    },
+    effectiveColors: EffectiveColors,
   ) => {
     updatePreview(data, image, styleOptions, effectiveColors)
   }, 300)

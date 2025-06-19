@@ -1,10 +1,14 @@
+import type { QRStyleOptions } from '@@/schemas/qr-style'
 import QRCodeStyling from 'qr-code-styling'
 import { useLogoSelection } from './useLogoSelection'
 
 interface QRCodeOptions {
   data: string
   image?: string
-  link?: Record<string, any>
+  link?: {
+    qr_style_options?: QRStyleOptions
+    [key: string]: any
+  }
   size?: number
 }
 
@@ -13,31 +17,22 @@ export function useQRCode() {
   function createQRCodeInstance(options: QRCodeOptions) {
     const { data, image, link, size = 256 } = options
 
-    // Default QR style options
-    const defaultStyleOptions = {
-      dotsOptions: { type: 'square', color: '#000000' },
-      backgroundOptions: { color: '#ffffff' },
-      cornersSquareOptions: { type: 'square', color: '#000000' },
-      cornersDotOptions: { type: 'square', color: '#000000' },
-      imageOptions: { hideBackgroundDots: true, imageSize: 0.4, margin: 2 },
-    }
-
-    // Get current style options from link or use defaults
-    const currentStyleOptions = link?.qr_style_options || defaultStyleOptions
+    // Get current style options from link
+    const currentStyleOptions = link?.qr_style_options
 
     // Get the image URL based on logo selection
     let imageUrl = image
 
-    const logoSelection = currentStyleOptions.logoSelection
-    if (logoSelection && logoSelection.logoType === 'none') {
+    const logoSelection = currentStyleOptions?.logoSelection
+    if (logoSelection?.logoType === 'none') {
       imageUrl = undefined // No image for QR code
     }
-    else if (logoSelection && logoSelection.logoType === 'organization' && logoSelection.selectedLogoId) {
+    else if (logoSelection?.logoType === 'organization' && logoSelection?.selectedLogoId) {
       const { getLogoUrl } = useLogoSelection()
       imageUrl = getLogoUrl(logoSelection.selectedLogoId)
     }
 
-    // Create QR code options
+    // Create QR code options with proper defaults
     const qrOptions = {
       width: size,
       height: size,
@@ -49,13 +44,27 @@ export function useQRCode() {
         errorCorrectionLevel: 'Q' as const,
       },
       imageOptions: {
-        ...currentStyleOptions.imageOptions,
+        hideBackgroundDots: currentStyleOptions?.imageOptions?.hideBackgroundDots ?? true,
+        imageSize: currentStyleOptions?.imageOptions?.imageSize ?? 0.4,
+        margin: currentStyleOptions?.imageOptions?.margin ?? 2,
         crossOrigin: 'anonymous',
       },
-      dotsOptions: currentStyleOptions.dotsOptions,
-      backgroundOptions: currentStyleOptions.backgroundOptions,
-      cornersSquareOptions: currentStyleOptions.cornersSquareOptions,
-      cornersDotOptions: currentStyleOptions.cornersDotOptions,
+      dotsOptions: {
+        color: currentStyleOptions?.dotsOptions?.color ?? '#000000',
+        type: currentStyleOptions?.dotsOptions?.type ?? 'square',
+        roundSize: currentStyleOptions?.dotsOptions?.roundSize ?? false,
+      },
+      backgroundOptions: {
+        color: currentStyleOptions?.backgroundOptions?.color ?? '#ffffff',
+      },
+      cornersSquareOptions: {
+        color: currentStyleOptions?.cornersSquareOptions?.color ?? '#000000',
+        type: currentStyleOptions?.cornersSquareOptions?.type ?? 'square',
+      },
+      cornersDotOptions: {
+        color: currentStyleOptions?.cornersDotOptions?.color ?? '#000000',
+        type: currentStyleOptions?.cornersDotOptions?.type ?? 'square',
+      },
       image: imageUrl,
     }
 

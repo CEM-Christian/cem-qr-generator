@@ -1,53 +1,12 @@
 import type { Link } from '@@/schemas/link'
+import type {
+  EffectiveColors,
+  QRCodeGenerationOptions,
+  QRStyleOptions,
+} from '@@/schemas/qr-style'
 
-export interface QRStyleOptions {
-  // Base style options that apply to all components
-  baseOptions?: {
-    color?: string
-    type?: string
-  }
-  // Individual component overrides
-  componentOverrides?: {
-    dots?: {
-      color?: string
-      type?: string
-    } | null
-    cornerSquares?: {
-      color?: string
-      type?: string
-    } | null
-    cornerDots?: {
-      color?: string
-      type?: string
-    } | null
-  }
-  // Legacy component options (maintained for backward compatibility)
-  dotsOptions?: {
-    color?: string
-    type?: string
-    roundSize?: boolean
-  }
-  backgroundOptions?: {
-    color?: string
-  }
-  cornersSquareOptions?: {
-    color?: string
-    type?: string
-  }
-  cornersDotOptions?: {
-    color?: string
-    type?: string
-  }
-  imageOptions?: {
-    hideBackgroundDots?: boolean
-    imageSize?: number
-    margin?: number
-  }
-  logoSelection?: {
-    logoType?: 'favicon' | 'organization' | 'none'
-    selectedLogoId?: string
-  }
-}
+// Re-export types from schemas for consistency
+export type { EffectiveColors, QRCodeGenerationOptions, QRStyleOptions }
 
 export interface QRStyleEditorProps {
   open: boolean
@@ -65,6 +24,8 @@ export interface QRStyleEditorEmits {
 export type QRComponentType = 'dots' | 'cornerSquares' | 'cornerDots'
 export type QRStyleProperty = 'color' | 'type'
 
+// Legacy interface - use QRCodeGenerationOptions from schemas instead
+// @deprecated Use QRCodeGenerationOptions from schemas/qr-style.ts
 export interface QRCodeOptions {
   width: number
   height: number

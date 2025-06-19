@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { QRStyleEditorEmits, QRStyleEditorProps } from '@/types/qr-style-editor'
+import type { QRStyleEditorEmits, QRStyleEditorProps, QRStyleOptions } from '@/types/qr-style-editor'
 import { nextTick, onMounted, watch } from 'vue'
 import { toast } from 'vue-sonner'
 import BaseStyleControl from './BaseStyleControl.vue'
@@ -40,6 +40,9 @@ const {
   handleLogoIdChange
 } = useQRStyleManager(props.initialOptions)
 
+// Type assertion for styleOptions to ensure proper typing
+const typedStyleOptions = styleOptions as QRStyleOptions
+
 const {
   previewContainer,
   initializePreview,
@@ -49,18 +52,18 @@ const {
 const { saveAndNotify } = useQRStyleSaver()
 
 // Watch for changes and update preview
-watch(() => styleOptions, () => {
+watch(() => typedStyleOptions, () => {
   debouncedUpdatePreview(
     props.data,
     props.image,
-    styleOptions,
+    typedStyleOptions,
     {
       dotsColor: effectiveDotsColor.value,
-      dotsType: effectiveDotsType.value,
+      dotsType: effectiveDotsType.value as any,
       cornerSquareColor: effectiveCornerSquareColor.value,
-      cornerSquareType: effectiveCornerSquareType.value,
+      cornerSquareType: effectiveCornerSquareType.value as any,
       cornerDotColor: effectiveCornerDotColor.value,
-      cornerDotType: effectiveCornerDotType.value
+      cornerDotType: effectiveCornerDotType.value as any
     }
   )
 }, { deep: true })
@@ -83,7 +86,9 @@ function handleResetToDefaults() {
 }
 
 function handleImageOptionsChange(newOptions: any) {
-  Object.assign(styleOptions.imageOptions, newOptions)
+  if (typedStyleOptions?.imageOptions) {
+    Object.assign(typedStyleOptions.imageOptions, newOptions)
+  }
 }
 
 async function handleSave() {
@@ -103,14 +108,14 @@ onMounted(() => {
       initializePreview(
         props.data,
         props.image,
-        styleOptions,
+        typedStyleOptions,
         {
           dotsColor: effectiveDotsColor.value,
-          dotsType: effectiveDotsType.value,
+          dotsType: effectiveDotsType.value as any,
           cornerSquareColor: effectiveCornerSquareColor.value,
-          cornerSquareType: effectiveCornerSquareType.value,
+          cornerSquareType: effectiveCornerSquareType.value as any,
           cornerDotColor: effectiveCornerDotColor.value,
-          cornerDotType: effectiveCornerDotType.value
+          cornerDotType: effectiveCornerDotType.value as any
         }
       )
     }
@@ -124,14 +129,14 @@ watch(() => props.open, async (newValue) => {
     initializePreview(
       props.data,
       props.image,
-      styleOptions,
+      typedStyleOptions,
       {
         dotsColor: effectiveDotsColor.value,
-        dotsType: effectiveDotsType.value,
+        dotsType: effectiveDotsType.value as any,
         cornerSquareColor: effectiveCornerSquareColor.value,
-        cornerSquareType: effectiveCornerSquareType.value,
+        cornerSquareType: effectiveCornerSquareType.value as any,
         cornerDotColor: effectiveCornerDotColor.value,
-        cornerDotType: effectiveCornerDotType.value
+        cornerDotType: effectiveCornerDotType.value as any
       }
     )
   }
@@ -160,8 +165,8 @@ watch(() => props.open, async (newValue) => {
         <div class="overflow-y-auto space-y-4">
           <!-- Base Style Section -->
           <BaseStyleControl
-            :color="styleOptions.baseOptions.color"
-            :type="styleOptions.baseOptions.type"
+            :color="typedStyleOptions?.baseOptions?.color ?? '#000000'"
+            :type="typedStyleOptions?.baseOptions?.type ?? 'square'"
             :on-color-change="handleBaseColorChange"
             :on-type-change="handleBaseTypeChange"
           />
@@ -169,8 +174,8 @@ watch(() => props.open, async (newValue) => {
           <!-- Logo Selection Section -->
           <div class="bg-muted/50 rounded-lg p-4 space-y-4">
             <LogoSelector
-              :logo-type="styleOptions.logoSelection.logoType"
-              :selected-logo-id="styleOptions.logoSelection.selectedLogoId"
+              :logo-type="typedStyleOptions?.logoSelection?.logoType"
+              :selected-logo-id="typedStyleOptions?.logoSelection?.selectedLogoId"
               @update:logo-type="handleLogoTypeChange"
               @update:selected-logo-id="handleLogoIdChange"
             />
@@ -192,8 +197,8 @@ watch(() => props.open, async (newValue) => {
               :on-reset-color-to-base="() => resetToBaseStyle('dots', 'color')"
               :on-reset-type-to-base="() => resetToBaseStyle('dots', 'type')"
               :show-round-size="true"
-              :round-size="styleOptions.dotsOptions.roundSize"
-              :on-round-size-change="(value) => { styleOptions.dotsOptions.roundSize = value }"
+              :round-size="typedStyleOptions?.dotsOptions?.roundSize"
+              :on-round-size-change="(value) => { if (typedStyleOptions?.dotsOptions) typedStyleOptions.dotsOptions.roundSize = value }"
             />
             
             <!-- Corner Squares -->
@@ -231,9 +236,9 @@ watch(() => props.open, async (newValue) => {
           
           <!-- Advanced Controls -->
           <AdvancedControls
-            :background-color="styleOptions.backgroundOptions.color"
-            :image-options="styleOptions.imageOptions"
-            :on-background-color-change="(color) => { styleOptions.backgroundOptions.color = color }"
+            :background-color="typedStyleOptions?.backgroundOptions?.color ?? '#ffffff'"
+            :image-options="typedStyleOptions?.imageOptions ?? { hideBackgroundDots: true, imageSize: 0.4, margin: 2 }"
+            :on-background-color-change="(color) => { if (typedStyleOptions?.backgroundOptions) typedStyleOptions.backgroundOptions.color = color }"
             :on-image-options-change="handleImageOptionsChange"
           />
         </div>
