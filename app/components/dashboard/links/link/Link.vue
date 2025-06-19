@@ -11,6 +11,7 @@ import { QRStyleEditor } from '../../../ui/qr-style-editor'
 interface Props {
   link: Link
   layout?: LinkCardLayout
+  qrElementType?: 'canvas' | 'svg'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -127,8 +128,8 @@ function handleActionsDuplicate() {
           :image="linkIcon"
           :link="link"
           :size="180"
+          :element-type="props.qrElementType"
           button-mode="hidden"
-          :compact="true"
           @update:link="updateLink"
         />
       </div>

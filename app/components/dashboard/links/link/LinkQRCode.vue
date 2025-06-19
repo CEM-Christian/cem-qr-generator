@@ -10,7 +10,7 @@ interface Props {
   link?: Record<string, any>
   size?: 'sm' | 'md' | 'lg' | 'xl' | number
   buttonMode?: 'full' | 'icon' | 'hidden'
-  compact?: boolean
+  elementType?: 'canvas' | 'svg'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
   link: () => ({}),
   size: 'md',
   buttonMode: 'full',
-  compact: false,
+  elementType: 'canvas',
 })
 
 const emit = defineEmits<{
@@ -76,6 +76,7 @@ const options = computed(() => ({
   width: qrDimensions.value,
   height: qrDimensions.value,
   data: props.data,
+  type: props.elementType,
   margin: 10,
   qrOptions: { typeNumber: 0 as any, mode: 'Byte' as const, errorCorrectionLevel: 'Q' as const },
   imageOptions: {

@@ -4,7 +4,7 @@ const locales: LocaleObject[] = [
   {
     code: 'en-AU',
     file: 'en-AU.json',
-    name: 'English',
+    name: 'English 🦘',
     emoji: '🇦🇺',
   },
   {
@@ -16,31 +16,31 @@ const locales: LocaleObject[] = [
   {
     code: 'zh-CN',
     file: 'zh-CN.json',
-    name: '简体中文',
+    name: '简体中文 🐼',
     emoji: '🇨🇳',
   },
   {
     code: 'zh-TW',
     file: 'zh-TW.json',
-    name: '繁體中文',
+    name: '繁體中文 🧋',
     emoji: '🇹🇼',
   },
   {
     code: 'fr-FR',
     file: 'fr-FR.json',
-    name: 'Français',
+    name: 'Français 🥐',
     emoji: '🇫🇷',
   },
   {
     code: 'vi-VN',
     file: 'vi-VN.json',
-    name: 'Tiếng Việt',
+    name: 'Tiếng Việt 🍜',
     emoji: '🇻🇳',
   },
   {
     code: 'de-DE',
     file: 'de-DE.json',
-    name: 'Deutsch',
+    name: 'Deutsch 🥨',
     emoji: '🇩🇪',
   },
 ]

@@ -39,6 +39,7 @@ onMounted(() => {
     <DashboardLinksLink
       v-if="link.id"
       :link="link"
+      qr-element-type="svg"
       @update:link="updateLink"
     />
     <DashboardAnalysis
