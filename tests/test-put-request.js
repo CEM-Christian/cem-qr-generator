@@ -138,7 +138,7 @@ async function main() {
 
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
-Usage: node test-put-request.js [options]
+Usage: node tests/test-put-request.js [options]
 
 Options:
   --all-methods    Test all HTTP methods
@@ -149,9 +149,9 @@ Environment Variables:
   BASE_URL        Production URL to test (default: https://your-production-domain.com)
 
 Examples:
-  node test-put-request.js
-  node test-put-request.js --all-methods
-  BASE_URL=https://your-site.pages.dev node test-put-request.js
+  node tests/test-put-request.js
+  node tests/test-put-request.js --all-methods
+  BASE_URL=https://your-site.pages.dev node tests/test-put-request.js
 `)
     return
   }

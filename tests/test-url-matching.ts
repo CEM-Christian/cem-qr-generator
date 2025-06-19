@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+// Run with: npx tsx tests/test-url-matching.ts
 
 // Simple test script for URL matching functionality
-import { matchUrlToOrganization } from '../app/utils/url-matcher.ts'
+import { matchUrlToOrganization } from '../app/utils/url-matcher'
 
 console.log('🧪 Testing URL Pattern Matching for Organization Detection\n')
 
@@ -91,7 +92,7 @@ for (const testCase of testCases) {
   catch (error) {
     console.log(`💥 ERROR: ${testCase.description}`)
     console.log(`   URL: ${testCase.url}`)
-    console.log(`   Error: ${error.message}\n`)
+    console.log(`   Error: ${error instanceof Error ? error.message : String(error)}\n`)
     failed++
   }
 }

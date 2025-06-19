@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+// Run with: npx tsx tests/test-simplified-url-matching.ts
 
 // Quick validation test for simplified URL matching
-import { matchUrlToOrganization } from '../app/utils/url-matcher.ts'
+import { matchUrlToOrganization } from '../app/utils/url-matcher'
 
 console.log('🧪 Testing Simplified URL Pattern Matching\n')
 
@@ -49,7 +50,7 @@ for (const testCase of testCases) {
   catch (error) {
     console.log(`💥 ERROR: ${testCase.description}`)
     console.log(`   URL: ${testCase.url}`)
-    console.log(`   Error: ${error.message}\n`)
+    console.log(`   Error: ${error instanceof Error ? error.message : String(error)}\n`)
     failed++
   }
 }
