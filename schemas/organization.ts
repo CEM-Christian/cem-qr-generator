@@ -4,27 +4,30 @@ import { z } from 'zod'
  * Organization schema for CEM QR Generator
  * Based on existing logo assets in public/logos/
  */
-export const OrganizationSchema = z.enum([
-  'cem',
-  'acc',
-  'acc-moreton',
-  'acc-singleton',
-  'acc-marsdenpark',
-  'acc-echuca',
-  'acc-benalla',
-  'acc-casey',
-  'acc-darlingdowns',
-  'acc-southlands',
-  'acc-burnie',
-  'acc-launceston',
-  'acc-hobart',
-  'bairnsdale',
-  'brightwaters',
-  'heritage',
-  'medowie',
-  'smartplay',
-  'swanhill',
-]).optional()
+export const OrganizationSchema = z.preprocess(
+  val => val === 'none' || val === '' ? undefined : val,
+  z.enum([
+    'cem',
+    'acc',
+    'acc-moreton',
+    'acc-singleton',
+    'acc-marsdenpark',
+    'acc-echuca',
+    'acc-benalla',
+    'acc-casey',
+    'acc-darlingdowns',
+    'acc-southlands',
+    'acc-burnie',
+    'acc-launceston',
+    'acc-hobart',
+    'bairnsdale',
+    'brightwaters',
+    'heritage',
+    'medowie',
+    'smartplay',
+    'swanhill',
+  ]).optional(),
+)
 
 export type Organization = z.infer<typeof OrganizationSchema>
 

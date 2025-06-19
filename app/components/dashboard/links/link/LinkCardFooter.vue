@@ -23,7 +23,7 @@ function handleCopyLink() {
 </script>
 
 <template>
-  <div class="text-sm space-y-2">
+  <div class="text-sm space-y-2 pr-1">
     <!-- Shortened URL -->
     <TooltipProvider>
       <Tooltip>
@@ -50,11 +50,11 @@ function handleCopyLink() {
     </TooltipProvider>
 
     <!-- Destination URL -->
-    <div class="flex items-center space-x-1">
-      <span class="text-muted-foreground">↳</span>
+    <div class="flex items-center gap-1 min-w-0">
+      <span class="text-muted-foreground shrink-0">↳</span>
       <a
         :href="link.url"
-        class="inline-flex items-center hover:underline"
+        class="flex items-center hover:underline min-w-0 flex-1"
         target="_blank"
         rel="noopener noreferrer"
         @click.stop
