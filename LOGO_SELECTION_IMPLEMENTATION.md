@@ -18,12 +18,12 @@
 ### Available Organization Logos:
 - ACC (acc.svg)
 - Bairnsdale (bairnsdale.svg)
-- Brightwaters (brightwaters.png)
+- Brightwaters (brightwaters.svg)
 - CEM (cem.svg)
-- Heritage (heritage.png)
+- Heritage (heritage.svg)
 - Medowie (medowie.svg)
-- SmartPlay (smartplay.png)
-- Swan Hill (swanhill.png)
+- SmartPlay (smartplay.svg)
+- Swan Hill (swanhill.svg)
 
 ### File Structure:
 ```
@@ -41,12 +41,12 @@ public/
 └── logos/
     ├── acc.svg
     ├── bairnsdale.svg
-    ├── brightwaters.png
+    ├── brightwaters.svg
     ├── cem.svg
-    ├── heritage.png
+    ├── heritage.svg
     ├── medowie.svg
-    ├── smartplay.png
-    └── swanhill.png
+    ├── smartplay.svg
+    └── swanhill.svg
 ```
 
 ### Integration Points:

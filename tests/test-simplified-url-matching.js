@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Quick validation test for simplified URL matching
-import { matchUrlToOrganization } from './app/utils/url-matcher.js'
+import { matchUrlToOrganization } from '../app/utils/url-matcher.js'
 
 console.log('🧪 Testing Simplified URL Pattern Matching\n')
 

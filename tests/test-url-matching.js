@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Simple test script for URL matching functionality
-import { matchUrlToOrganization } from './app/utils/url-matcher.js'
+import { matchUrlToOrganization } from '../app/utils/url-matcher.js'
 
 console.log('🧪 Testing URL Pattern Matching for Organization Detection\n')
 

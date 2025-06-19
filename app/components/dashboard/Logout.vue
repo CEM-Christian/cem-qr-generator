@@ -2,7 +2,7 @@
 import { LogOut } from 'lucide-vue-next'
 
 function logOut() {
-  localStorage.removeItem('SinkSiteToken')
+  localStorage.removeItem('CemQrSiteToken')
   navigateTo('/dashboard/login')
 }
 </script>

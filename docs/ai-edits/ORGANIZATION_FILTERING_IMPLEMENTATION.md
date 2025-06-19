@@ -55,11 +55,11 @@ Based on existing logo assets in `public/logos/`:
 1. **Christian Education Ministries** (CEM) - `cem.svg`
 2. **Australian Christian College** (ACC) - `acc.svg`
 3. **Bairnsdale Christian College** - `bairnsdale.svg`
-4. **Brightwaters Christian College** - `brightwaters.png`
-5. **Heritage Christian School** - `heritage.png`
+4. **Brightwaters Christian College** - `brightwaters.svg`
+5. **Heritage Christian School** - `heritage.svg`
 6. **Medowie Christian School** - `medowie.svg`
-7. **SmartPlay** - `smartplay.png`
-8. **Swan Hill Christian School** - `swanhill.png`
+7. **SmartPlay** - `smartplay.svg`
+8. **Swan Hill Christian School** - `swanhill.svg`
 
 ## 🔧 Technical Implementation
 

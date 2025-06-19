@@ -185,13 +185,13 @@ const ORGANIZATIONS = [
   {
     id: 'brightwaters',
     name: 'Brightwaters Christian College',
-    logo: 'brightwaters.png',
+    logo: 'brightwaters.svg',
     initials: 'BWC',
   },
   {
     id: 'heritage',
     name: 'Heritage Christian School',
-    logo: 'heritage.png',
+    logo: 'heritage.svg',
     initials: 'HCS',
   },
   {
@@ -203,13 +203,13 @@ const ORGANIZATIONS = [
   {
     id: 'smartplay',
     name: 'SmartPlay',
-    logo: 'smartplay.png',
+    logo: 'smartplay.svg',
     initials: 'SP',
   },
   {
     id: 'swanhill',
     name: 'Swan Hill Christian School',
-    logo: 'swanhill.png',
+    logo: 'swanhill.svg',
     initials: 'SHCS',
   },
 ] as const

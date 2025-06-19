@@ -20,7 +20,7 @@ export function useLogoSelection() {
     {
       id: 'brightwaters',
       name: 'Brightwaters',
-      filename: 'brightwaters.png',
+      filename: 'brightwaters.svg',
       type: 'png',
       organization: 'Brightwaters',
     },
@@ -34,7 +34,7 @@ export function useLogoSelection() {
     {
       id: 'heritage',
       name: 'Heritage',
-      filename: 'heritage.png',
+      filename: 'heritage.svg',
       type: 'png',
       organization: 'Heritage',
     },
@@ -48,14 +48,14 @@ export function useLogoSelection() {
     {
       id: 'smartplay',
       name: 'SmartPlay',
-      filename: 'smartplay.png',
+      filename: 'smartplay.svg',
       type: 'png',
       organization: 'SmartPlay',
     },
     {
       id: 'swanhill',
       name: 'Swan Hill',
-      filename: 'swanhill.png',
+      filename: 'swanhill.svg',
       type: 'png',
       organization: 'Swan Hill',
     },

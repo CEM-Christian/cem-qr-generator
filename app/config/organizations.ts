@@ -207,7 +207,7 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
   'brightwaters': {
     id: 'brightwaters',
     name: 'Brightwaters Christian College',
-    logo: 'brightwaters.png',
+    logo: 'brightwaters.svg',
     initials: 'BWCC',
     color: '#7c3aed',
     description: 'Brightwaters Christian College',
@@ -218,7 +218,7 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
   'heritage': {
     id: 'heritage',
     name: 'Heritage Christian School',
-    logo: 'heritage.png',
+    logo: 'heritage.svg',
     initials: 'HCS',
     color: '#ea580c',
     description: 'Heritage Christian School',
@@ -240,7 +240,7 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
   'smartplay': {
     id: 'smartplay',
     name: 'SmartPlay',
-    logo: 'smartplay.png',
+    logo: 'smartplay.svg',
     initials: 'SP',
     color: '#65a30d',
     description: 'SmartPlay Educational Resources',
@@ -251,7 +251,7 @@ export const ORGANIZATIONS: Record<OrganizationId, OrganizationConfig> = {
   'swanhill': {
     id: 'swanhill',
     name: 'Swan Hill Christian School',
-    logo: 'swanhill.png',
+    logo: 'swanhill.svg',
     initials: 'SHCS',
     color: '#c2410c',
     description: 'Swan Hill Christian School',

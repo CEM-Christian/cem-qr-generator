@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return
 
   if (to.path.startsWith('/dashboard') && to.path !== '/dashboard/login') {
-    if (!window.localStorage.getItem('SinkSiteToken'))
+    if (!window.localStorage.getItem('CemQrSiteToken'))
       return navigateTo('/dashboard/login')
   }
 

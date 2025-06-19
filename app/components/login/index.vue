@@ -21,7 +21,7 @@ const { previewMode } = useRuntimeConfig().public
 
 async function onSubmit(form) {
   try {
-    localStorage.setItem('SinkSiteToken', form.token)
+    localStorage.setItem('CemQrSiteToken', form.token)
     await useAPI('/api/verify')
     navigateTo('/dashboard')
   }
