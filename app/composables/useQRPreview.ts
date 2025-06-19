@@ -35,6 +35,7 @@ export function useQRPreview() {
       width: 256,
       height: 256,
       data,
+      type: 'svg' as const,
       margin: 10,
       qrOptions: {
         typeNumber: 0 as any,
