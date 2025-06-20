@@ -113,5 +113,22 @@ const { t } = useI18n()
         </Tooltip>
       </TooltipProvider>
     </template>
+
+    <template v-else>
+      <span class="text-muted-foreground">|</span>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <div class="flex items-center text-green-600 shrink-0">
+              <Eye class="w-3 h-3 mr-1" />
+              <span>?</span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{{ t('links.stats.scans_tooltip', { count: "?" }) }}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </template>
   </div>
 </template>
