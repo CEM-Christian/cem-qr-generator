@@ -274,6 +274,12 @@
       "qr": "QR Code",
       "qr_description": "Mettre l'accent sur la visualisation du QR Code",
       "toggle_tooltip": "Basculer entre les mises en page détail et QR Code"
+    },
+    "stats": {
+      "scans": "Scans",
+      "scans_tooltip": "Total des scans : {count}",
+      "last_scanned": "Dernier scan : {date}",
+      "stats_unavailable": "Statistiques non disponibles"
     }
   },
   "qr_style_editor": {

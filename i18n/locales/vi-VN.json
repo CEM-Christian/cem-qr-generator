@@ -275,6 +275,12 @@
       "qr": "Mã QR",
       "qr_description": "Nhấn mạnh hiển thị mã QR",
       "toggle_tooltip": "Chuyển đổi giữa bố cục chi tiết và mã QR"
+    },
+    "stats": {
+      "scans": "Lượt quét",
+      "scans_tooltip": "Tổng lượt quét: {count}",
+      "last_scanned": "Quét lần cuối: {date}",
+      "stats_unavailable": "Thống kê không khả dụng"
     }
   },
   "qr_style_editor": {

@@ -3,6 +3,27 @@
 ## Project Overview
 This is a Vue.js/Nuxt.js application for generating QR codes and shortening URLs with analytics capabilities, built for Cloudflare Pages/Workers deployment.
 
+## Git Workflow & Branching Strategy
+- **CRITICAL**: Before implementing any feature, enhancement, or fix, ALWAYS check the current branch
+- If currently on `main` branch, MUST create a new feature branch before making any changes
+- Use descriptive branch names following the pattern: `feature/descriptive-name` or `fix/bug-description`
+- Branch naming examples:
+  - `feature/qr-color-customization`
+  - `feature/bulk-qr-generation` 
+  - `fix/analytics-tracking-issue`
+  - `enhancement/ui-accessibility-improvements`
+- Never make direct commits to the `main` branch
+- All changes must be committed to feature branches for human review before merging
+- Use conventional commit messages: `feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `test:`, `chore:`
+- When feature is complete, inform the user that the changes are ready for review on the feature branch
+
+### Git Workflow Steps
+1. Check current branch: `git branch --show-current`
+2. If on `main`, create and switch to new feature branch: `git checkout -b feature/your-feature-name`
+3. Implement the requested changes
+4. Stage and commit changes with conventional commit messages
+5. Inform user that changes are ready for review and can be merged via pull request
+
 ## Technology Stack & Dependencies
 - **Framework**: Nuxt.js 3.17+ with Vue 3 Composition API
 - **TypeScript**: Fully typed codebase with strict type checking

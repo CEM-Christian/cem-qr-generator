@@ -274,6 +274,12 @@
       "qr": "二维码",
       "qr_description": "强调二维码可视化",
       "toggle_tooltip": "在详情和二维码布局之间切换"
+    },
+    "stats": {
+      "scans": "扫描次数",
+      "scans_tooltip": "总扫描次数：{count}",
+      "last_scanned": "最后扫描：{date}",
+      "stats_unavailable": "统计数据不可用"
     }
   },
   "qr_style_editor": {

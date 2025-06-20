@@ -275,6 +275,12 @@
       "qr": "QR碼",
       "qr_description": "強調QR碼視覺化",
       "toggle_tooltip": "在詳情和QR碼佈局之間切換"
+    },
+    "stats": {
+      "scans": "掃描次數",
+      "scans_tooltip": "總掃描次數：{count}",
+      "last_scanned": "最後掃描：{date}",
+      "stats_unavailable": "統計資料不可用"
     }
   },
   "qr_style_editor": {
