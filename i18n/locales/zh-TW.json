@@ -321,7 +321,9 @@
       "round_size": "圓形大小"
     },
     "background": {
-      "color": "背景顏色"
+      "color": "背景顏色",
+      "transparent": "透明背景",
+      "transparent_info": "下載或顯示時，QR碼將具有透明背景。"
     },
     "corner_squares": {
       "color": "角落方塊顏色",

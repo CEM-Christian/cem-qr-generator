@@ -15,9 +15,19 @@ const props = defineProps<Props>()
 const { t } = useI18n()
 const backgroundColorInputRef = ref<HTMLInputElement>()
 
+const isTransparent = computed(() => props.backgroundColor === 'transparent')
+
 function handleBackgroundColorInput(event: Event) {
   const target = event.target as HTMLInputElement
   props.onBackgroundColorChange(target.value)
+}
+
+function handleTransparentToggle(value: boolean) {
+  if (value) {
+    props.onBackgroundColorChange('transparent')
+  } else {
+    props.onBackgroundColorChange('#ffffff') // Default to white when disabling transparency
+  }
 }
 
 function handleHideBackgroundDotsChange(value: boolean) {
@@ -51,8 +61,17 @@ function handleImageMarginChange(value: number) {
     <AccordionItem value="background">
       <AccordionTrigger>{{ $t('qr_style_editor.sections.background') }}</AccordionTrigger>
       <AccordionContent class="space-y-4 px-2">
+        <!-- Transparent Background Toggle -->
+        <div class="flex items-center justify-between">
+          <Label>{{ $t('qr_style_editor.background.transparent') }}</Label>
+          <Switch 
+            :checked="isTransparent"
+            @update:checked="handleTransparentToggle" 
+          />
+        </div>
+        
         <!-- Background Color -->
-        <div class="space-y-2">
+        <div v-if="!isTransparent" class="space-y-2">
           <Label>{{ $t('qr_style_editor.background.color') }}</Label>
           <div class="flex items-center gap-2">
             <div 
@@ -74,6 +93,13 @@ function handleImageMarginChange(value: number) {
               @update:model-value="(value) => onBackgroundColorChange(String(value))"
             />
           </div>
+        </div>
+        
+        <!-- Transparent Background Info -->
+        <div v-if="isTransparent" class="bg-muted/50 rounded-lg p-3">
+          <p class="text-sm text-muted-foreground">
+            {{ $t('qr_style_editor.background.transparent_info') }}
+          </p>
         </div>
       </AccordionContent>
     </AccordionItem>

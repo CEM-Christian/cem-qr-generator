@@ -3,6 +3,12 @@ import { z } from 'zod'
 // Common hex color regex pattern
 const hexColorRegex = /^#[0-9a-f]{6}$/i
 
+// Color schema that accepts hex colors or 'transparent'
+const colorSchema = z.union([
+  z.string().regex(hexColorRegex),
+  z.literal('transparent'),
+])
+
 // Logo option schema for organization logos
 export const LogoOptionSchema = z.object({
   id: z.string().trim().min(1),
@@ -60,7 +66,7 @@ export const QRStyleOptionsSchema = z.object({
     }).optional(),
   }).default({}),
   backgroundOptions: z.object({
-    color: z.string().regex(hexColorRegex).default('#ffffff'),
+    color: colorSchema.default('#ffffff'),
     gradient: z.object({
       type: z.enum(['linear', 'radial']).default('linear'),
       rotation: z.number().min(0).max(360).default(0),
@@ -141,7 +147,7 @@ export const QRCodeGenerationOptionsSchema = z.object({
     type: z.enum(['dot', 'square', 'rounded', 'dots', 'classy', 'classy-rounded', 'extra-rounded']),
   }),
   backgroundOptions: z.object({
-    color: z.string().regex(hexColorRegex),
+    color: colorSchema,
   }),
   imageOptions: z.object({
     hideBackgroundDots: z.boolean().default(false),

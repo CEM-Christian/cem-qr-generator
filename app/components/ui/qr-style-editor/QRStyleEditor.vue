@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { QRStyleEditorEmits, QRStyleEditorProps, QRStyleOptions } from '@/types/qr-style-editor'
-import { nextTick, onMounted, watch } from 'vue'
+import { nextTick, onMounted, watch, computed } from 'vue'
 import { toast } from 'vue-sonner'
 import BaseStyleControl from './BaseStyleControl.vue'
 import ComponentStyleControl from './ComponentStyleControl.vue'
@@ -50,6 +50,13 @@ const {
 } = useQRPreview()
 
 const { saveAndNotify } = useQRStyleSaver()
+
+// Computed property for preview background styling
+const previewBackgroundClass = computed(() => {
+  return typedStyleOptions?.backgroundOptions?.color === 'transparent' 
+    ? 'bg-gray-50 bg-[linear-gradient(45deg,#f3f4f6_25%,transparent_25%),linear-gradient(-45deg,#f3f4f6_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#f3f4f6_75%),linear-gradient(-45deg,transparent_75%,#f3f4f6_75%)] bg-[length:20px_20px] bg-[position:0_0,0_10px,10px_-10px,-10px_0px]'
+    : 'bg-white'
+})
 
 // Watch for changes and update preview
 watch(() => typedStyleOptions, () => {
@@ -157,7 +164,8 @@ watch(() => props.open, async (newValue) => {
           <div class="text-sm font-medium">{{ $t('qr_style_editor.preview') }}</div>
           <div 
             ref="previewContainer"
-            class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm"
+            class="p-4 rounded-lg border border-gray-200 shadow-sm"
+            :class="previewBackgroundClass"
           />
         </div>
         

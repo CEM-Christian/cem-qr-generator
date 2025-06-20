@@ -105,7 +105,7 @@
     "views": "Views",
     "visitors": "Visitors",
     "referers": "Referers",
-    "stats": "'s Stats",
+    "stats": "Stats for",
     "custom_date": "Custom Date",
     "date": "Date",
     "date_range": "Date Range",
@@ -322,7 +322,9 @@
       "round_size": "Round Size"
     },
     "background": {
-      "color": "Color"
+      "color": "Color",
+      "transparent": "Transparent Background",
+      "transparent_info": "The QR code will have a transparent background when downloaded or displayed."
     },
     "corner_squares": {
       "color": "Color",
