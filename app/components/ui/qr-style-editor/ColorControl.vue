@@ -40,7 +40,7 @@ function handleColorInput(event: Event) {
         :model-value="color"
         class="flex-1"
         placeholder="#000000"
-        @update:model-value="onColorChange"
+        @update:model-value="(value) => onColorChange(String(value))"
       />
       <Button
         v-if="!isUsingBase"

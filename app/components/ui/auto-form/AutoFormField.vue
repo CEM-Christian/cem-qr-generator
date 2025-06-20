@@ -1,5 +1,4 @@
-<script setup lang="ts" generic="U extends ZodAny">
-import type { ZodAny } from 'zod'
+<script setup lang="ts">
 import { computed } from 'vue'
 import type { Config, ConfigItem, Shape } from './interface'
 import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from './constant'
@@ -8,7 +7,7 @@ import useDependencies from './dependencies'
 const props = defineProps<{
   fieldName: string
   shape: Shape
-  config?: ConfigItem | Config<U>
+  config?: ConfigItem | Config<any>
 }>()
 
 function isValidConfig(config: any): config is ConfigItem {
@@ -30,7 +29,7 @@ const { isDisabled, isHidden, isRequired, overrideOptions } = useDependencies(pr
       ? typeof config.component === 'string'
         ? INPUT_COMPONENTS[config.component!]
         : config.component
-      : INPUT_COMPONENTS[DEFAULT_ZOD_HANDLERS[shape.type]] "
+      : INPUT_COMPONENTS[DEFAULT_ZOD_HANDLERS[shape.type] || 'string']"
     v-if="!isHidden"
     :field-name="fieldName"
     :label="shape.schema?.description"

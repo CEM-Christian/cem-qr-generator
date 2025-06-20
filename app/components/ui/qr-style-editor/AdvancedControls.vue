@@ -71,7 +71,7 @@ function handleImageMarginChange(value: number) {
               :model-value="backgroundColor" 
               class="flex-1"
               placeholder="#ffffff"
-              @update:model-value="onBackgroundColorChange"
+              @update:model-value="(value) => onBackgroundColorChange(String(value))"
             />
           </div>
         </div>

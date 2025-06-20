@@ -38,7 +38,7 @@ const {
   handleBaseTypeChange,
   handleLogoTypeChange,
   handleLogoIdChange
-} = useQRStyleManager(props.initialOptions)
+} = useQRStyleManager(props.initialOptions as any)
 
 // Type assertion for styleOptions to ensure proper typing
 const typedStyleOptions = styleOptions as QRStyleOptions

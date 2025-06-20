@@ -1,9 +1,19 @@
-import type { QRComponentType, QRStyleOptions, QRStyleProperty } from '@/types/qr-style-editor'
+import type { QRStyleOptions } from '@@/schemas/qr-style'
+import type { QRComponentType, QRStyleProperty } from '@/types/qr-style-editor'
 import { computed, reactive } from 'vue'
 
-export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
+// Internal type for required QR style options with proper component overrides
+type RequiredQRStyleOptions = NonNullable<QRStyleOptions> & {
+  componentOverrides: {
+    dots: Record<string, any>
+    cornerSquares: Record<string, any>
+    cornerDots: Record<string, any>
+  }
+}
+
+export function useQRStyleManager(initialOptions?: Partial<RequiredQRStyleOptions>) {
   // Default QR style options with base style support
-  const defaultStyleOptions: QRStyleOptions = {
+  const defaultStyleOptions: RequiredQRStyleOptions = {
     // Base style options that apply to all components
     baseOptions: {
       color: '#000000',
@@ -44,7 +54,7 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
   }
 
   // Initialize style options with backward compatibility support
-  function initializeStyleOptions(initialOptions?: Partial<QRStyleOptions>): QRStyleOptions {
+  function initializeStyleOptions(initialOptions?: Partial<RequiredQRStyleOptions>): RequiredQRStyleOptions {
     const options = { ...defaultStyleOptions }
 
     if (initialOptions) {
@@ -81,7 +91,7 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
   }
 
   // Style options reactive object
-  const styleOptions = reactive(initializeStyleOptions(initialOptions))
+  const styleOptions: RequiredQRStyleOptions = reactive(initializeStyleOptions(initialOptions))
 
   // Base style management functions
   function isUsingBaseStyle(component: QRComponentType, property: QRStyleProperty): boolean {
@@ -104,7 +114,7 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
       delete styleOptions.componentOverrides.dots.color
     }
     else if (component === 'dots' && property === 'type') {
-      styleOptions.dotsOptions.type = effectiveValue
+      styleOptions.dotsOptions.type = effectiveValue as 'rounded' | 'dots' | 'classy' | 'classy-rounded' | 'square' | 'extra-rounded'
       delete styleOptions.componentOverrides.dots.type
     }
     else if (component === 'cornerSquares' && property === 'color') {
@@ -112,7 +122,7 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
       delete styleOptions.componentOverrides.cornerSquares.color
     }
     else if (component === 'cornerSquares' && property === 'type') {
-      styleOptions.cornersSquareOptions.type = effectiveValue
+      styleOptions.cornersSquareOptions.type = effectiveValue as 'dot' | 'square' | 'extra-rounded' | 'rounded' | 'dots' | 'classy' | 'classy-rounded'
       delete styleOptions.componentOverrides.cornerSquares.type
     }
     else if (component === 'cornerDots' && property === 'color') {
@@ -120,7 +130,7 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
       delete styleOptions.componentOverrides.cornerDots.color
     }
     else if (component === 'cornerDots' && property === 'type') {
-      styleOptions.cornersDotOptions.type = effectiveValue
+      styleOptions.cornersDotOptions.type = effectiveValue as 'dot' | 'square' | 'rounded' | 'dots' | 'classy' | 'classy-rounded' | 'extra-rounded'
       delete styleOptions.componentOverrides.cornerDots.type
     }
   }
@@ -138,18 +148,43 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
 
   function getEffectiveValue(component: QRComponentType, property: QRStyleProperty): string {
     if (isUsingBaseStyle(component, property)) {
-      return styleOptions.baseOptions[property]
+      if (property === 'color') {
+        return styleOptions.baseOptions.color
+      }
+      else {
+        return styleOptions.baseOptions.type
+      }
     }
 
     switch (component) {
       case 'dots':
-        return styleOptions.dotsOptions[property]
+        if (property === 'color') {
+          return styleOptions.dotsOptions.color
+        }
+        else {
+          return styleOptions.dotsOptions.type
+        }
       case 'cornerSquares':
-        return styleOptions.cornersSquareOptions[property]
+        if (property === 'color') {
+          return styleOptions.cornersSquareOptions.color
+        }
+        else {
+          return styleOptions.cornersSquareOptions.type || 'square'
+        }
       case 'cornerDots':
-        return styleOptions.cornersDotOptions[property]
+        if (property === 'color') {
+          return styleOptions.cornersDotOptions.color
+        }
+        else {
+          return styleOptions.cornersDotOptions.type || 'square'
+        }
       default:
-        return styleOptions.baseOptions[property]
+        if (property === 'color') {
+          return styleOptions.baseOptions.color
+        }
+        else {
+          return styleOptions.baseOptions.type
+        }
     }
   }
 
@@ -168,7 +203,7 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
   }
 
   function handleDotsTypeChange(newType: string): void {
-    styleOptions.dotsOptions.type = newType
+    styleOptions.dotsOptions.type = newType as any
     markAsCustomized('dots', 'type', newType)
   }
 
@@ -178,7 +213,7 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
   }
 
   function handleCornerSquareTypeChange(newType: string): void {
-    styleOptions.cornersSquareOptions.type = newType
+    styleOptions.cornersSquareOptions.type = newType as any
     markAsCustomized('cornerSquares', 'type', newType)
   }
 
@@ -188,7 +223,7 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
   }
 
   function handleCornerDotTypeChange(newType: string): void {
-    styleOptions.cornersDotOptions.type = newType
+    styleOptions.cornersDotOptions.type = newType as any
     markAsCustomized('cornerDots', 'type', newType)
   }
 
@@ -208,16 +243,16 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
   }
 
   function handleBaseTypeChange(newType: string): void {
-    styleOptions.baseOptions.type = newType
+    styleOptions.baseOptions.type = newType as any
     // Update all non-customized components
     if (isUsingBaseStyle('dots', 'type')) {
-      styleOptions.dotsOptions.type = newType
+      styleOptions.dotsOptions.type = newType as any
     }
     if (isUsingBaseStyle('cornerSquares', 'type')) {
-      styleOptions.cornersSquareOptions.type = newType
+      styleOptions.cornersSquareOptions.type = newType as any
     }
     if (isUsingBaseStyle('cornerDots', 'type')) {
-      styleOptions.cornersDotOptions.type = newType
+      styleOptions.cornersDotOptions.type = newType as any
     }
   }
 
@@ -255,16 +290,16 @@ export function useQRStyleManager(initialOptions?: Partial<QRStyleOptions>) {
       // Legacy component options for backward compatibility
       dotsOptions: {
         color: effectiveDotsColor.value || '#000000',
-        type: effectiveDotsType.value || 'square',
+        type: (effectiveDotsType.value || 'square') as any,
         roundSize: styleOptions.dotsOptions.roundSize ?? true,
       },
       cornersSquareOptions: {
         color: effectiveCornerSquareColor.value || '#000000',
-        type: effectiveCornerSquareType.value || 'square',
+        type: (effectiveCornerSquareType.value || 'square') as any,
       },
       cornersDotOptions: {
         color: effectiveCornerDotColor.value || '#000000',
-        type: effectiveCornerDotType.value || 'square',
+        type: (effectiveCornerDotType.value || 'square') as any,
       },
       backgroundOptions: {
         color: styleOptions.backgroundOptions.color || '#ffffff',

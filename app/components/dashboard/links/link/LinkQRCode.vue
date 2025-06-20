@@ -255,7 +255,7 @@ onMounted(() => {
       :data="data"
       :image="image"
       :initial-options="currentStyleOptions"
-      :link="link"
+      :link="link as any"
       @save="handleStyleSave"
     />
 
