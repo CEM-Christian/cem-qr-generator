@@ -62,13 +62,6 @@ function handleTransparentToggle(value: boolean) {
           />
         </div>
       </div>
-      
-      <!-- Transparent Background Info -->
-      <div v-if="isTransparent" class="bg-muted/50 rounded-lg p-3">
-        <p class="text-sm text-muted-foreground">
-          {{ $t('qr_style_editor.background.transparent_info') }}
-        </p>
-      </div>
     </AccordionContent>
   </AccordionItem>
 </template>

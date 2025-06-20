@@ -106,7 +106,7 @@ function handleLogoSelect(logoId: string) {
           <!-- Logo Name -->
           <div class="mt-2 text-center">
             <p class="text-xs font-medium text-foreground">{{ logo.name }}</p>
-            <p class="text-xs text-muted-foreground">{{ logo.organization }}</p>
+            <!-- <p class="text-xs text-muted-foreground">{{ logo.organization }}</p> -->
           </div>
         </div>
       </div>

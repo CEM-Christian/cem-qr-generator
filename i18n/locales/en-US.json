@@ -323,8 +323,7 @@
     },
     "background": {
       "color": "Color",
-      "transparent": "Transparent Background",
-      "transparent_info": "The QR code will have a transparent background when downloaded or displayed."
+      "transparent": "Transparent Background"
     },
     "corner_squares": {
       "color": "Color",

@@ -331,8 +331,7 @@
     },
     "background": {
       "color": "Couleur",
-      "transparent": "Arrière-plan transparent",
-      "transparent_info": "Le code QR aura un arrière-plan transparent lors du téléchargement ou de l'affichage."
+      "transparent": "Arrière-plan transparent"
     },
     "corner_squares": {
       "color": "Couleur",

@@ -331,8 +331,7 @@
     },
     "background": {
       "color": "Farbe",
-      "transparent": "Transparenter Hintergrund",
-      "transparent_info": "Der QR-Code hat beim Herunterladen oder Anzeigen einen transparenten Hintergrund."
+      "transparent": "Transparenter Hintergrund"
     },
     "corner_squares": {
       "color": "Farbe",

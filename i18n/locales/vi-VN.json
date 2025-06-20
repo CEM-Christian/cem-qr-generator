@@ -322,8 +322,7 @@
     },
     "background": {
       "color": "Màu nền",
-      "transparent": "Nền trong suốt",
-      "transparent_info": "Mã QR sẽ có nền trong suốt khi tải xuống hoặc hiển thị."
+      "transparent": "Nền trong suốt"
     },
     "corner_squares": {
       "color": "Màu góc vuông",

@@ -331,8 +331,7 @@
     },
     "background": {
       "color": "颜色",
-      "transparent": "透明背景",
-      "transparent_info": "下载或显示时，二维码将具有透明背景。"
+      "transparent": "透明背景"
     },
     "corner_squares": {
       "color": "颜色",

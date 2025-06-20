@@ -1,96 +1,112 @@
 {
   "common": {
-    "i18n": "Multi Language",
     "abbreviations": "En",
-    "current_language": "English 🦘",
-    "try_again": "Try again",
     "cancel": "Cancel",
-    "continue": "Continue",
     "close": "Close",
-    "save": "Save",
-    "edit": "Edit",
+    "continue": "Continue",
+    "copied_to_clipboard": "Copied to clipboard",
+    "copy": "Copy",
+    "copy_failed": "Failed to copy to clipboard",
+    "current_language": "English 🦘",
     "delete": "Delete",
     "delete_success": "Delete successful!",
-    "duplicate": "Duplicate",
-    "search": "Search",
     "download": "Download",
-    "copy": "Copy",
-    "copied_to_clipboard": "Copied to clipboard",
-    "copy_failed": "Failed to copy to clipboard"
+    "duplicate": "Duplicate",
+    "edit": "Edit",
+    "i18n": "Multi Language",
+    "save": "Save",
+    "search": "Search",
+    "try_again": "Try again"
   },
-  "theme": {
-    "toggle": "Toggle theme",
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
-  },
-  "login": {
-    "title": "Login",
-    "description": "Enter your site token to login",
-    "tips": "Tips",
-    "preview_token": "The site token for preview mode is",
-    "submit": "Login",
-    "failed": "Login failed, please try again"
-  },
-  "logout": {
-    "title": "LogOut?",
-    "confirm": "Are you sure you want to log out?",
-    "action": "LogOut"
-  },
-  "layouts": {
-    "footer": {
-      "copyright": "Products of HTML.ZONE",
-      "social": {
-        "email": "Email",
-        "telegram": "Telegram",
-        "blog": "Blog",
-        "twitter": "Twitter",
-        "mastodon": "Mastodon",
-        "github": "GitHub"
-      }
+  "dashboard": {
+    "count": "Count",
+    "custom_date": "Custom Date",
+    "date": "Date",
+    "date_picker": {
+      "custom": "Custom",
+      "custom_title": "Custom Date",
+      "date_range": "Date Range",
+      "last_24h": "Last 24 hours",
+      "last_30d": "Last 30 days",
+      "last_7d": "Last 7 days",
+      "last_90d": "Last 90 days",
+      "single_date": "Date",
+      "this_month": "This month",
+      "this_week": "This week",
+      "today": "Today"
     },
-    "header": {
-      "select_language": "Select Language"
-    }
-  },
-  "nav": {
-    "links": "Links",
-    "analysis": "Analysis",
-    "realtime": "Realtime"
+    "date_range": "Date Range",
+    "details": "Details",
+    "filter_placeholder": "Filter links...",
+    "loading": "Loading",
+    "locations": "Locations",
+    "metrics": {
+      "browser": "Browser",
+      "browserType": "Browser Type",
+      "city": "City",
+      "country": "Country",
+      "device": "Device",
+      "deviceType": "Device Type",
+      "language": "Language",
+      "os": "OS",
+      "referer": "Referer",
+      "region": "Region",
+      "slug": "Slug",
+      "timezone": "Timezone"
+    },
+    "name": "Name",
+    "no_data": "No Data",
+    "none": "(None)",
+    "referers": "Referers",
+    "stats": "Stats for",
+    "time_picker": {
+      "last_10m": "Last 10 minutes",
+      "last_12h": "Last 12 hours",
+      "last_1h": "Last 1 hour",
+      "last_24h": "Last 24 hours",
+      "last_30m": "Last 30 minutes",
+      "last_5m": "Last 5 minutes",
+      "last_6h": "Last 6 hours",
+      "today": "Today"
+    },
+    "title": "Dashboard",
+    "views": "Views",
+    "visitors": "Visitors",
+    "visits": "Visits"
   },
   "home": {
+    "cta": {
+      "button": "Start Deploy",
+      "description": "With just a few simple clicks, you can start deploying without any expenses",
+      "title": "Deploy immediately"
+    },
     "features": {
-      "title": "Features",
-      "subtitle": "Simple and sufficient functionality",
-      "url_shortening": {
-        "title": "URL Shortening",
-        "description": "Compress your URLs to their minimal length"
+      "ai_slug": {
+        "description": "Leverage AI to generate slugs",
+        "title": "AI Slug"
       },
       "analytics": {
-        "title": "Analytics",
-        "description": "Monitor link analytics and gather insightful statistics"
-      },
-      "serverless": {
-        "title": "Serverless",
-        "description": "Deploy without the need for traditional servers"
+        "description": "Monitor link analytics and gather insightful statistics",
+        "title": "Analytics"
       },
       "customizable_slug": {
-        "title": "Customisable Slug",
-        "description": "Support for personalised slugs and case sensitivity"
-      },
-      "ai_slug": {
-        "title": "AI Slug",
-        "description": "Leverage AI to generate slugs"
+        "description": "Support for personalised slugs and case sensitivity",
+        "title": "Customisable Slug"
       },
       "link_expiration": {
-        "title": "Link Expiration",
-        "description": "Set expiration dates for your links"
+        "description": "Set expiration dates for your links",
+        "title": "Link Expiration"
+      },
+      "serverless": {
+        "description": "Deploy without the need for traditional servers",
+        "title": "Serverless"
+      },
+      "subtitle": "Simple and sufficient functionality",
+      "title": "Features",
+      "url_shortening": {
+        "description": "Compress your URLs to their minimal length",
+        "title": "URL Shortening"
       }
-    },
-    "cta": {
-      "title": "Deploy immediately",
-      "description": "With just a few simple clicks, you can start deploying without any expenses",
-      "button": "Start Deploy"
     },
     "logos": {
       "title": "Built with awesome technologies"
@@ -99,272 +115,257 @@
       "follow": "Follow me on X(Twitter)"
     }
   },
-  "dashboard": {
-    "title": "Dashboard",
-    "visits": "Visits",
-    "views": "Views",
-    "visitors": "Visitors",
-    "referers": "Referers",
-    "stats": "Stats for",
-    "custom_date": "Custom Date",
-    "date": "Date",
-    "date_range": "Date Range",
-    "locations": "Locations",
-    "details": "Details",
-    "name": "Name",
-    "count": "Count",
-    "loading": "Loading",
-    "no_data": "No Data",
-    "none": "(None)",
-    "filter_placeholder": "Filter links...",
-    "date_picker": {
-      "today": "Today",
-      "last_24h": "Last 24 hours",
-      "this_week": "This week",
-      "last_7d": "Last 7 days",
-      "this_month": "This month",
-      "last_30d": "Last 30 days",
-      "last_90d": "Last 90 days",
-      "custom": "Custom",
-      "custom_title": "Custom Date",
-      "single_date": "Date",
-      "date_range": "Date Range"
+  "layouts": {
+    "footer": {
+      "copyright": "Products of HTML.ZONE",
+      "social": {
+        "blog": "Blog",
+        "email": "Email",
+        "github": "GitHub",
+        "mastodon": "Mastodon",
+        "telegram": "Telegram",
+        "twitter": "Twitter"
+      }
     },
-    "metrics": {
-      "country": "Country",
-      "region": "Region",
-      "city": "City",
-      "referer": "Referer",
-      "slug": "Slug",
-      "language": "Language",
-      "timezone": "Timezone",
-      "device": "Device",
-      "deviceType": "Device Type",
-      "os": "OS",
-      "browser": "Browser",
-      "browserType": "Browser Type"
-    },
-    "time_picker": {
-      "today": "Today",
-      "last_5m": "Last 5 minutes",
-      "last_10m": "Last 10 minutes",
-      "last_30m": "Last 30 minutes",
-      "last_1h": "Last 1 hour",
-      "last_6h": "Last 6 hours",
-      "last_12h": "Last 12 hours",
-      "last_24h": "Last 24 hours"
+    "header": {
+      "select_language": "Select Language"
     }
   },
   "links": {
-    "form": {
-      "name": {
-        "label": "Name",
-        "description": "A friendly name for your link",
-        "placeholder": "Enter link name..."
-      },
-      "destination_url": {
-        "label": "Destination URL",
-        "description": "The URL where users will be redirected",
-        "placeholder": "https://example.com"
-      },
-      "slug": {
-        "label": "Slug",
-        "description": "Your link's short identifier",
-        "placeholder": "Enter custom slug..."
-      },
-      "organization": {
-        "label": "Organisation",
-        "description": "Assign link to an organisation",
-        "placeholder": "Select organisation (optional)"
-      },
-      "utm": {
-        "section_title": "UTM Tracking Parameters",
-        "source": {
-          "label": "Source",
-          "description": "Where user is coming from",
-          "placeholder": "Select traffic source"
-        },
-        "medium": {
-          "label": "Medium",
-          "description": "The medium of the source",
-          "placeholder": "Select medium type"
-        },
-        "campaign": {
-          "label": "Campaign Name",
-          "description": "A promotion or strategic campaign e.g. Kindy-Open-Day"
-        },
-        "id": {
-          "label": "Campaign ID",
-          "description": "Specific instance of a campaign (usually just copy-paste the campaign name)"
-        }
-      }
-    },
     "actions": {
       "create": "Create Link",
       "edit": "Edit Link",
-      "preview_label": "Preview",
-      "short_url_preview": "Short URL Preview",
-      "generate_random_slug": "Generate random slug",
       "generate_ai_slug": "Generate AI slug",
-      "open_destination": "Open destination URL"
+      "generate_random_slug": "Generate random slug",
+      "open_destination": "Open destination URL",
+      "preview_label": "Preview",
+      "short_url_preview": "Short URL Preview"
     },
-    "messages": {
-      "create_description": "Create a new shortened link with optional UTM tracking parameters.",
-      "edit_description": "Update the link details and UTM tracking parameters below.",
-      "delete_confirm_title": "Are you absolutely sure?",
-      "delete_confirm_desc": "This action cannot be undone. This will really delete your link from servers.",
-      "delete_success": "Delete successful!",
-      "update_success": "Link updated successfully",
-      "create_success": "Link created successfully",
-      "preview_mode_tip": "The preview mode link is valid for up to 5 minutes."
-    },
-    "preview": {
-      "title": "Link Preview",
-      "short_url": "Short Link",
-      "destination_url": "Destination URL",
-      "copy_short": "Copy short link",
-      "copy_destination": "Copy destination URL",
-      "copy_short_success": "Short link copied to clipboard",
-      "copy_destination_success": "Destination URL copied to clipboard",
-      "open_destination": "Open destination URL in new tab"
-    },
-    "search_placeholder": "Search links...",
-    "no_results": "No links found.",
-    "group_title": "Links",
-    "copy_success": "Copy successful!",
     "click_to_copy": "Click to copy",
+    "copy_success": "Copy successful!",
     "created_at": "Created At",
-    "updated_at": "Updated At",
-    "expires_at": "Expires At",
-    "no_more": "No more links",
-    "load_failed": "Loading links failed,",
-    "download_qr_code": "Download QR Code",
     "download_options": {
-      "title": "Download QR Code",
       "description": "Choose your preferred format and settings for downloading the QR code.",
-      "format_label": "Format",
-      "select_format": "Select format",
-      "resolution_label": "Resolution",
-      "select_resolution": "Select resolution",
+      "download_button": "Download",
       "estimated_size": "Estimated file size",
       "format": "Format",
-      "download_button": "Download",
-      "vector_format_note": "Resolution setting is not applicable for vector formats",
+      "format_label": "Format",
       "formats": {
-        "png_description": "High quality, lossless compression, supports transparency",
         "jpeg_description": "Good quality, smaller file size, perfect for photos",
+        "png_description": "High quality, lossless compression, supports transparency",
         "svg_description": "Vector format, scalable, perfect for print and web"
+      },
+      "resolution_label": "Resolution",
+      "select_format": "Select format",
+      "select_resolution": "Select resolution",
+      "title": "Download QR Code",
+      "vector_format_note": "Resolution setting is not applicable for vector formats"
+    },
+    "download_qr_code": "Download QR Code",
+    "expires_at": "Expires At",
+    "form": {
+      "destination_url": {
+        "description": "The URL where users will be redirected",
+        "label": "Destination URL",
+        "placeholder": "https://example.com"
+      },
+      "name": {
+        "description": "A friendly name for your link",
+        "label": "Name",
+        "placeholder": "Enter link name..."
+      },
+      "organization": {
+        "description": "Assign link to an organisation",
+        "label": "Organisation",
+        "placeholder": "Select organisation (optional)"
+      },
+      "slug": {
+        "description": "Your link's short identifier",
+        "label": "Slug",
+        "placeholder": "Enter custom slug..."
+      },
+      "utm": {
+        "campaign": {
+          "description": "A promotion or strategic campaign e.g. Kindy-Open-Day",
+          "label": "Campaign Name"
+        },
+        "id": {
+          "description": "Specific instance of a campaign (usually just copy-paste the campaign name)",
+          "label": "Campaign ID"
+        },
+        "medium": {
+          "description": "The medium of the source",
+          "label": "Medium",
+          "placeholder": "Select medium type"
+        },
+        "section_title": "UTM Tracking Parameters",
+        "source": {
+          "description": "Where user is coming from",
+          "label": "Source",
+          "placeholder": "Select traffic source"
+        }
       }
     },
+    "group_title": "Links",
+    "layout": {
+      "condensed": "Condensed",
+      "condensed_tooltip": "Show links in a condensed grid view",
+      "details": "Details",
+      "details_description": "Focus on link metadata and information",
+      "qr": "QR Code",
+      "qr_code": "QR Code",
+      "qr_code_tooltip": "Show links with QR code previews",
+      "qr_description": "Emphasize QR code visualization",
+      "toggle_tooltip": "Switch between detail and QR code layouts"
+    },
+    "load_failed": "Loading links failed,",
+    "messages": {
+      "create_description": "Create a new shortened link with optional UTM tracking parameters.",
+      "create_success": "Link created successfully",
+      "delete_confirm_desc": "This action cannot be undone. This will really delete your link from servers.",
+      "delete_confirm_title": "Are you absolutely sure?",
+      "delete_success": "Delete successful!",
+      "edit_description": "Update the link details and UTM tracking parameters below.",
+      "preview_mode_tip": "The preview mode link is valid for up to 5 minutes.",
+      "update_success": "Link updated successfully"
+    },
+    "no_more": "No more links",
+    "no_results": "No links found.",
+    "preview": {
+      "copy_destination": "Copy destination URL",
+      "copy_destination_success": "Destination URL copied to clipboard",
+      "copy_short": "Copy short link",
+      "copy_short_success": "Short link copied to clipboard",
+      "destination_url": "Destination URL",
+      "open_destination": "Open destination URL in new tab",
+      "short_url": "Short Link",
+      "title": "Link Preview"
+    },
+    "search_placeholder": "Search links...",
     "sort": {
-      "newest": "Newest First",
-      "oldest": "Oldest First",
       "name_az": "Name A-Z",
       "name_za": "Name Z-A",
+      "newest": "Newest First",
+      "oldest": "Oldest First",
       "slug_az": "Slug A-Z",
       "slug_za": "Slug Z-A",
       "tip": "Experience: Only for loaded links"
     },
-    "layout": {
-      "condensed": "Condensed",
-      "condensed_tooltip": "Show links in a condensed grid view",
-      "qr_code": "QR Code",
-      "qr_code_tooltip": "Show links with QR code previews",
-      "details": "Details",
-      "details_description": "Focus on link metadata and information",
-      "qr": "QR Code",
-      "qr_description": "Emphasize QR code visualization",
-      "toggle_tooltip": "Switch between detail and QR code layouts"
-    },
     "stats": {
+      "last_scanned": "Last scanned: {date}",
       "scans": "Scans",
       "scans_tooltip": "Total scans: {count}",
-      "last_scanned": "Last scanned: {date}",
       "stats_unavailable": "Statistics unavailable"
-    }
+    },
+    "updated_at": "Updated At"
+  },
+  "login": {
+    "description": "Enter your site token to login",
+    "failed": "Login failed, please try again",
+    "preview_token": "The site token for preview mode is",
+    "submit": "Login",
+    "tips": "Tips",
+    "title": "Login"
+  },
+  "logout": {
+    "action": "LogOut",
+    "confirm": "Are you sure you want to log out?",
+    "title": "LogOut?"
+  },
+  "nav": {
+    "analysis": "Analysis",
+    "links": "Links",
+    "realtime": "Realtime"
+  },
+  "organization": {
+    "all": "All Organisations",
+    "filter_placeholder": "Filter by organisation",
+    "filter_tip": "Filter links by organisation",
+    "none": "No Organisation",
+    "select_placeholder": "Select organisation"
   },
   "qr_style_editor": {
-    "title": "QR Code Style Editor",
-    "description": "Customise the appearance of your QR code with advanced styling options.",
-    "preview": "Preview",
-    "base_style": {
-      "title": "Base Style",
-      "description": "Global style applied to all QR code components",
-      "color": "Base Color",
-      "type": "Base Type"
-    },
-    "logo_selection": {
-      "title": "Logo Selection",
-      "description": "Choose between website favicon, organization logo, or no image",
-      "use_favicon": "Use website favicon",
-      "use_organization": "Use organisation logo",
-      "use_none": "No image",
-      "select_logo": "Select Organisation Logo",
-      "no_logo_selected": "Please select a logo from the options above"
-    },
-    "override_indicators": {
-      "using_base": "Using base style",
-      "custom": "Custom style",
-      "apply_base": "Reset to base",
-      "reset_to_base": "Reset to base"
-    },
-    "sections": {
-      "dots": "Dots Styling",
-      "background": "Background",
-      "corner_squares": "Corner Squares",
-      "corner_dots": "Corner Dots",
-      "image": "Image Settings",
-      "export": "Export Options"
-    },
-    "dots": {
-      "color": "Color",
-      "type": "Type",
-      "round_size": "Round Size"
-    },
     "background": {
-      "color": "Color"
-    },
-    "corner_squares": {
       "color": "Color",
-      "type": "Type"
+      "transparent": "Transparent Background"
+    },
+    "base_style": {
+      "color": "Base Color",
+      "description": "Global style applied to all QR code components",
+      "title": "Base Style",
+      "type": "Base Type"
     },
     "corner_dots": {
       "color": "Color",
       "type": "Type"
     },
-    "image": {
-      "hide_background_dots": "Hide Background Dots",
-      "size": "Image Size",
-      "margin": "Margin"
+    "corner_squares": {
+      "color": "Color",
+      "type": "Type"
     },
+    "description": "Customise the appearance of your QR code with advanced styling options.",
+    "dots": {
+      "color": "Color",
+      "round_size": "Round Size",
+      "type": "Type"
+    },
+    "download_error": "Failed to download QR code",
+    "download_success": "QR code downloaded successfully",
+    "edit_style": "Customize QR",
     "export": {
       "format": "Format",
       "resolution": "Resolution"
     },
-    "types": {
-      "square": "Square",
-      "rounded": "Rounded",
-      "dots": "Dots",
-      "classy": "Classy",
-      "classy_rounded": "Classy Rounded",
-      "extra_rounded": "Extra Rounded",
-      "dot": "Dot"
+    "image": {
+      "hide_background_dots": "Hide Background Dots",
+      "margin": "Margin",
+      "size": "Image Size"
     },
+    "logo_selection": {
+      "description": "Choose between website favicon, organization logo, or no image",
+      "no_logo_selected": "Please select a logo from the options above",
+      "select_logo": "Select Organisation Logo",
+      "title": "Logo Selection",
+      "use_favicon": "Use website favicon",
+      "use_none": "No image",
+      "use_organization": "Use organisation logo"
+    },
+    "override_indicators": {
+      "apply_base": "Reset to base",
+      "custom": "Custom style",
+      "reset_to_base": "Reset to base",
+      "using_base": "Using base style"
+    },
+    "preview": "Preview",
     "reset": "Reset to Defaults",
+    "reset_success": "QR code style reset to defaults",
     "save": "Save",
     "save_and_download": "Save & Download",
-    "reset_success": "QR code style reset to defaults",
-    "save_success": "QR code style saved successfully",
     "save_error": "Failed to save QR code style",
-    "download_success": "QR code downloaded successfully",
-    "download_error": "Failed to download QR code",
-    "edit_style": "Customize QR"
+    "save_success": "QR code style saved successfully",
+    "sections": {
+      "background": "Background",
+      "corner_dots": "Corner Dots",
+      "corner_squares": "Corner Squares",
+      "dots": "Dots Styling",
+      "export": "Export Options",
+      "image": "Image Settings"
+    },
+    "title": "QR Code Style Editor",
+    "types": {
+      "classy": "Classy",
+      "classy_rounded": "Classy Rounded",
+      "dot": "Dot",
+      "dots": "Dots",
+      "extra_rounded": "Extra Rounded",
+      "rounded": "Rounded",
+      "square": "Square"
+    }
   },
-  "organization": {
-    "filter_placeholder": "Filter by organisation",
-    "filter_tip": "Filter links by organisation",
-    "all": "All Organisations",
-    "none": "No Organisation",
-    "select_placeholder": "Select organisation"
+  "theme": {
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
+    "toggle": "Toggle theme"
   }
 }
