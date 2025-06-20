@@ -25,31 +25,31 @@ const { t } = useI18n()
 
 const typeOptions = [
   { value: 'square', label: 'square' },
-  { value: 'rounded', label: 'rounded' },
   { value: 'dots', label: 'dots' },
+  { value: 'rounded', label: 'rounded' },
+  { value: 'extra-rounded', label: 'extra_rounded' },
   { value: 'classy', label: 'classy' },
-  { value: 'classy-rounded', label: 'classy_rounded' },
-  { value: 'extra-rounded', label: 'extra_rounded' }
+  { value: 'classy-rounded', label: 'classy_rounded' }
 ]
 
 const cornerSquareTypeOptions = [
-  { value: 'dot', label: 'dot' },
   { value: 'square', label: 'square' },
-  { value: 'extra-rounded', label: 'extra_rounded' },
-  { value: 'rounded', label: 'rounded' },
+  { value: 'dot', label: 'dot' },
   { value: 'dots', label: 'dots' },
+  { value: 'rounded', label: 'rounded' },
+  { value: 'extra-rounded', label: 'extra_rounded' },
   { value: 'classy', label: 'classy' },
   { value: 'classy-rounded', label: 'classy_rounded' }
 ]
 
 const cornerDotTypeOptions = [
-  { value: 'dot', label: 'dot' },
   { value: 'square', label: 'square' },
-  { value: 'rounded', label: 'rounded' },
+  { value: 'dot', label: 'dot' },
   { value: 'dots', label: 'dots' },
+  { value: 'rounded', label: 'rounded' },
+  { value: 'extra-rounded', label: 'extra_rounded' },
   { value: 'classy', label: 'classy' },
-  { value: 'classy-rounded', label: 'classy_rounded' },
-  { value: 'extra-rounded', label: 'extra_rounded' }
+  { value: 'classy-rounded', label: 'classy_rounded' }
 ]
 
 const currentTypeOptions = computed(() => {

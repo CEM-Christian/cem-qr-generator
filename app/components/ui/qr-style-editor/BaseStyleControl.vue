@@ -13,11 +13,11 @@ const baseColorInputRef = ref<HTMLInputElement>()
 
 const typeOptions = [
   { value: 'square', label: 'square' },
-  { value: 'rounded', label: 'rounded' },
   { value: 'dots', label: 'dots' },
+  { value: 'rounded', label: 'rounded' },
+  { value: 'extra-rounded', label: 'extra_rounded' },
   { value: 'classy', label: 'classy' },
-  { value: 'classy-rounded', label: 'classy_rounded' },
-  { value: 'extra-rounded', label: 'extra_rounded' }
+  { value: 'classy-rounded', label: 'classy_rounded' }
 ]
 
 function handleColorInput(event: Event) {
