@@ -4,7 +4,8 @@ import { nextTick, onMounted, watch, computed } from 'vue'
 import { toast } from 'vue-sonner'
 import BaseStyleControl from './BaseStyleControl.vue'
 import ComponentStyleControl from './ComponentStyleControl.vue'
-import AdvancedControls from './AdvancedControls.vue'
+import BackgroundControl from './BackgroundControl.vue'
+import ImageControl from './ImageControl.vue'
 
 const props = defineProps<QRStyleEditorProps>()
 const emit = defineEmits<QRStyleEditorEmits>()
@@ -240,15 +241,19 @@ watch(() => props.open, async (newValue) => {
               :on-reset-color-to-base="() => resetToBaseStyle('cornerDots', 'color')"
               :on-reset-type-to-base="() => resetToBaseStyle('cornerDots', 'type')"
             />
+            
+            <!-- Background -->
+            <BackgroundControl
+              :background-color="typedStyleOptions?.backgroundOptions?.color ?? '#ffffff'"
+              :on-background-color-change="(color) => { if (typedStyleOptions?.backgroundOptions) typedStyleOptions.backgroundOptions.color = color }"
+            />
+            
+            <!-- Image Settings -->
+            <ImageControl
+              :image-options="typedStyleOptions?.imageOptions ?? { hideBackgroundDots: true, imageSize: 0.4, margin: 2 }"
+              :on-image-options-change="handleImageOptionsChange"
+            />
           </Accordion>
-          
-          <!-- Advanced Controls -->
-          <AdvancedControls
-            :background-color="typedStyleOptions?.backgroundOptions?.color ?? '#ffffff'"
-            :image-options="typedStyleOptions?.imageOptions ?? { hideBackgroundDots: true, imageSize: 0.4, margin: 2 }"
-            :on-background-color-change="(color) => { if (typedStyleOptions?.backgroundOptions) typedStyleOptions.backgroundOptions.color = color }"
-            :on-image-options-change="handleImageOptionsChange"
-          />
         </div>
       </div>
       

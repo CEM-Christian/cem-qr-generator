@@ -13,15 +13,11 @@ This is a Vue.js/Nuxt.js application for generating QR codes and shortening URLs
   - `fix/analytics-tracking-issue`
   - `enhancement/ui-accessibility-improvements`
 - Never make direct commits to the `main` branch
-- Use conventional commit messages: `feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `test:`, `chore:`
-- When feature is complete, DO NOT perform a commit
 
 ### Git Workflow Steps
 1. Check current branch: `git branch --show-current`
 2. If on `main`, create and switch to new feature branch: `git checkout -b feature/your-feature-name`
 3. Implement the requested changes
-4. Stage changes with conventional commit messages
-5. Inform user that changes are ready for review and can be committed, then merged via pull request
 
 ## Technology Stack & Dependencies
 - **Framework**: Nuxt.js 3.17+ with Vue 3 Composition API
